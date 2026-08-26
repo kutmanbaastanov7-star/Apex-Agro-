@@ -1,2 +1,158 @@
-<!doctype html><html lang="ky"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Apex Agro Экосистема</title><style>:root{--g:#176b38;--bg:#f5f8f6;--line:#dfe8e2}*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,sans-serif;color:#17251d;padding-bottom:80px}header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:12px;z-index:5}.top{display:flex;justify-content:space-between;align-items:center}.brand{font-size:22px;font-weight:900;color:var(--g)}.brand small{display:block;font-size:8px;color:#718078}.region{padding:9px 12px;border:1px solid #cfe6d5;border-radius:20px;background:#eff8f1;color:var(--g);font-weight:800}.wrap{max-width:560px;margin:auto;padding:14px}.page{display:none}.page.active{display:block}.search,.box,.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:13px;margin-bottom:12px}.search input{border:0;outline:0;width:90%;font-size:14px}.hero{background:linear-gradient(135deg,#0d5b31,#278a50);color:#fff;border-radius:21px;padding:20px;margin-bottom:15px}.hero h1{font-size:23px}.hero button,.btn{background:var(--g);color:#fff;border:0;border-radius:11px;padding:10px 13px;font-weight:800}.hero button{background:#fff;color:var(--g)}.cats,.cards,.services{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.cats{grid-template-columns:repeat(4,1fr)}.cat,.service{background:#fff;border:1px solid var(--line);border-radius:15px;padding:11px 5px;text-align:center;cursor:pointer}.cat i,.service i{font-style:normal;font-size:25px}.cat b,.service b{display:block;color:var(--g);font-size:10px;margin-top:4px}.pic{height:90px;border-radius:12px;background:#edf7ef;display:flex;align-items:center;justify-content:center;font-size:45px}.card h3{font-size:13px;margin:8px 0}.muted{font-size:10px;color:#718078}.price{font-size:16px;font-weight:900;color:var(--g);margin:7px 0}.btn{width:100%}.section{display:flex;justify-content:space-between;align-items:center;margin:16px 0 9px}.section h2{font-size:17px;margin:0}.more{font-size:10px;color:var(--g);font-weight:800}.row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:11px}.row:last-child{border:0}.row span{color:var(--g);font-weight:900}.profile-head{display:flex;gap:12px;align-items:center}.avatar{width:60px;height:60px;border-radius:50%;background:#e4f4e9;display:flex;align-items:center;justify-content:center;font-size:30px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:14px}.stat{text-align:center;background:#f6faf7;border-radius:11px;padding:9px}.stat b{display:block;color:var(--g);font-size:15px}.stat small{color:#718078}.deal{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer}.chatav{width:43px;height:43px;border-radius:50%;background:#e9f6ed;display:flex;align-items:center;justify-content:center}.messages{height:300px;overflow:auto}.msg{max-width:78%;padding:9px 11px;border-radius:14px;margin:7px 0;font-size:11px}.me{margin-left:auto;background:#dff2e5}.them{background:#f0f3f1}.compose{display:flex;gap:7px;border-top:1px solid var(--line);padding-top:10px}.compose input{flex:1;border:1px solid var(--line);border-radius:22px;padding:10px}.send{width:42px;border:0;border-radius:50%;background:var(--g);color:#fff}.nav{position:fixed;bottom:0;left:0;right:0;height:72px;background:#fff;border-top:1px solid var(--line);display:flex;z-index:10}.nav button{flex:1;border:0;background:#fff;color:#89938d;font-size:10px;font-weight:800}.nav button.active{color:var(--g)}.nav i{display:block;font-style:normal;font-size:21px;margin-bottom:3px}@media(max-width:390px){.cats{gap:5px}.cat b{font-size:8px}}
-</style></head><body><header><div class="top"><div class="brand" onclick="go('home')">Apex<small>AGRO ЭКОСИСТЕМА</small></div><button class="region" onclick="nextRegion()">📍 <span id="r">Талас</span>⌄</button></div></header><main class="wrap"><section id="home" class="page active"><div class="search">🔎 <input id="q" placeholder="Продукт издеңиз..." oninput="renderHome()"></div><div class="hero"><small>КЫРГЫЗСТАНДЫН АГРО ЭКОСИСТЕМАСЫ</small><h1>Дыйкандын ишин жеңилдетебиз</h1><p>Товарлар, баалар, агрономдор, техника, мал жана агро кызматтар — бир жерде.</p><button onclick="go('products')">Товарларды көрүү</button></div><div class="section"><h2>Категориялар</h2><span class="more" onclick="go('products')">Баарын көрүү</span></div><div class="cats"><div class="cat" onclick="cat('Өсүмдүктөр')">🌱<b>Өсүмдүктөр</b></div><div class="cat" onclick="cat('Мал')">🐄<b>Мал</b></div><div class="cat" onclick="cat('Дары-дармек')">💊<b>Дары-дармек</b></div><div class="cat" onclick="cat('Техника')">🚜<b>Техника</b></div></div><div class="section"><h2>Популярдуу товарлар</h2></div><div id="homeCards" class="cards"></div><div class="section"><h2>Рынок анализи</h2><span class="more" onclick="go('market')">Толук</span></div><div id="pulse" class="box"></div></section><section id="products" class="page"><div class="section"><h2 id="pt">Өсүмдүктөр тизмеги</h2></div><div class="cats"><div class="cat" onclick="cat('Өсүмдүктөр')">🌱<b>Өсүмдүктөр</b></div><div class="cat" onclick="cat('Мал')">🐄<b>Мал</b></div><div class="cat" onclick="cat('Дары-дармек')">💊<b>Дары-дармек</b></div><div class="cat" onclick="cat('Техника')">🚜<b>Техника</b></div></div><br><div id="cards" class="cards"></div></section><section id="market" class="page"><div class="section"><h2>Рынок анализи</h2></div><div id="table" class="box"></div></section><section id="deals" class="page"><div class="section"><h2>Бүтүмдөр</h2></div><div class="box"><div id="list"><div class="deal" onclick="chat('Бакыт — фермер')"><div class="chatav">👨‍🌾</div><div><b>Бакыт — фермер</b><div class="muted">Картошка боюнча суроо</div></div></div><div class="deal" onclick="chat('Айбек — багбан')"><div class="chatav">🧑‍🌾</div><div><b>Айбек — багбан</b><div class="muted">Алма баасы тууралуу</div></div></div><div class="deal" onclick="chat('Нурбек — дыйкан')"><div class="chatav">👨‍🔧</div><div><b>Нурбек — дыйкан</b><div class="muted">Техника боюнча сүйлөшүү</div></div></div></div><div id="conv" style="display:none"><button class="btn" onclick="closeChat()">← Бүтүмдөргө кайтуу</button><h3 id="who"></h3><div id="msgs" class="messages"></div><div class="compose"><input id="mi" placeholder="Билдирүү жазыңыз..." onkeydown="if(event.key==='Enter')send()"><button class="send" onclick="send()">➤</button></div></div></div></section><section id="profile" class="page"><div class="section"><h2>Профиль</h2></div><div class="box"><div class="profile-head"><div class="avatar">👤</div><div><h2 style="margin:0">Кутман Баястанов</h2><b style="color:var(--g);font-size:10px">Негиздөөчү / Генеральный директор</b><div class="muted">📍 Талас, Кыргызстан</div></div></div><div class="stats"><div class="stat"><b>24</b><small>Жарыя</small></div><div class="stat"><b>18</b><small>Бүтүм</small></div><div class="stat"><b>4.9</b><small>Рейтинг</small></div></div></div><div class="box"><div class="row"><b>📦 Менин товарларым</b><span>→</span></div><div class="row"><b>📣 Менин жарыяларым</b><span>→</span></div><div class="row"><b>⚙️ Жөндөөлөр</b><span>→</span></div></div></section></main><nav class="nav"><button class="active" data-p="home" onclick="go('home')"><i>⌂</i>Башкы</button><button data-p="products" onclick="go('products')"><i>🌱</i>Өсүмдүктөр</button><button onclick="alert('Жарыя түзүү')"><i>＋</i>Жарыя</button><button data-p="deals" onclick="go('deals')"><i>💬</i>Бүтүмдөр</button><button data-p="profile" onclick="go('profile')"><i>♙</i>Профиль</button></nav><script>const R={Талас:1,Чүй:1.14,Бишкек:1.1,Ош:1.08,Нарын:1.06,'Ысык-Көл':1.12,'Жалал-Абад':1.09,Баткен:1.07};let reg='Талас',catg='Өсүмдүктөр';const P=[['Картошка','Өсүмдүктөр','🥔',30,'сом/кг'],['Алма','Өсүмдүктөр','🍎',50,'сом/кг'],['Пияз','Өсүмдүктөр','🧅',28,'сом/кг'],['Сабиз','Өсүмдүктөр','🥕',32,'сом/кг'],['Буудай','Өсүмдүктөр','🌾',24,'сом/кг'],['Сүт','Мал','🥛',40,'сом/л'],['Кой','Мал','🐑',14500,'сом'],['Уй','Мал','🐄',85000,'сом'],['Актара 25 WG','Дары-дармек','💊',650,'сом'],['Мочевина','Дары-дармек','🧪',58,'сом/кг'],['Трактор кызматы','Техника','🚜',1800,'сом/саат'],['Сугат насосу','Техника','⚙️',12500,'сом']];function price(p){return Math.round(p[3]*R[reg]).toLocaleString()}function go(id){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.p===id));if(id==='products')renderProducts();if(id==='market')renderTable();scrollTo(0,0)}function cat(c){catg=c;go('products')}function renderHome(){let q=document.getElementById('q').value.toLowerCase();let a=P.filter(p=>(p[0]+' '+p[1]).toLowerCase().includes(q)).slice(0,4);document.getElementById('homeCards').innerHTML=a.map(p=>`<div class="card"><div class="pic">${p[2]}</div><h3>${p[0]}</h3><div class="muted">${reg}</div><div class="price">${price(p)} ${p[4]}</div><button class="btn" onclick="cat('${p[1]}')">Көрүү</button></div>`).join('');document.getElementById('pulse').innerHTML=P.slice(0,5).map(p=>`<div class="row"><b>${p[2]} ${p[0]}</b><span>${price(p)} ${p[4]}</span></div>`).join('')}function renderProducts(){document.getElementById('pt').textContent=catg+' тизмеги';document.getElementById('cards').innerHTML=P.filter(p=>p[1]===catg).map(p=>`<div class="card"><div class="pic">${p[2]}</div><h3>${p[0]}</h3><div class="muted">Регион: ${reg}</div><div class="price">${price(p)} ${p[4]}</div><button class="btn" onclick="alert('${p[0]}')">Кароo</button></div>`).join('')}function renderTable(){let rs=Object.keys(R);document.getElementById('table').innerHTML='<b>Товар / регион боюнча баалар</b><div style="overflow:auto"><table style="width:100%;font-size:10px;margin-top:10px"><tr><th>Товар</th>'+rs.map(x=>'<th>'+x+'</th>').join('')+'</tr>'+P.slice(0,6).map(p=>'<tr><td>'+p[0]+'</td>'+rs.map(r=>'<td>'+Math.round(p[3]*R[r])+'</td>').join('')+'</tr>').join('')+'</table></div>'}function nextRegion(){let k=Object.keys(R),i=k.indexOf(reg);reg=k[(i+1)%k.length];document.getElementById('r').textContent=reg;renderHome();renderProducts();renderTable()}function chat(w){document.getElementById('list').style.display='none';document.getElementById('conv').style.display='block';document.getElementById('who').textContent=w;document.getElementById('msgs').innerHTML='<div class="msg them">Салам! Apex аркылуу байланышып жатам.</div><div class="msg me">Салам! Ооба, сүйлөшөлү.</div>'}function closeChat(){document.getElementById('list').style.display='block';document.getElementById('conv').style.display='none'}function send(){let i=document.getElementById('mi'),v=i.value.trim();if(!v)return;document.getElementById('msgs').insertAdjacentHTML('beforeend','<div class="msg me">'+v+'</div>');i.value=''}renderHome();renderProducts();renderTable();</script></body></html>
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Apex Agro Экосистема — Кыргызстан</title>
+<style>
+:root{
+  --primary:#176b38;--primary2:#23844a;--light:#eaf7ee;--bg:#f4f7f5;
+  --text:#17251d;--muted:#718078;--border:#dfe8e2;--white:#fff;
+  --danger:#d84b4b;--shadow:0 5px 18px rgba(23,107,56,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+body{background:var(--bg);color:var(--text);padding-bottom:88px}
+button,input{font:inherit}
+button{cursor:pointer}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:10px 14px}
+.header-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.logo-box{display:flex;align-items:center;gap:9px;cursor:pointer}
+.logo-text{font-size:20px;font-weight:850;color:var(--primary);line-height:1}
+.logo-sub{font-size:9px;font-weight:800;color:var(--muted);letter-spacing:.5px;margin-top:2px}
+.container{max-width:520px;margin:auto;padding:13px 14px 20px}
+
+/* HERO & STATS */
+.hero{
+  position:relative;overflow:hidden;background:linear-gradient(135deg,#0e5b31,#24874b 58%,#61b77a);
+  color:#fff;border-radius:22px;padding:18px 17px;margin-bottom:13px;box-shadow:0 10px 28px rgba(20,100,52,.22)
+}
+.hero h1{font-size:20px;margin:6px 0 7px;font-weight:950}
+.hero p{font-size:11px;opacity:.9}
+
+/* CATEGORIES */
+.grid-categories{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:15px}
+.cat-card{border:1.5px solid var(--border);background:#fff;border-radius:16px;padding:10px 4px;text-align:center;cursor:pointer;transition:.18s}
+.cat-card.active{border-color:var(--primary);background:var(--light)}
+.cat-icon{font-size:24px;margin-bottom:4px}
+.cat-label{font-size:10px;line-height:1.15;font-weight:800;color:var(--primary)}
+
+/* CHAT STYLES */
+.chat-shell{background:#fff;border:1px solid var(--border);border-radius:18px;padding:14px;box-shadow:var(--shadow)}
+.chat-messages{height:300px;overflow-y:auto;background:#f8fbf9;border:1px solid #e2ebe4;border-radius:12px;padding:10px;margin-bottom:10px}
+.msg{padding:8px 12px;border-radius:12px;margin-bottom:8px;font-size:11px;max-width:80%;word-break:break-word}
+.msg.me{background:#dff2e5;color:#183c26;margin-left:auto}
+.msg.them{background:#fff;border:1px solid var(--border)}
+.chat-input-box{display:flex;gap:7px}
+.chat-input-box input{flex:1;border:1px solid var(--border);border-radius:10px;padding:9px 12px;outline:none;font-size:12px}
+.chat-input-box button{background:var(--primary);color:#fff;border:0;padding:9px 15px;border-radius:10px;font-weight:800}
+
+/* PRODUCT CARD */
+.product-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:14px;margin-bottom:11px;box-shadow:var(--shadow)}
+.product-title{font-size:14px;font-weight:850}
+.product-price{font-size:15px;font-weight:900;color:var(--primary);margin-top:5px}
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="header-top">
+      <div class="logo-box">
+        <div>
+          <div class="logo-text">APEX AGRO</div>
+          <div class="logo-sub">ЭКОСИСТЕМА КЫРГЫЗСТАН</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="hero">
+      <h1>Айыл чарба маркетплейси</h1>
+      <p>Өнүмдөрдү түз сатыңыз, сатып алыңыз жана платформа ичинде баарлашыңыз</p>
+    </div>
+
+    <!-- КАТЕГОРИЯЛАР (Койлор кошулду) -->
+    <div class="grid-categories">
+      <div class="cat-card active">
+        <div class="cat-icon">🌱</div>
+        <div class="cat-label">Түшүм</div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-icon">🐂</div>
+        <div class="cat-label">Ири мүйүздүү</div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-icon">🐑</div>
+        <div class="cat-label">Кой & Майда жандыктар</div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-icon">🚜</div>
+        <div class="cat-label">Техника</div>
+      </div>
+    </div>
+
+    <!-- ӨНҮМДӨР -->
+    <div class="product-card">
+      <div class="product-title">Арашан тукумундагы койлор</div>
+      <div class="product-price">25,000 сом / баш</div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-title">Айыл чарба картошкасы (Дерби)</div>
+      <div class="product-price">22 сом / кг</div>
+    </div>
+
+    <!-- ОНЛАЙН ЧАТ -->
+    <div class="chat-shell">
+      <h3 style="font-size:14px; color:var(--primary); margin-bottom:10px;">Платформа ичиндеги чат</h3>
+      <div class="chat-messages" id="messages">
+        <div class="msg them"><b>Система:</b> Салам! Apex Agro онлайн чатына кош келиңиз.</div>
+      </div>
+      
+      <div class="chat-input-box">
+        <input type="text" id="username" placeholder="Атыңыз" style="width: 30%; flex: none;">
+        <input type="text" id="messageInput" placeholder="Билдирүү жазыңыз...">
+        <button onclick="sendMessage()">Жөнөтүү</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCKET.IO СҮЙЛӨШҮҮ СКРИПТИ -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const roomId = "general_chat";
+
+    socket.emit('join_room', roomId);
+
+    function sendMessage() {
+      const nameInput = document.getElementById('username');
+      const msgInput = document.getElementById('messageInput');
+      
+      const sender = nameInput.value.trim() || 'Колдонуучу';
+      const text = msgInput.value.trim();
+
+      if (text !== '') {
+        socket.emit('send_message', {
+          room: roomId,
+          sender: sender,
+          text: text
+        });
+        msgInput.value = '';
+      }
+    }
+
+    socket.on('receive_message', (data) => {
+      const messagesDiv = document.getElementById('messages');
+      const msgDiv = document.createElement('div');
+      
+      const myName = document.getElementById('username').value.trim() || 'Колдонуучу';
+      msgDiv.className = data.sender === myName ? 'msg me' : 'msg them';
+      
+      msgDiv.innerHTML = `<b>${data.sender}:</b> ${data.text}`;
+      messagesDiv.appendChild(msgDiv);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    });
+  </script>
+</body>
+</html>
