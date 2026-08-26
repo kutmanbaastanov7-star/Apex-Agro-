@@ -8,7 +8,7 @@
 :root{
   --primary:#176b38;--primary2:#23844a;--light:#eaf7ee;--bg:#f4f7f5;
   --text:#17251d;--muted:#718078;--border:#dfe8e2;--white:#fff;
-  --danger:#d84b4b;--shadow:0 5px 18px rgba(23,107,56,.08);
+  --shadow:0 5px 18px rgba(23,107,56,.08);
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
 body{background:var(--bg);color:var(--text);padding-bottom:88px}
@@ -71,7 +71,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.97);backdro
       <p>Өнүмдөрдү түз сатыңыз, сатып алыңыз жана платформа ичинде баарлашыңыз</p>
     </div>
 
-    <!-- КАТЕГОРИЯЛАР (Койлор кошулду) -->
+    <!-- КАТЕГОРИЯЛАР -->
     <div class="grid-categories">
       <div class="cat-card active">
         <div class="cat-icon">🌱</div>
@@ -106,7 +106,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.97);backdro
     <div class="chat-shell">
       <h3 style="font-size:14px; color:var(--primary); margin-bottom:10px;">Платформа ичиндеги чат</h3>
       <div class="chat-messages" id="messages">
-        <div class="msg them"><b>Система:</b> Салам! Apex Agro онлайн чатына кош келиңиз.</div>
+        <div class="msg them"><b>Система:</b> Салам! Apex Agro чатына кош келиңиз.</div>
       </div>
       
       <div class="chat-input-box">
@@ -117,13 +117,23 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.97);backdro
     </div>
   </div>
 
-  <!-- SOCKET.IO СҮЙЛӨШҮҮ СКРИПТИ -->
+  <!-- SOCKET.IO СКРИПТИ (Маалымат базасы менен иштөө) -->
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
     const roomId = "general_chat";
 
     socket.emit('join_room', roomId);
+
+    // Базадагы эски билдирүүлөрдү жүктөө
+    socket.on('load_history', (history) => {
+      const messagesDiv = document.getElementById('messages');
+      messagesDiv.innerHTML = '<div class="msg them"><b>Система:</b> Салам! Apex Agro чатына кош келиңиз.</div>';
+      
+      history.forEach(data => {
+        appendMessage(data);
+      });
+    });
 
     function sendMessage() {
       const nameInput = document.getElementById('username');
@@ -143,16 +153,19 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.97);backdro
     }
 
     socket.on('receive_message', (data) => {
+      appendMessage(data);
+    });
+
+    function appendMessage(data) {
       const messagesDiv = document.getElementById('messages');
       const msgDiv = document.createElement('div');
-      
       const myName = document.getElementById('username').value.trim() || 'Колдонуучу';
-      msgDiv.className = data.sender === myName ? 'msg me' : 'msg them';
       
+      msgDiv.className = data.sender === myName ? 'msg me' : 'msg them';
       msgDiv.innerHTML = `<b>${data.sender}:</b> ${data.text}`;
       messagesDiv.appendChild(msgDiv);
       messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    });
+    }
   </script>
 </body>
 </html>
