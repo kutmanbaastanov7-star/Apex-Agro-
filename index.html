@@ -2,170 +2,429 @@
 <html lang="ky">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Apex Agro Экосистема — Кыргызстан</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Apex Agro Market</title>
 <style>
-:root{
-  --primary:#176b38;--primary2:#23844a;--light:#eaf7ee;--bg:#f4f7f5;
-  --text:#17251d;--muted:#718078;--border:#dfe8e2;--white:#fff;
-  --shadow:0 5px 18px rgba(23,107,56,.08);
+:root {
+  --primary: #156d39;
+  --primary-dark: #0d4a25;
+  --accent: #229954;
+  --bg: #f4f7f4;
+  --card-bg: #ffffff;
+  --text: #1a251e;
+  --text-muted: #6c7a70;
+  --border: #e2eae4;
+  --shadow: 0 4px 16px rgba(21, 109, 57, 0.08);
 }
-*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-body{background:var(--bg);color:var(--text);padding-bottom:88px}
-button,input{font:inherit}
-button{cursor:pointer}
-header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:10px 14px}
-.header-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.logo-box{display:flex;align-items:center;gap:9px;cursor:pointer}
-.logo-text{font-size:20px;font-weight:850;color:var(--primary);line-height:1}
-.logo-sub{font-size:9px;font-weight:800;color:var(--muted);letter-spacing:.5px;margin-top:2px}
-.container{max-width:520px;margin:auto;padding:13px 14px 20px}
 
-/* HERO & STATS */
-.hero{
-  position:relative;overflow:hidden;background:linear-gradient(135deg,#0e5b31,#24874b 58%,#61b77a);
-  color:#fff;border-radius:22px;padding:18px 17px;margin-bottom:13px;box-shadow:0 10px 28px rgba(20,100,52,.22)
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; display: flex; justify-content: center; }
+
+.app-container {
+  width: 100%;
+  max-width: 430px;
+  background: var(--bg);
+  min-height: 100vh;
+  position: relative;
+  box-shadow: 0 0 30px rgba(0,0,0,0.1);
 }
-.hero h1{font-size:20px;margin:6px 0 7px;font-weight:950}
-.hero p{font-size:11px;opacity:.9}
 
-/* CATEGORIES */
-.grid-categories{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:15px}
-.cat-card{border:1.5px solid var(--border);background:#fff;border-radius:16px;padding:10px 4px;text-align:center;cursor:pointer;transition:.18s}
-.cat-card.active{border-color:var(--primary);background:var(--light)}
-.cat-icon{font-size:24px;margin-bottom:4px}
-.cat-label{font-size:10px;line-height:1.15;font-weight:800;color:var(--primary)}
+/* Header */
+.header {
+  position: sticky; top: 0; z-index: 10; background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px); padding: 12px 16px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo-group { display: flex; align-items: center; gap: 8px; }
+.logo-icon { width: 32px; height: 32px; }
+.logo-text { font-size: 22px; font-weight: 900; color: var(--primary); letter-spacing: -0.5px; }
+.header-actions { display: flex; align-items: center; gap: 10px; }
+.notif-btn { position: relative; background: none; border: none; font-size: 20px; cursor: pointer; }
+.notif-badge { position: absolute; top: -2px; right: -2px; background: #e74c3c; color: white; font-size: 9px; font-weight: bold; width: 14px; height: 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
-/* CHAT STYLES */
-.chat-shell{background:#fff;border:1px solid var(--border);border-radius:18px;padding:14px;box-shadow:var(--shadow)}
-.chat-messages{height:300px;overflow-y:auto;background:#f8fbf9;border:1px solid #e2ebe4;border-radius:12px;padding:10px;margin-bottom:10px}
-.msg{padding:8px 12px;border-radius:12px;margin-bottom:8px;font-size:11px;max-width:80%;word-break:break-word}
-.msg.me{background:#dff2e5;color:#183c26;margin-left:auto}
-.msg.them{background:#fff;border:1px solid var(--border)}
-.chat-input-box{display:flex;gap:7px}
-.chat-input-box input{flex:1;border:1px solid var(--border);border-radius:10px;padding:9px 12px;outline:none;font-size:12px}
-.chat-input-box button{background:var(--primary);color:#fff;border:0;padding:9px 15px;border-radius:10px;font-weight:800}
+/* Search Bar */
+.search-container { padding: 12px 16px; display: flex; gap: 10px; }
+.search-box {
+  flex: 1; background: #fff; border: 1px solid var(--border); border-radius: 12px;
+  padding: 8px 12px; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+}
+.search-box input { border: none; outline: none; width: 100%; font-size: 13px; color: var(--text); }
+.region-select {
+  background: #fff; border: 1px solid var(--border); border-radius: 12px;
+  padding: 8px 10px; font-size: 12px; font-weight: 600; color: var(--primary); outline: none;
+}
 
-/* PRODUCT CARD */
-.product-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:14px;margin-bottom:11px;box-shadow:var(--shadow)}
-.product-title{font-size:14px;font-weight:850}
-.product-price{font-size:15px;font-weight:900;color:var(--primary);margin-top:5px}
+/* Banner */
+.banner {
+  margin: 0 16px 16px; background: linear-gradient(135deg, #156d39, #27ae60);
+  border-radius: 16px; padding: 16px; color: white; display: flex; justify-content: space-between; align-items: center;
+  box-shadow: 0 8px 20px rgba(21, 109, 57, 0.2);
+}
+.banner-text h3 { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+.banner-text p { font-size: 11px; opacity: 0.9; margin-bottom: 12px; }
+.banner-btn {
+  background: white; color: var(--primary); border: none; padding: 8px 14px;
+  border-radius: 8px; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase;
+}
+.banner-emoji { font-size: 42px; }
+
+/* Section Header */
+.section-header { display: flex; justify-content: space-between; align-items: center; padding: 0 16px 10px; }
+.section-title { font-size: 15px; font-weight: 800; color: var(--text); }
+.see-all { font-size: 12px; font-weight: 600; color: var(--primary); text-decoration: none; }
+
+/* Categories */
+.categories-grid { display: flex; gap: 10px; overflow-x: auto; padding: 0 16px 16px; scrollbar-width: none; }
+.categories-grid::-webkit-scrollbar { display: none; }
+.category-card {
+  min-width: 72px; background: white; border: 1px solid var(--border); border-radius: 12px;
+  padding: 10px 6px; text-align: center; flex-shrink: 0; box-shadow: var(--shadow); cursor: pointer;
+}
+.category-icon { font-size: 22px; margin-bottom: 4px; }
+.category-name { font-size: 10px; font-weight: 700; color: var(--text); line-height: 1.2; }
+
+/* Product Cards */
+.products-scroll { display: flex; gap: 12px; overflow-x: auto; padding: 0 16px 20px; scrollbar-width: none; }
+.products-scroll::-webkit-scrollbar { display: none; }
+.product-card {
+  min-width: 130px; width: 130px; background: white; border: 1px solid var(--border);
+  border-radius: 14px; padding: 10px; box-shadow: var(--shadow); flex-shrink: 0;
+}
+.product-img { width: 100%; height: 80px; object-fit: cover; border-radius: 8px; background: #f0f0f0; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; font-size: 36px; }
+.product-title { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+.product-region { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; }
+.product-price { font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
+.btn-view { width: 100%; background: var(--primary); color: white; border: none; padding: 6px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; }
+
+/* Market Analytics Section */
+.analytics-card {
+  margin: 0 16px 20px; background: white; border: 1px solid var(--border);
+  border-radius: 16px; padding: 14px; box-shadow: var(--shadow);
+}
+.chart-box {
+  background: #f9fbf9; border-radius: 10px; padding: 10px; margin: 10px 0;
+  border: 1px dashed #c8dbc8; text-align: center;
+}
+.chart-bars { display: flex; align-items: flex-end; justify-content: space-around; height: 60px; padding-top: 10px; }
+.bar-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.bar { width: 14px; background: var(--accent); border-radius: 3px 3px 0 0; }
+.bar-label { font-size: 9px; color: var(--text-muted); }
+
+.price-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 11px; }
+.price-table th { text-align: left; color: var(--text-muted); font-weight: 600; padding: 6px 4px; border-bottom: 1px solid var(--border); }
+.price-table td { padding: 8px 4px; border-bottom: 1px solid #f0f0f0; }
+.price-table tr:last-child td { border-bottom: none; }
+.trend-up { color: #27ae60; font-weight: 700; font-size: 10px; }
+.trend-down { color: #e74c3c; font-weight: 700; font-size: 10px; }
+
+/* CHAT SECTION STYLING */
+.chat-section {
+  margin: 0 16px 20px; background: white; border: 1px solid var(--border);
+  border-radius: 16px; padding: 14px; box-shadow: var(--shadow);
+}
+.chat-messages {
+  height: 220px; overflow-y: auto; background: #f8fbf9; border: 1px solid var(--border);
+  border-radius: 12px; padding: 10px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px;
+}
+.msg { padding: 8px 12px; border-radius: 12px; font-size: 11px; max-width: 80%; word-break: break-word; }
+.msg.me { background: #dff2e5; color: #183c26; margin-left: auto; border-bottom-right-radius: 2px; }
+.msg.them { background: #ffffff; border: 1px solid var(--border); margin-right: auto; border-bottom-left-radius: 2px; }
+.chat-input-box { display: flex; gap: 6px; }
+.chat-input-box input[type="text"] {
+  border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; outline: none; font-size: 11px;
+}
+.chat-input-box button {
+  background: var(--primary); color: white; border: none; padding: 8px 14px;
+  border-radius: 10px; font-weight: 700; font-size: 11px; cursor: pointer;
+}
+
+/* Bottom Nav */
+.bottom-nav {
+  position: fixed; bottom: 0; width: 100%; max-width: 430px; background: white;
+  border-top: 1px solid var(--border); display: flex; justify-content: space-around;
+  padding: 8px 0; z-index: 20;
+}
+.nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--text-muted); font-size: 10px; font-weight: 600; gap: 3px; }
+.nav-item.active { color: var(--primary); }
+.nav-icon { font-size: 18px; }
+.add-btn-wrap { position: relative; top: -14px; }
+.add-btn {
+  width: 46px; height: 46px; background: var(--primary); color: white;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 24px; box-shadow: 0 4px 12px rgba(21, 109, 57, 0.4); border: 3px solid white; cursor: pointer;
+}
 </style>
 </head>
 <body>
 
-  <header>
-    <div class="header-top">
-      <div class="logo-box">
-        <div>
-          <div class="logo-text">APEX AGRO</div>
-          <div class="logo-sub">ЭКОСИСТЕМА КЫРГЫЗСТАН</div>
-        </div>
-      </div>
+<div class="app-container">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo-group">
+      <svg class="logo-icon" viewBox="0 0 200 200" fill="none">
+        <path d="M100 25 L165 145 L135 145 L100 80 L65 145 L35 145 Z" fill="#156d39"/>
+        <path d="M100 70 C85 105 60 125 45 135 C70 135 90 120 100 70 Z" fill="#8ed89d"/>
+      </svg>
+      <span class="logo-text">Apex Agro</span>
+    </div>
+    <div class="header-actions">
+      <button class="notif-btn">
+        🔔<span class="notif-badge">1</span>
+      </button>
     </div>
   </header>
 
-  <div class="container">
-    <div class="hero">
-      <h1>Айыл чарба маркетплейси</h1>
-      <p>Өнүмдөрдү түз сатыңыз, сатып алыңыз жана платформа ичинде баарлашыңыз</p>
+  <!-- Search & Region -->
+  <div class="search-container">
+    <div class="search-box">
+      <span>🔍</span>
+      <input type="text" placeholder="Продукт издөө...">
     </div>
+    <select class="region-select">
+      <option>Бишкек</option>
+      <option>Чүй</option>
+      <option>Ош</option>
+      <option>Жалал-Абад</option>
+      <option>Ысык-Көл</option>
+      <option>Нарын</option>
+      <option>Талас</option>
+      <option>Баткен</option>
+    </select>
+  </div>
 
-    <!-- КАТЕГОРИЯЛАР -->
-    <div class="grid-categories">
-      <div class="cat-card active">
-        <div class="cat-icon">🌱</div>
-        <div class="cat-label">Түшүм</div>
-      </div>
-      <div class="cat-card">
-        <div class="cat-icon">🐂</div>
-        <div class="cat-label">Ири мүйүздүү</div>
-      </div>
-      <div class="cat-card">
-        <div class="cat-icon">🐑</div>
-        <div class="cat-label">Кой & Майда жандыктар</div>
-      </div>
-      <div class="cat-card">
-        <div class="cat-icon">🚜</div>
-        <div class="cat-label">Техника</div>
-      </div>
+  <!-- Banner -->
+  <div class="banner">
+    <div class="banner-text">
+      <h3>Жаңы түшүмдөр<br>жогорку баада!</h3>
+      <p>Түз сатуу, ортомчусуз келишимдер</p>
+      <button class="banner-btn">Жарыя түзүү</button>
     </div>
+    <div class="banner-emoji">🧺</div>
+  </div>
 
-    <!-- ӨНҮМДӨР -->
-    <div class="product-card">
-      <div class="product-title">Арашан тукумундагы койлор</div>
-      <div class="product-price">25,000 сом / баш</div>
+  <!-- Categories -->
+  <div class="section-header">
+    <span class="section-title">Категориялар</span>
+    <a href="#" class="see-all">Бардыгын кароо</a>
+  </div>
+  <div class="categories-grid">
+    <div class="category-card">
+      <div class="category-icon">🥦</div>
+      <div class="category-name">Жашылча-жемиш</div>
     </div>
-
-    <div class="product-card">
-      <div class="product-title">Айыл чарба картошкасы (Дерби)</div>
-      <div class="product-price">22 сом / кг</div>
+    <div class="category-card">
+      <div class="category-icon">🍎</div>
+      <div class="category-name">Мөмө-жемиш</div>
     </div>
-
-    <!-- ОНЛАЙН ЧАТ -->
-    <div class="chat-shell">
-      <h3 style="font-size:14px; color:var(--primary); margin-bottom:10px;">Платформа ичиндеги чат</h3>
-      <div class="chat-messages" id="messages">
-        <div class="msg them"><b>Система:</b> Салам! Apex Agro чатына кош келиңиз.</div>
-      </div>
-      
-      <div class="chat-input-box">
-        <input type="text" id="username" placeholder="Атыңыз" style="width: 30%; flex: none;">
-        <input type="text" id="messageInput" placeholder="Билдирүү жазыңыз...">
-        <button onclick="sendMessage()">Жөнөтүү</button>
-      </div>
+    <div class="category-card">
+      <div class="category-icon">🐑</div>
+      <div class="category-name">Кой & Майда жандыктар</div>
+    </div>
+    <div class="category-card">
+      <div class="category-icon">🌾</div>
+      <div class="category-name">Дан өсүмдүктөрү</div>
+    </div>
+    <div class="category-card">
+      <div class="category-icon">🥛</div>
+      <div class="category-name">Сүт азыктары</div>
+    </div>
+    <div class="category-card">
+      <div class="category-icon">🥩</div>
+      <div class="category-name">Эт жана канаттуулар</div>
     </div>
   </div>
 
-  <!-- SOCKET.IO СКРИПТИ (Маалымат базасы менен иштөө) -->
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    const socket = io();
-    const roomId = "general_chat";
+  <!-- Popular Products -->
+  <div class="section-header">
+    <span class="section-title">Популярдуу товарлар</span>
+    <a href="#" class="see-all">Бардыгын кароо</a>
+  </div>
+  <div class="products-scroll">
+    <div class="product-card">
+      <div class="product-img">🥔</div>
+      <div class="product-title">Картошка</div>
+      <div class="product-region">Нарын облусу</div>
+      <div class="product-price">25 сом/кг</div>
+      <button class="btn-view">Кароо</button>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🍎</div>
+      <div class="product-title">Алма</div>
+      <div class="product-region">Чүй облусу</div>
+      <div class="product-price">35 сом/кг</div>
+      <button class="btn-view">Кароо</button>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🥛</div>
+      <div class="product-title">Сүт (уйдун)</div>
+      <div class="product-region">Талас облусу</div>
+      <div class="product-price">40 сом/л</div>
+      <button class="btn-view">Кароо</button>
+    </div>
+  </div>
 
-    socket.emit('join_room', roomId);
+  <!-- Market Analytics -->
+  <div class="section-header">
+    <span class="section-title">Реалдуу убакыттагы баалар & Аналитика</span>
+    <a href="#" class="see-all">Кеңири</a>
+  </div>
+  
+  <div class="analytics-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; color:var(--text-muted);">
+      <span>Картошка баасынын динамикасы (сом/кг)</span>
+      <span style="color:var(--primary); font-weight:bold;">+4.2% ↑</span>
+    </div>
+    
+    <!-- Visual Bar Chart -->
+    <div class="chart-box">
+      <div class="chart-bars">
+        <div class="bar-container"><div class="bar" style="height: 35px;"></div><span class="bar-label">Чүй</span></div>
+        <div class="bar-container"><div class="bar" style="height: 50px;"></div><span class="bar-label">Ош</span></div>
+        <div class="bar-container"><div class="bar" style="height: 40px;"></div><span class="bar-label">Талас</span></div>
+        <div class="bar-container"><div class="bar" style="height: 45px;"></div><span class="bar-label">Нарын</span></div>
+        <div class="bar-container"><div class="bar" style="height: 55px; background:var(--primary-dark);"></div><span class="bar-label">Ысык-Көл</span></div>
+      </div>
+    </div>
 
-    // Базадагы эски билдирүүлөрдү жүктөө
-    socket.on('load_history', (history) => {
-      const messagesDiv = document.getElementById('messages');
-      messagesDiv.innerHTML = '<div class="msg them"><b>Система:</b> Салам! Apex Agro чатына кош келиңиз.</div>';
-      
+    <!-- Corrected Table -->
+    <table class="price-table">
+      <thead>
+        <tr>
+          <th>Продукт (сом/кг)</th>
+          <th>Чүй</th>
+          <th>Ош</th>
+          <th>Талас</th>
+          <th>Нарын</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Картошка</b></td>
+          <td>25 <span class="trend-up">↑</span></td>
+          <td>28</td>
+          <td>26</td>
+          <td>27 <span class="trend-down">↓</span></td>
+        </tr>
+        <tr>
+          <td><b>Пияз</b></td>
+          <td>22</td>
+          <td>25 <span class="trend-up">↑</span></td>
+          <td>23</td>
+          <td>24</td>
+        </tr>
+        <tr>
+          <td><b>Сабиз</b></td>
+          <td>24</td>
+          <td>27</td>
+          <td>25 <span class="trend-down">↓</span></td>
+          <td>26</td>
+        </tr>
+        <tr>
+          <td><b>Алма</b></td>
+          <td>35 <span class="trend-up">↑</span></td>
+          <td>40</td>
+          <td>38</td>
+          <td>37</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Realtime Socket.io Chat Section -->
+  <div class="section-header" id="chat-section-anchor">
+    <span class="section-title">Онлайн Чат & Сатуучулар менен байланыш</span>
+  </div>
+
+  <div class="chat-section">
+    <div class="chat-messages" id="messages">
+      <div class="msg them"><b>Система:</b> Салам! Apex Agro чатына кош келиңиз.</div>
+    </div>
+    
+    <div class="chat-input-box">
+      <input type="text" id="username" placeholder="Атыңыз" style="width: 30%;">
+      <input type="text" id="messageInput" placeholder="Билдирүү жазыңыз..." style="flex: 1;">
+      <button onclick="sendMessage()">Жөнөтүү</button>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="#" class="nav-item active">
+      <span class="nav-icon">🏠</span>
+      <span>Башкы</span>
+    </a>
+    <a href="#" class="nav-item">
+      <span class="nav-icon">🔍</span>
+      <span>Издөө</span>
+    </a>
+    <div class="add-btn-wrap">
+      <div class="add-btn">+</div>
+    </div>
+    <a href="#chat-section-anchor" class="nav-item">
+      <span class="nav-icon">💬</span>
+      <span>Билдирүү</span>
+    </a>
+    <a href="#" class="nav-item">
+      <span class="nav-icon">👤</span>
+      <span>Профиль</span>
+    </a>
+  </nav>
+
+</div>
+
+<!-- Socket.io Script Connection -->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+  const roomId = "general_chat";
+
+  socket.emit('join_room', roomId);
+
+  // Тарыхты сервердин эс тутумунан кайра жүктөө
+  socket.on('load_history', (history) => {
+    const messagesDiv = document.getElementById('messages');
+    messagesDiv.innerHTML = '<div class="msg them"><b>Система:</b> Салам! Apex Agro чатына кош келиңиз.</div>';
+    
+    if (history && history.length > 0) {
       history.forEach(data => {
         appendMessage(data);
       });
-    });
-
-    function sendMessage() {
-      const nameInput = document.getElementById('username');
-      const msgInput = document.getElementById('messageInput');
-      
-      const sender = nameInput.value.trim() || 'Колдонуучу';
-      const text = msgInput.value.trim();
-
-      if (text !== '') {
-        socket.emit('send_message', {
-          room: roomId,
-          sender: sender,
-          text: text
-        });
-        msgInput.value = '';
-      }
     }
+  });
 
-    socket.on('receive_message', (data) => {
-      appendMessage(data);
-    });
+  function sendMessage() {
+    const nameInput = document.getElementById('username');
+    const msgInput = document.getElementById('messageInput');
+    
+    const sender = nameInput.value.trim() || 'Колдонуучу';
+    const text = msgInput.value.trim();
 
-    function appendMessage(data) {
-      const messagesDiv = document.getElementById('messages');
-      const msgDiv = document.createElement('div');
-      const myName = document.getElementById('username').value.trim() || 'Колдонуучу';
-      
-      msgDiv.className = data.sender === myName ? 'msg me' : 'msg them';
-      msgDiv.innerHTML = `<b>${data.sender}:</b> ${data.text}`;
-      messagesDiv.appendChild(msgDiv);
-      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    if (text !== '') {
+      socket.emit('send_message', {
+        room: roomId,
+        sender: sender,
+        text: text
+      });
+      msgInput.value = '';
     }
-  </script>
+  }
+
+  socket.on('receive_message', (data) => {
+    appendMessage(data);
+  });
+
+  function appendMessage(data) {
+    const messagesDiv = document.getElementById('messages');
+    const msgDiv = document.createElement('div');
+    const myName = document.getElementById('username').value.trim() || 'Колдонуучу';
+    
+    msgDiv.className = data.sender === myName ? 'msg me' : 'msg them';
+    msgDiv.innerHTML = `<b>${data.sender}:</b> ${data.text}`;
+    messagesDiv.appendChild(msgDiv);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+</script>
+
 </body>
 </html>
