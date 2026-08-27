@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="google-site-verification" content="hS5kDAN57hVoe7MN6krquyNkOZh2Sg0ZF7nhavEcZPQ" />
+<!-- Google Search Console Подтверждение -->
+<meta name="google-site-verification" content="bOMomZc8gUdaLHM9lh0RAnoqAo1rH9i-8cgnUa8JxKE" />
 <title>Apex — Бирдиктүү агро рынок</title>
 <style>
 :root {
@@ -48,7 +49,7 @@ body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; di
   backdrop-filter: blur(12px); padding: 12px 16px; border-bottom: 1px solid var(--border);
   display: flex; align-items: center; justify-content: space-between;
 }
-.logo-group { display: flex; align-items: center; gap: 10px; }
+.logo-group { display: flex; align-items: center; gap: 10px; cursor: pointer; }
 .logo-icon-box {
   width: 40px; height: 40px; background: linear-gradient(135deg, #2ECC71, #27AE60);
   border-radius: 12px; display: flex; align-items: center; justify-content: center;
@@ -98,6 +99,20 @@ body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; di
 .agro-hub-desc { font-size: 11px; opacity: 0.9; margin-bottom: 12px; line-height: 1.4; }
 .hub-btn { background: white; color: #117A65; border: none; padding: 8px 16px; border-radius: 10px; font-size: 11px; font-weight: 800; cursor: pointer; }
 
+/* Grid Categories */
+.category-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 16px 16px; }
+.category-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 14px; text-align: center; cursor: pointer; transition: transform 0.1s; }
+.category-card:active { transform: scale(0.97); }
+.category-icon { font-size: 28px; margin-bottom: 4px; }
+.category-title { font-size: 12px; font-weight: 800; color: #2C3E50; }
+
+/* Listings Container */
+.ad-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+.ad-info { display: flex; flex-direction: column; gap: 2px; }
+.ad-title { font-size: 13px; font-weight: 800; color: var(--text); }
+.ad-category { font-size: 10px; color: #27AE60; font-weight: 700; }
+.ad-price { font-size: 14px; font-weight: 900; color: var(--primary); }
+
 /* Chat Container */
 .chat-container { margin: 10px 16px 20px; background: white; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
 .chat-header { background: #F8F9FA; padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
@@ -139,7 +154,7 @@ body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; di
 
   <!-- Main Header -->
   <header class="header">
-    <div class="logo-group">
+    <div class="logo-group" onclick="switchTab('home')">
       <div class="logo-icon-box">A</div>
       <div class="logo-title-wrap">
         <span class="logo-title">Apex</span>
@@ -158,23 +173,47 @@ body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; di
       <button class="hub-btn" onclick="switchTab('chat')">Агро Хаб Чатына Кирүү</button>
     </div>
 
-    <div style="padding: 0 16px 10px; font-weight: 800; font-size: 14px; color: #2C3E50;">Агро Хаб Кызматтары</div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 16px 16px;">
-      <div style="background:white; border:1px solid var(--border); border-radius:14px; padding:12px; text-align:center; cursor:pointer;" onclick="alert('Агрономдор тобу кеңеши')">
-        <div style="font-size: 26px;">👨‍🌾</div>
-        <div style="font-size: 12px; font-weight: 800; margin-top: 4px;">Агроном Жардамы</div>
+    <div style="padding: 0 16px 10px; font-weight: 800; font-size: 14px; color: #2C3E50;">Категориялар жана Кызматтар</div>
+    <div class="category-grid">
+      <div class="category-card" onclick="filterCategory('Өсүмдүктөр')">
+        <div class="category-icon">🌾</div>
+        <div class="category-title">Өсүмдүктөр</div>
       </div>
-      <div style="background:white; border:1px solid var(--border); border-radius:14px; padding:12px; text-align:center; cursor:pointer;" onclick="alert('Техникалык жардам кызматы')">
-        <div style="font-size: 26px;">🚜</div>
-        <div style="font-size: 12px; font-weight: 800; margin-top: 4px;">Техникалык Жардам</div>
+      <div class="category-card" onclick="filterCategory('Мал чарбасы')">
+        <div class="category-icon">🐄</div>
+        <div class="category-title">Мал чарбасы</div>
       </div>
+      <div class="category-card" onclick="filterCategory('Дары-дармек')">
+        <div class="category-icon">🧪</div>
+        <div class="category-title">Дары-дармектер</div>
+      </div>
+      <div class="category-card" onclick="filterCategory('Техника')">
+        <div class="category-icon">🚜</div>
+        <div class="category-title">Техника</div>
+      </div>
+      <div class="category-card" onclick="alert('Агрономдар тобу даярдалууда')">
+        <div class="category-icon">👨‍🌾</div>
+        <div class="category-title">Агроном кеңеши</div>
+      </div>
+      <div class="category-card" onclick="switchTab('search')">
+        <div class="category-icon">📋</div>
+        <div class="category-title">Бардык жарыялар</div>
+      </div>
+    </div>
+
+    <div style="padding: 0 16px 10px; font-weight: 800; font-size: 14px; color: #2C3E50;">Акыркы жарыялар</div>
+    <div style="padding: 0 16px;" id="homeAdList">
+      <!-- Listings rendered dynamically via JavaScript -->
     </div>
   </div>
 
-  <!-- PAGE 2: SEARCH -->
+  <!-- PAGE 2: SEARCH & LISTINGS -->
   <div id="page-search" class="page-content">
     <div style="padding: 12px 16px;">
-      <input type="text" placeholder="Товар же кызмат издөө..." style="width:100%; padding:10px; border-radius:10px; border:1px solid var(--border);">
+      <input type="text" id="searchInput" placeholder="Товар же кызмат издөө..." oninput="renderAds()" style="width:100%; padding:10px; border-radius:10px; border:1px solid var(--border);">
+    </div>
+    <div style="padding: 0 16px;" id="allAdList">
+      <!-- All Ads Rendered Here -->
     </div>
   </div>
 
@@ -185,6 +224,15 @@ body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; di
       <div class="form-group">
         <label>Продукт аты</label>
         <input type="text" id="adTitle" placeholder="Мисалы: Нарын картошкасы">
+      </div>
+      <div class="form-group">
+        <label>Категориясы</label>
+        <select id="adCategory">
+          <option>Өсүмдүктөр</option>
+          <option>Мал чарбасы</option>
+          <option>Дары-дармек</option>
+          <option>Техника</option>
+        </select>
       </div>
       <div class="form-group">
         <label>Баасы (сом)</label>
@@ -225,7 +273,7 @@ body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; di
 
       <div class="profile-menu">
         <div class="profile-menu-item" onclick="openAuthModal('login')"><span>🔑 Кирүү / Катталуу</span><span>›</span></div>
-        <div class="profile-menu-item" onclick="alert('Менин жарыяларым')"><span>📦 Менин жарыяларым</span><span>›</span></div>
+        <div class="profile-menu-item" onclick="alert('Менин жарыяларым жакында кошулат')"><span>📦 Менин жарыяларым</span><span>›</span></div>
         <div class="profile-menu-item" style="color: #E74C3C;" onclick="logout()"><span>🚪 Чыгуу</span><span>›</span></div>
       </div>
     </div>
@@ -302,9 +350,15 @@ body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; di
   </div>
 </div>
 
-<script src="/socket.io/socket.io.js"></script>
 <script>
+  // Initial Data Storage
   let currentUser = JSON.parse(localStorage.getItem('apex_user')) || null;
+  let sampleAds = JSON.parse(localStorage.getItem('apex_ads')) || [
+    { title: 'Элиттик пикассо картошкасы', category: 'Өсүмдүктөр', price: '28 сом/кг' },
+    { title: 'Голштин породасындагы уй', category: 'Мал чарбасы', price: '120,000 сом' },
+    { title: 'НПК жер семирткичи (50кг)', category: 'Дары-дармек', price: '2,400 сом' },
+    { title: 'MTZ-82 Трактор ижарага', category: 'Техника', price: '1,500 сом/саат' }
+  ];
 
   function updateProfileUI() {
     if (currentUser) {
@@ -316,6 +370,43 @@ body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; di
       document.getElementById('profPhone').innerText = 'Телефон: -';
       document.getElementById('profRole').innerText = 'Конок';
     }
+  }
+
+  function renderAds(filterCat = '') {
+    const searchVal = document.getElementById('searchInput') ? document.getElementById('searchInput').value.toLowerCase() : '';
+    const homeList = document.getElementById('homeAdList');
+    const allList = document.getElementById('allAdList');
+
+    let filtered = sampleAds.filter(ad => {
+      const matchSearch = ad.title.toLowerCase().includes(searchVal);
+      const matchCat = filterCat ? ad.category === filterCat : true;
+      return matchSearch && matchCat;
+    });
+
+    let html = '';
+    if (filtered.length === 0) {
+      html = '<div style="text-align:center; padding:20px; color:#7F8C8D;">Жарыялар табылган жок</div>';
+    } else {
+      filtered.forEach(ad => {
+        html += `
+          <div class="ad-card">
+            <div class="ad-info">
+              <span class="ad-title">${ad.title}</span>
+              <span class="ad-category">${ad.category}</span>
+            </div>
+            <span class="ad-price">${ad.price}</span>
+          </div>
+        `;
+      });
+    }
+
+    if (homeList) homeList.innerHTML = html;
+    if (allList) allList.innerHTML = html;
+  }
+
+  function filterCategory(catName) {
+    switchTab('search');
+    renderAds(catName);
   }
 
   function openAuthModal(type) {
@@ -335,120 +426,4 @@ body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; di
       document.getElementById('tabRegister').classList.remove('active');
     } else {
       document.getElementById('loginForm').style.display = 'none';
-      document.getElementById('registerForm').style.display = 'block';
-      document.getElementById('tabLogin').classList.remove('active');
-      document.getElementById('tabRegister').classList.add('active');
-    }
-  }
-
-  function processRegister() {
-    const name = document.getElementById('regName').value.trim();
-    const phone = document.getElementById('regPhone').value.trim();
-    const pass = document.getElementById('regPass').value.trim();
-    const role = document.getElementById('regRole').value;
-
-    if (!name || !phone || !pass) {
-      alert('Сураныч, бардык талааларды толтуруңуз!');
-      return;
-    }
-
-    currentUser = { name: name, phone: phone, role: role };
-    localStorage.setItem('apex_user', JSON.stringify(currentUser));
-    updateProfileUI();
-    closeAuthModal();
-    alert('Ийгиликтүү катталдыңыз! Кош келиңиз, ' + name);
-  }
-
-  function processLogin() {
-    const phone = document.getElementById('loginPhone').value.trim();
-    const pass = document.getElementById('loginPass').value.trim();
-
-    if (!phone || !pass) {
-      alert('Номер менен паролду жазыңыз!');
-      return;
-    }
-
-    currentUser = { name: 'Колдонуучу', phone: phone, role: 'Сатуучу' };
-    localStorage.setItem('apex_user', JSON.stringify(currentUser));
-    updateProfileUI();
-    closeAuthModal();
-    alert('Ийгиликтүү кирдиңиз!');
-  }
-
-  function logout() {
-    localStorage.removeItem('apex_user');
-    currentUser = null;
-    updateProfileUI();
-    alert('Системадан чыктыңыз.');
-  }
-
-  function switchTab(tabName) {
-    document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-
-    document.getElementById('page-' + tabName).classList.add('active');
-    if (document.getElementById('nav-' + tabName)) {
-      document.getElementById('nav-' + tabName).classList.add('active');
-    }
-    window.scrollTo(0,0);
-  }
-
-  function publishAd() {
-    if (!currentUser) {
-      alert('Жарыя түзүү үчүн адегенде катталышыңыз же киришиңиз керек!');
-      openAuthModal('login');
-      return;
-    }
-    alert('Жарыяңыз ийгиликтүү жайгаштырылды!');
-    switchTab('home');
-  }
-
-  // Socket.io Realtime Chat Engine
-  const socket = io();
-  const roomId = "general_chat";
-
-  socket.emit('join_room', roomId);
-
-  socket.on('load_history', (history) => {
-    const messagesDiv = document.getElementById('messages');
-    messagesDiv.innerHTML = `
-      <div class="msg-wrapper them">
-        <div class="msg-sender">Система / Агро Хаб</div>
-        <div class="msg-bubble">Салам! Apex Агро Хаб чатына кош келиңиз!</div>
-        <div class="msg-info">Азыр</div>
-      </div>`;
-    if (history && history.length > 0) {
-      history.forEach(data => { appendMessage(data); });
-    }
-  });
-
-  function sendMessage() {
-    if (!currentUser) {
-      alert('Чатта жазуу үчүн кириңиз же катталыңыз!');
-      openAuthModal('login');
-      return;
-    }
-
-    const msgInput = document.getElementById('messageInput');
-    const text = msgInput.value.trim();
-
-    if (text !== '') {
-      socket.emit('send_message', { room: roomId, sender: currentUser.name, text: text });
-      msgInput.value = '';
-    }
-  }
-
-  socket.on('receive_message', (data) => {
-    appendMessage(data);
-  });
-
-  function appendMessage(data) {
-    const messagesDiv = document.getElementById('messages');
-    const myName = currentUser ? currentUser.name : '';
-    const isMe = (myName && data.sender.toLowerCase() === myName.toLowerCase());
-
-    const wrapper = document.createElement('div');
-    wrapper.className = isMe ? 'msg-wrapper me' : 'msg-wrapper them';
-
-    const now = new Date();
-    const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padS
+      document.getElementById('registerF
