@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://apex-agro.onrender.com/sitemap.xml
