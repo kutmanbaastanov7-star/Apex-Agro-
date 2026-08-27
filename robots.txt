@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://apex-agro.github.io/sitemap.xml
+Sitemap: https://apex-agro.github.io/Apex/sitemap.xml
