@@ -4,18 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="google-site-verification" content="hS5kDAN57hVoe7MN6krquyNkOZh2Sg0ZF7nhavEcZPQ" />
-<title>Apex Agro Market</title>
+<title>Apex — Бирдиктүү агро рынок</title>
 <style>
 :root {
-  --primary: #156d39;
-  --primary-dark: #0d4a25;
-  --accent: #229954;
-  --bg: #f4f7f4;
-  --card-bg: #ffffff;
-  --text: #1a251e;
-  --text-muted: #6c7a70;
-  --border: #e2eae4;
-  --shadow: 0 4px 16px rgba(21, 109, 57, 0.08);
+  --primary: #0066FF;
+  --primary-dark: #0046B8;
+  --friend-msg: #2ECC71;
+  --bg: #F4F7F6;
+  --card-bg: #FFFFFF;
+  --text: #1C2833;
+  --text-muted: #7F8C8D;
+  --border: #E5E8E8;
+  --shadow: 0 8px 24px rgba(0,0,0,0.06);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
@@ -30,383 +30,410 @@ body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; di
   box-shadow: 0 0 30px rgba(0,0,0,0.1);
 }
 
-/* Header */
+/* Founders Banner */
+.founders-banner {
+  background: linear-gradient(135deg, #1A252C, #2C3E50);
+  color: #ECF0F1;
+  text-align: center;
+  padding: 6px 12px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.founders-banner span { font-weight: 800; color: #2ECC71; }
+
+/* Header Banner */
 .header {
-  position: sticky; top: 0; z-index: 10; background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px); padding: 12px 16px; border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 10; background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px); padding: 12px 16px; border-bottom: 1px solid var(--border);
   display: flex; align-items: center; justify-content: space-between;
 }
-.logo-group { display: flex; align-items: center; gap: 8px; }
-.logo-icon { width: 32px; height: 32px; }
-.logo-text { font-size: 22px; font-weight: 900; color: var(--primary); letter-spacing: -0.5px; }
-.header-actions { display: flex; align-items: center; gap: 10px; }
-.notif-btn { position: relative; background: none; border: none; font-size: 20px; cursor: pointer; }
-.notif-badge { position: absolute; top: -2px; right: -2px; background: #e74c3c; color: white; font-size: 9px; font-weight: bold; width: 14px; height: 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.logo-group { display: flex; align-items: center; gap: 10px; }
+.logo-icon-box {
+  width: 40px; height: 40px; background: linear-gradient(135deg, #2ECC71, #27AE60);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 900; font-size: 20px; box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+}
+.logo-title-wrap { display: flex; flex-direction: column; }
+.logo-title { font-size: 20px; font-weight: 900; color: #1C2833; letter-spacing: -0.5px; line-height: 1.1; }
+.logo-subtitle { font-size: 10px; font-weight: 700; color: #27AE60; text-transform: uppercase; letter-spacing: 0.8px; }
 
-/* Search Bar */
-.search-container { padding: 12px 16px; display: flex; gap: 10px; }
-.search-box {
-  flex: 1; background: #fff; border: 1px solid var(--border); border-radius: 12px;
-  padding: 8px 12px; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+/* Pages */
+.page-content { display: none; padding-top: 10px; }
+.page-content.active { display: block; }
+
+/* Modal (Auth Modal) */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+  display: none; justify-content: center; align-items: center; z-index: 100;
 }
-.search-box input { border: none; outline: none; width: 100%; font-size: 13px; color: var(--text); }
-.region-select {
-  background: #fff; border: 1px solid var(--border); border-radius: 12px;
-  padding: 8px 10px; font-size: 12px; font-weight: 600; color: var(--primary); outline: none;
+.modal-overlay.active { display: flex; }
+.auth-box {
+  background: white; width: 90%; max-width: 380px; border-radius: 20px; padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative;
+}
+.auth-tabs { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 16px; }
+.auth-tab { flex: 1; padding: 10px; text-align: center; font-weight: 800; font-size: 13px; color: var(--text-muted); cursor: pointer; }
+.auth-tab.active { color: #27AE60; border-bottom: 2px solid #27AE60; margin-bottom: -2px; }
+
+/* Form Elements */
+.form-group { margin-bottom: 12px; text-align: left; }
+.form-group label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 4px; color: var(--text-muted); }
+.form-group input, .form-group select {
+  width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 10px; font-size: 12px; outline: none; background: #F8F9FA;
+}
+.btn-primary {
+  width: 100%; background: linear-gradient(135deg, #2ECC71, #27AE60); color: white;
+  border: none; padding: 12px; border-radius: 10px; font-weight: 800; font-size: 13px; cursor: pointer; margin-top: 6px;
 }
 
-/* Banner */
-.banner {
-  margin: 0 16px 16px; background: linear-gradient(135deg, #156d39, #27ae60);
-  border-radius: 16px; padding: 16px; color: white; display: flex; justify-content: space-between; align-items: center;
-  box-shadow: 0 8px 20px rgba(21, 109, 57, 0.2);
+/* Agro Hub Banner */
+.agro-hub-banner {
+  margin: 10px 16px 16px; background: linear-gradient(135deg, #27AE60, #117A65);
+  border-radius: 18px; padding: 18px; color: white; box-shadow: 0 8px 20px rgba(39, 174, 96, 0.25);
 }
-.banner-text h3 { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
-.banner-text p { font-size: 11px; opacity: 0.9; margin-bottom: 12px; }
-.banner-btn {
-  background: white; color: var(--primary); border: none; padding: 8px 14px;
-  border-radius: 8px; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase;
-}
-.banner-emoji { font-size: 42px; }
+.agro-hub-badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 20px; font-size: 9px; font-weight: 800; margin-bottom: 8px; }
+.agro-hub-title { font-size: 18px; font-weight: 900; margin-bottom: 4px; }
+.agro-hub-desc { font-size: 11px; opacity: 0.9; margin-bottom: 12px; line-height: 1.4; }
+.hub-btn { background: white; color: #117A65; border: none; padding: 8px 16px; border-radius: 10px; font-size: 11px; font-weight: 800; cursor: pointer; }
 
-/* Section Header */
-.section-header { display: flex; justify-content: space-between; align-items: center; padding: 0 16px 10px; }
-.section-title { font-size: 15px; font-weight: 800; color: var(--text); }
-.see-all { font-size: 12px; font-weight: 600; color: var(--primary); text-decoration: none; }
+/* Chat Container */
+.chat-container { margin: 10px 16px 20px; background: white; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
+.chat-header { background: #F8F9FA; padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.chat-messages { height: 360px; overflow-y: auto; background: #F4F6F7; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
 
-/* Categories */
-.categories-grid { display: flex; gap: 10px; overflow-x: auto; padding: 0 16px 16px; scrollbar-width: none; }
-.categories-grid::-webkit-scrollbar { display: none; }
-.category-card {
-  min-width: 72px; background: white; border: 1px solid var(--border); border-radius: 12px;
-  padding: 10px 6px; text-align: center; flex-shrink: 0; box-shadow: var(--shadow); cursor: pointer;
-}
-.category-icon { font-size: 22px; margin-bottom: 4px; }
-.category-name { font-size: 10px; font-weight: 700; color: var(--text); line-height: 1.2; }
+.msg-wrapper.me { display: flex; flex-direction: column; align-items: flex-end; width: 100%; }
+.msg-wrapper.me .msg-bubble { background: var(--primary); color: white; border-radius: 16px 16px 2px 16px; padding: 10px 14px; font-size: 12px; max-width: 78%; }
+.msg-wrapper.them { display: flex; flex-direction: column; align-items: flex-start; width: 100%; }
+.msg-wrapper.them .msg-bubble { background: white; color: #1C2833; border: 1.5px solid var(--friend-msg); border-radius: 16px 16px 16px 2px; padding: 10px 14px; font-size: 12px; max-width: 78%; }
+.msg-wrapper.them .msg-sender { font-size: 10px; font-weight: 800; color: #27AE60; margin-bottom: 2px; }
+.msg-info { font-size: 9px; color: #95A5A6; margin-top: 3px; }
 
-/* Product Cards */
-.products-scroll { display: flex; gap: 12px; overflow-x: auto; padding: 0 16px 20px; scrollbar-width: none; }
-.products-scroll::-webkit-scrollbar { display: none; }
-.product-card {
-  min-width: 130px; width: 130px; background: white; border: 1px solid var(--border);
-  border-radius: 14px; padding: 10px; box-shadow: var(--shadow); flex-shrink: 0;
-}
-.product-img { width: 100%; height: 80px; object-fit: cover; border-radius: 8px; background: #f0f0f0; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; font-size: 36px; }
-.product-title { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
-.product-region { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; }
-.product-price { font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
-.btn-view { width: 100%; background: var(--primary); color: white; border: none; padding: 6px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; }
+.chat-input-area { padding: 12px; background: white; border-top: 1px solid var(--border); display: flex; gap: 8px; }
+.chat-input-area input { flex: 1; border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; outline: none; font-size: 12px; background: #F8F9FA; }
+.send-btn { background: var(--primary); color: white; border: none; padding: 10px 16px; border-radius: 12px; font-weight: 800; font-size: 12px; cursor: pointer; }
 
-/* Market Analytics Section */
-.analytics-card {
-  margin: 0 16px 20px; background: white; border: 1px solid var(--border);
-  border-radius: 16px; padding: 14px; box-shadow: var(--shadow);
-}
-.chart-box {
-  background: #f9fbf9; border-radius: 10px; padding: 10px; margin: 10px 0;
-  border: 1px dashed #c8dbc8; text-align: center;
-}
-.chart-bars { display: flex; align-items: flex-end; justify-content: space-around; height: 60px; padding-top: 10px; }
-.bar-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.bar { width: 14px; background: var(--accent); border-radius: 3px 3px 0 0; }
-.bar-label { font-size: 9px; color: var(--text-muted); }
-
-.price-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 11px; }
-.price-table th { text-align: left; color: var(--text-muted); font-weight: 600; padding: 6px 4px; border-bottom: 1px solid var(--border); }
-.price-table td { padding: 8px 4px; border-bottom: 1px solid #f0f0f0; }
-.price-table tr:last-child td { border-bottom: none; }
-.trend-up { color: #27ae60; font-weight: 700; font-size: 10px; }
-.trend-down { color: #e74c3c; font-weight: 700; font-size: 10px; }
-
-/* CHAT SECTION STYLING */
-.chat-section {
-  margin: 0 16px 20px; background: white; border: 1px solid var(--border);
-  border-radius: 16px; padding: 14px; box-shadow: var(--shadow);
-}
-.chat-messages {
-  height: 220px; overflow-y: auto; background: #f8fbf9; border: 1px solid var(--border);
-  border-radius: 12px; padding: 10px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px;
-}
-.msg { padding: 8px 12px; border-radius: 12px; font-size: 11px; max-width: 80%; word-break: break-word; }
-.msg.me { background: #dff2e5; color: #183c26; margin-left: auto; border-bottom-right-radius: 2px; }
-.msg.them { background: #ffffff; border: 1px solid var(--border); margin-right: auto; border-bottom-left-radius: 2px; }
-.chat-input-box { display: flex; gap: 6px; }
-.chat-input-box input[type="text"] {
-  border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; outline: none; font-size: 11px;
-}
-.chat-input-box button {
-  background: var(--primary); color: white; border: none; padding: 8px 14px;
-  border-radius: 10px; font-weight: 700; font-size: 11px; cursor: pointer;
-}
+/* Profile Card */
+.profile-card { margin: 0 16px 20px; background: white; border: 1px solid var(--border); border-radius: 18px; padding: 20px; text-align: center; }
+.profile-avatar { width: 70px; height: 70px; background: #E8F8F5; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto 10px; border: 2px solid #2ECC71; }
+.profile-menu { border-top: 1px solid var(--border); margin-top: 14px; padding-top: 10px; text-align: left; }
+.profile-menu-item { padding: 10px 0; border-bottom: 1px solid #F0F0F0; font-size: 13px; font-weight: 600; display: flex; justify-content: space-between; cursor: pointer; }
 
 /* Bottom Nav */
-.bottom-nav {
-  position: fixed; bottom: 0; width: 100%; max-width: 430px; background: white;
-  border-top: 1px solid var(--border); display: flex; justify-around;
-  padding: 8px 0; z-index: 20;
-}
-.nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--text-muted); font-size: 10px; font-weight: 600; gap: 3px; }
+.bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 430px; background: white; border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 8px 0; z-index: 20; }
+.nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 10px; font-weight: 700; gap: 3px; cursor: pointer; text-decoration: none; }
 .nav-item.active { color: var(--primary); }
-.nav-icon { font-size: 18px; }
 .add-btn-wrap { position: relative; top: -14px; }
-.add-btn {
-  width: 46px; height: 46px; background: var(--primary); color: white;
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  font-size: 24px; box-shadow: 0 4px 12px rgba(21, 109, 57, 0.4); border: 3px solid white; cursor: pointer;
-}
+.add-btn { width: 48px; height: 48px; background: linear-gradient(135deg, #2ECC71, #27AE60); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; border: 3px solid white; cursor: pointer; }
 </style>
 </head>
 <body>
 
 <div class="app-container">
 
-  <!-- Header -->
+  <!-- Founders Header -->
+  <div class="founders-banner">
+    Негиздөөчүлөр: <span>Кутман Баястанов</span> &bull; <span>Амантур Арстанбеков</span>
+  </div>
+
+  <!-- Main Header -->
   <header class="header">
     <div class="logo-group">
-      <svg class="logo-icon" viewBox="0 0 200 200" fill="none">
-        <path d="M100 25 L165 145 L135 145 L100 80 L65 145 L35 145 Z" fill="#156d39"/>
-        <path d="M100 70 C85 105 60 125 45 135 C70 135 90 120 100 70 Z" fill="#8ed89d"/>
-      </svg>
-      <span class="logo-text">Apex Agro</span>
-    </div>
-    <div class="header-actions">
-      <button class="notif-btn">
-        🔔<span class="notif-badge">1</span>
-      </button>
-    </div>
-  </header>
-
-  <!-- Search & Region -->
-  <div class="search-container">
-    <div class="search-box">
-      <span>🔍</span>
-      <input type="text" placeholder="Продукт издөө...">
-    </div>
-    <select class="region-select">
-      <option>Бишкек</option>
-      <option>Чүй</option>
-      <option>Ош</option>
-      <option>Жалал-Абад</option>
-      <option>Ысык-Көл</option>
-      <option>Нарын</option>
-      <option>Талас</option>
-      <option>Баткен</option>
-    </select>
-  </div>
-
-  <!-- Banner -->
-  <div class="banner">
-    <div class="banner-text">
-      <h3>Жаңы түшүмдөр<br>жогорку баада!</h3>
-      <p>Түз сатуу, ортомчусуз келишимдер</p>
-      <button class="banner-btn">Жарыя түзүү</button>
-    </div>
-    <div class="banner-emoji">🧺</div>
-  </div>
-
-  <!-- Categories -->
-  <div class="section-header">
-    <span class="section-title">Категориялар</span>
-    <a href="#" class="see-all">Бардыгын кароо</a>
-  </div>
-  <div class="categories-grid">
-    <div class="category-card">
-      <div class="category-icon">🥦</div>
-      <div class="category-name">Жашылча-жемиш</div>
-    </div>
-    <div class="category-card">
-      <div class="category-icon">🍎</div>
-      <div class="category-name">Мөмө-жемиш</div>
-    </div>
-    <div class="category-card">
-      <div class="category-icon">🐑</div>
-      <div class="category-name">Кой & Майда жандыктар</div>
-    </div>
-    <div class="category-card">
-      <div class="category-icon">🌾</div>
-      <div class="category-name">Дан өсүмдүктөрү</div>
-    </div>
-    <div class="category-card">
-      <div class="category-icon">🥛</div>
-      <div class="category-name">Сүт азыктары</div>
-    </div>
-    <div class="category-card">
-      <div class="category-icon">🥩</div>
-      <div class="category-name">Эт жана канаттуулар</div>
-    </div>
-  </div>
-
-  <!-- Popular Products -->
-  <div class="section-header">
-    <span class="section-title">Популярдуу товарлар</span>
-    <a href="#" class="see-all">Бардыгын кароо</a>
-  </div>
-  <div class="products-scroll">
-    <div class="product-card">
-      <div class="product-img">🥔</div>
-      <div class="product-title">Картошка</div>
-      <div class="product-region">Нарын облусу</div>
-      <div class="product-price">25 сом/кг</div>
-      <button class="btn-view">Кароо</button>
-    </div>
-    <div class="product-card">
-      <div class="product-img">🍎</div>
-      <div class="product-title">Алма</div>
-      <div class="product-region">Чүй облусу</div>
-      <div class="product-price">35 сом/кг</div>
-      <button class="btn-view">Кароо</button>
-    </div>
-    <div class="product-card">
-      <div class="product-img">🥛</div>
-      <div class="product-title">Сүт (уйдун)</div>
-      <div class="product-region">Талас облусу</div>
-      <div class="product-price">40 сом/л</div>
-      <button class="btn-view">Кароо</button>
-    </div>
-  </div>
-
-  <!-- Market Analytics -->
-  <div class="section-header">
-    <span class="section-title">Реалдуу убакыттагы баалар & Аналитика</span>
-    <a href="#" class="see-all">Кеңири</a>
-  </div>
-  
-  <div class="analytics-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; color:var(--text-muted);">
-      <span>Картошка баасынын динамикасы (сом/кг)</span>
-      <span style="color:var(--primary); font-weight:bold;">+4.2% ↑</span>
-    </div>
-    
-    <!-- Visual Bar Chart -->
-    <div class="chart-box">
-      <div class="chart-bars">
-        <div class="bar-container"><div class="bar" style="height: 35px;"></div><span class="bar-label">Чүй</span></div>
-        <div class="bar-container"><div class="bar" style="height: 50px;"></div><span class="bar-label">Ош</span></div>
-        <div class="bar-container"><div class="bar" style="height: 40px;"></div><span class="bar-label">Талас</span></div>
-        <div class="bar-container"><div class="bar" style="height: 45px;"></div><span class="bar-label">Нарын</span></div>
-        <div class="bar-container"><div class="bar" style="height: 55px; background:var(--primary-dark);"></div><span class="bar-label">Ысык-Көл</span></div>
+      <div class="logo-icon-box">A</div>
+      <div class="logo-title-wrap">
+        <span class="logo-title">Apex</span>
+        <span class="logo-subtitle">Бирдиктүү агро рынок</span>
       </div>
     </div>
+    <button style="background:none; border:none; font-size:20px; cursor:pointer;" onclick="openAuthModal('login')">👤</button>
+  </header>
 
-    <!-- Corrected Table -->
-    <table class="price-table">
-      <thead>
-        <tr>
-          <th>Продукт (сом/кг)</th>
-          <th>Чүй</th>
-          <th>Ош</th>
-          <th>Талас</th>
-          <th>Нарын</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><b>Картошка</b></td>
-          <td>25 <span class="trend-up">↑</span></td>
-          <td>28</td>
-          <td>26</td>
-          <td>27 <span class="trend-down">↓</span></td>
-        </tr>
-        <tr>
-          <td><b>Пияз</b></td>
-          <td>22</td>
-          <td>25 <span class="trend-up">↑</span></td>
-          <td>23</td>
-          <td>24</td>
-        </tr>
-        <tr>
-          <td><b>Сабиз</b></td>
-          <td>24</td>
-          <td>27</td>
-          <td>25 <span class="trend-down">↓</span></td>
-          <td>26</td>
-        </tr>
-        <tr>
-          <td><b>Алма</b></td>
-          <td>35 <span class="trend-up">↑</span></td>
-          <td>40</td>
-          <td>38</td>
-          <td>37</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Realtime Socket.io Chat Section -->
-  <div class="section-header" id="chat-section-anchor">
-    <span class="section-title">Онлайн Чат & Сатуучулар менен байланыш</span>
-  </div>
-
-  <div class="chat-section">
-    <div class="chat-messages" id="messages">
-      <div class="msg them"><b>Система:</b> Салам! Apex Agro чатына кош келиңиз.</div>
+  <!-- PAGE 1: HOME -->
+  <div id="page-home" class="page-content active">
+    <div class="agro-hub-banner">
+      <span class="agro-hub-badge">🌱 Интерактивдүү Борбор</span>
+      <div class="agro-hub-title">АГРО ХАБ</div>
+      <div class="agro-hub-desc">Фермерлер, агрономдар жана сатып алуучулар үчүн бирдиктүү тажрыйба алмашуу жана анализ аянтчасы.</div>
+      <button class="hub-btn" onclick="switchTab('chat')">Агро Хаб Чатына Кирүү</button>
     </div>
-    
-    <div class="chat-input-box">
-      <input type="text" id="username" placeholder="Атыңыз" style="width: 30%;">
-      <input type="text" id="messageInput" placeholder="Билдирүү жазыңыз..." style="flex: 1;">
-      <button onclick="sendMessage()">Жөнөтүү</button>
+
+    <div style="padding: 0 16px 10px; font-weight: 800; font-size: 14px; color: #2C3E50;">Агро Хаб Кызматтары</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 16px 16px;">
+      <div style="background:white; border:1px solid var(--border); border-radius:14px; padding:12px; text-align:center; cursor:pointer;" onclick="alert('Агрономдор тобу кеңеши')">
+        <div style="font-size: 26px;">👨‍🌾</div>
+        <div style="font-size: 12px; font-weight: 800; margin-top: 4px;">Агроном Жардамы</div>
+      </div>
+      <div style="background:white; border:1px solid var(--border); border-radius:14px; padding:12px; text-align:center; cursor:pointer;" onclick="alert('Техникалык жардам кызматы')">
+        <div style="font-size: 26px;">🚜</div>
+        <div style="font-size: 12px; font-weight: 800; margin-top: 4px;">Техникалык Жардам</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 2: SEARCH -->
+  <div id="page-search" class="page-content">
+    <div style="padding: 12px 16px;">
+      <input type="text" placeholder="Товар же кызмат издөө..." style="width:100%; padding:10px; border-radius:10px; border:1px solid var(--border);">
+    </div>
+  </div>
+
+  <!-- PAGE 3: CREATE AD -->
+  <div id="page-create" class="page-content">
+    <div style="padding: 0 16px 10px; font-weight: 800; font-size: 15px;">Жаңы жарыя түзүү</div>
+    <div style="margin:0 16px; background:white; padding:16px; border-radius:16px; border:1px solid var(--border);">
+      <div class="form-group">
+        <label>Продукт аты</label>
+        <input type="text" id="adTitle" placeholder="Мисалы: Нарын картошкасы">
+      </div>
+      <div class="form-group">
+        <label>Баасы (сом)</label>
+        <input type="number" id="adPrice" placeholder="25">
+      </div>
+      <button class="btn-primary" onclick="publishAd()">Жарыялоо</button>
+    </div>
+  </div>
+
+  <!-- PAGE 4: CHAT & AGRO HUB -->
+  <div id="page-chat" class="page-content">
+    <div class="chat-container">
+      <div class="chat-header">
+        <span style="font-size: 13px; font-weight: 800;">Агро Хаб & Сүйлөшүү чаты</span>
+        <span style="font-size: 10px; background: #E8F8F5; color: #27AE60; padding: 2px 6px; border-radius: 6px; font-weight: 700;">Онлайн</span>
+      </div>
+      <div class="chat-messages" id="messages">
+        <div class="msg-wrapper them">
+          <div class="msg-sender">Система / Агро Хаб</div>
+          <div class="msg-bubble">Салам! Apex Агро Хаб чатына кош келиңиз!</div>
+          <div class="msg-info">Азыр</div>
+        </div>
+      </div>
+      <div class="chat-input-area">
+        <input type="text" id="messageInput" placeholder="Билдирүү жазыңыз..." onkeydown="if(event.key === 'Enter') sendMessage()">
+        <button class="send-btn" onclick="sendMessage()">Жөнөтүү</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 5: PROFILE -->
+  <div id="page-profile" class="page-content">
+    <div class="profile-card">
+      <div class="profile-avatar">👨‍🌾</div>
+      <div id="profName" style="font-size:16px; font-weight:800;">Конок (Катталган эмес)</div>
+      <div id="profPhone" style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">Телефон: -</div>
+      <div id="profRole" style="display:inline-block; background:#E8F8F5; color:#27AE60; padding:4px 10px; border-radius:20px; font-size:10px; font-weight:bold; margin-bottom:12px;">Конок</div>
+
+      <div class="profile-menu">
+        <div class="profile-menu-item" onclick="openAuthModal('login')"><span>🔑 Кирүү / Катталуу</span><span>›</span></div>
+        <div class="profile-menu-item" onclick="alert('Менин жарыяларым')"><span>📦 Менин жарыяларым</span><span>›</span></div>
+        <div class="profile-menu-item" style="color: #E74C3C;" onclick="logout()"><span>🚪 Чыгуу</span><span>›</span></div>
+      </div>
     </div>
   </div>
 
   <!-- Bottom Navigation -->
   <nav class="bottom-nav">
-    <a href="#" class="nav-item active">
-      <span class="nav-icon">🏠</span>
-      <span>Башкы</span>
+    <a class="nav-item active" id="nav-home" onclick="switchTab('home')">
+      <span style="font-size:18px;">🏠</span><span>Башкы</span>
     </a>
-    <a href="#" class="nav-item">
-      <span class="nav-icon">🔍</span>
-      <span>Издөө</span>
+    <a class="nav-item" id="nav-search" onclick="switchTab('search')">
+      <span style="font-size:18px;">🔍</span><span>Издөө</span>
     </a>
     <div class="add-btn-wrap">
-      <div class="add-btn">+</div>
+      <div class="add-btn" onclick="switchTab('create')">+</div>
     </div>
-    <a href="#chat-section-anchor" class="nav-item">
-      <span class="nav-icon">💬</span>
-      <span>Билдирүү</span>
+    <a class="nav-item" id="nav-chat" onclick="switchTab('chat')">
+      <span style="font-size:18px;">💬</span><span>Чат</span>
     </a>
-    <a href="#" class="nav-item">
-      <span class="nav-icon">👤</span>
-      <span>Профиль</span>
+    <a class="nav-item" id="nav-profile" onclick="switchTab('profile')">
+      <span style="font-size:18px;">👤</span><span>Жеке бөлмө</span>
     </a>
   </nav>
 
 </div>
 
-<!-- Socket.io Script Connection -->
+<!-- AUTHENTICATION MODAL -->
+<div class="modal-overlay" id="authModal">
+  <div class="auth-box">
+    <div style="position:absolute; right:15px; top:12px; cursor:pointer; font-size:18px;" onclick="closeAuthModal()">✖</div>
+    
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="tabLogin" onclick="toggleAuthForm('login')">Кирүү</div>
+      <div class="auth-tab" id="tabRegister" onclick="toggleAuthForm('register')">Катталуу</div>
+    </div>
+
+    <!-- Login Form -->
+    <div id="loginForm">
+      <div class="form-group">
+        <label>Телефон номер</label>
+        <input type="text" id="loginPhone" placeholder="+996 700 000 000">
+      </div>
+      <div class="form-group">
+        <label>Пароль</label>
+        <input type="password" id="loginPass" placeholder="******">
+      </div>
+      <button class="btn-primary" onclick="processLogin()">Кирүү</button>
+    </div>
+
+    <!-- Registration Form -->
+    <div id="registerForm" style="display:none;">
+      <div class="form-group">
+        <label>Толук аты-жөнүңүз</label>
+        <input type="text" id="regName" placeholder="Кутман Баястанов">
+      </div>
+      <div class="form-group">
+        <label>Телефон номер</label>
+        <input type="text" id="regPhone" placeholder="+996 700 000 000">
+      </div>
+      <div class="form-group">
+        <label>Пароль ойлоп табыңыз</label>
+        <input type="password" id="regPass" placeholder="******">
+      </div>
+      <div class="form-group">
+        <label>Ролуңуз</label>
+        <select id="regRole">
+          <option>Сатуучу (Фермер)</option>
+          <option>Сатып алуучу</option>
+          <option>Агро-эксперт / Агроном</option>
+        </select>
+      </div>
+      <button class="btn-primary" onclick="processRegister()">Катталууну аяктоо</button>
+    </div>
+  </div>
+</div>
+
 <script src="/socket.io/socket.io.js"></script>
 <script>
+  let currentUser = JSON.parse(localStorage.getItem('apex_user')) || null;
+
+  function updateProfileUI() {
+    if (currentUser) {
+      document.getElementById('profName').innerText = currentUser.name;
+      document.getElementById('profPhone').innerText = 'Тел: ' + currentUser.phone;
+      document.getElementById('profRole').innerText = currentUser.role;
+    } else {
+      document.getElementById('profName').innerText = 'Конок (Катталган эмес)';
+      document.getElementById('profPhone').innerText = 'Телефон: -';
+      document.getElementById('profRole').innerText = 'Конок';
+    }
+  }
+
+  function openAuthModal(type) {
+    document.getElementById('authModal').classList.add('active');
+    toggleAuthForm(type);
+  }
+
+  function closeAuthModal() {
+    document.getElementById('authModal').classList.remove('active');
+  }
+
+  function toggleAuthForm(type) {
+    if (type === 'login') {
+      document.getElementById('loginForm').style.display = 'block';
+      document.getElementById('registerForm').style.display = 'none';
+      document.getElementById('tabLogin').classList.add('active');
+      document.getElementById('tabRegister').classList.remove('active');
+    } else {
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('registerForm').style.display = 'block';
+      document.getElementById('tabLogin').classList.remove('active');
+      document.getElementById('tabRegister').classList.add('active');
+    }
+  }
+
+  function processRegister() {
+    const name = document.getElementById('regName').value.trim();
+    const phone = document.getElementById('regPhone').value.trim();
+    const pass = document.getElementById('regPass').value.trim();
+    const role = document.getElementById('regRole').value;
+
+    if (!name || !phone || !pass) {
+      alert('Сураныч, бардык талааларды толтуруңуз!');
+      return;
+    }
+
+    currentUser = { name: name, phone: phone, role: role };
+    localStorage.setItem('apex_user', JSON.stringify(currentUser));
+    updateProfileUI();
+    closeAuthModal();
+    alert('Ийгиликтүү катталдыңыз! Кош келиңиз, ' + name);
+  }
+
+  function processLogin() {
+    const phone = document.getElementById('loginPhone').value.trim();
+    const pass = document.getElementById('loginPass').value.trim();
+
+    if (!phone || !pass) {
+      alert('Номер менен паролду жазыңыз!');
+      return;
+    }
+
+    currentUser = { name: 'Колдонуучу', phone: phone, role: 'Сатуучу' };
+    localStorage.setItem('apex_user', JSON.stringify(currentUser));
+    updateProfileUI();
+    closeAuthModal();
+    alert('Ийгиликтүү кирдиңиз!');
+  }
+
+  function logout() {
+    localStorage.removeItem('apex_user');
+    currentUser = null;
+    updateProfileUI();
+    alert('Системадан чыктыңыз.');
+  }
+
+  function switchTab(tabName) {
+    document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+    document.getElementById('page-' + tabName).classList.add('active');
+    if (document.getElementById('nav-' + tabName)) {
+      document.getElementById('nav-' + tabName).classList.add('active');
+    }
+    window.scrollTo(0,0);
+  }
+
+  function publishAd() {
+    if (!currentUser) {
+      alert('Жарыя түзүү үчүн адегенде катталышыңыз же киришиңиз керек!');
+      openAuthModal('login');
+      return;
+    }
+    alert('Жарыяңыз ийгиликтүү жайгаштырылды!');
+    switchTab('home');
+  }
+
+  // Socket.io Realtime Chat Engine
   const socket = io();
   const roomId = "general_chat";
 
   socket.emit('join_room', roomId);
 
-  // Тарыхты сервердин эс тутумунан кайра жүктөө
   socket.on('load_history', (history) => {
     const messagesDiv = document.getElementById('messages');
-    messagesDiv.innerHTML = '<div class="msg them"><b>Система:</b> Салам! Apex Agro чатына кош келиңиз.</div>';
-    
+    messagesDiv.innerHTML = `
+      <div class="msg-wrapper them">
+        <div class="msg-sender">Система / Агро Хаб</div>
+        <div class="msg-bubble">Салам! Apex Агро Хаб чатына кош келиңиз!</div>
+        <div class="msg-info">Азыр</div>
+      </div>`;
     if (history && history.length > 0) {
-      history.forEach(data => {
-        appendMessage(data);
-      });
+      history.forEach(data => { appendMessage(data); });
     }
   });
 
   function sendMessage() {
-    const nameInput = document.getElementById('username');
+    if (!currentUser) {
+      alert('Чатта жазуу үчүн кириңиз же катталыңыз!');
+      openAuthModal('login');
+      return;
+    }
+
     const msgInput = document.getElementById('messageInput');
-    
-    const sender = nameInput.value.trim() || 'Колдонуучу';
     const text = msgInput.value.trim();
 
     if (text !== '') {
-      socket.emit('send_message', {
-        room: roomId,
-        sender: sender,
-        text: text
-      });
+      socket.emit('send_message', { room: roomId, sender: currentUser.name, text: text });
       msgInput.value = '';
     }
   }
@@ -417,16 +444,11 @@ body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; di
 
   function appendMessage(data) {
     const messagesDiv = document.getElementById('messages');
-    const msgDiv = document.createElement('div');
-    const myName = document.getElementById('username').value.trim() || 'Колдонуучу';
-    
-    msgDiv.className = data.sender === myName ? 'msg me' : 'msg them';
-    msgDiv.innerHTML = `<b>${data.sender}:</b> ${data.text}`;
-    messagesDiv.appendChild(msgDiv);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  }
-</script>
+    const myName = currentUser ? currentUser.name : '';
+    const isMe = (myName && data.sender.toLowerCase() === myName.toLowerCase());
 
-</body>
-        </html>
-        
+    const wrapper = document.createElement('div');
+    wrapper.className = isMe ? 'msg-wrapper me' : 'msg-wrapper them';
+
+    const now = new Date();
+    const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padS
