@@ -11,85 +11,230 @@
 <meta property="og:title" content="Apex Agro — Бирдиктүү агро рынок">
 <meta property="og:description" content="Айыл чарба товарлары, агрономдор, дары-дармек, жер семирткич, мал жана техника бир платформада.">
 <meta property="og:type" content="website">
+<script src="/socket.io/socket.io.js"></script>
 <style>
 :root{--g:#08752d;--g2:#16843d;--bg:#f4f8f5;--card:#fff;--txt:#17321f;--mut:#708276;--line:#dce9df;--yel:#fff2c9}
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#e9efeb;color:var(--txt);padding-bottom:82px}.app{max-width:760px;margin:auto;min-height:100vh;background:var(--bg);box-shadow:0 0 35px #0001}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:linear-gradient(135deg,#e8f0ea,#f7faf7);color:var(--txt);padding-bottom:82px}.app{max-width:760px;margin:auto;min-height:100vh;background:var(--bg);box-shadow:0 0 35px #0001}
 button,input,select,textarea{font:inherit}button{cursor:pointer}.founders{background:#123a20;color:#fff;text-align:center;padding:7px;font-size:11px;font-weight:700}.founders b{color:#8de09d}
-.top{background:#fff;padding:15px 16px 12px;position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line)}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.brand{display:flex;align-items:center;gap:10px}.logo{width:55px;height:55px;border-radius:15px;background:var(--g);display:grid;place-items:center}.logo svg{width:48px;height:48px}.brand h1{font-size:25px;color:var(--g);line-height:1;font-weight:900}.brand small{font-size:10px;color:#56805f;font-weight:900;letter-spacing:.6px}.region{border:2px solid #b9ddc1;background:#eff9f0;color:#276f39;border-radius:28px;padding:10px 12px;font-weight:800}
+.top{background:rgba(255,255,255,.96);backdrop-filter:blur(12px);padding:14px 16px 12px;position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line);box-shadow:0 4px 18px #194b2410}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.brand{display:flex;align-items:center;gap:10px;cursor:pointer}.logo{width:48px;height:48px;border-radius:15px;background:var(--g);display:grid;place-items:center}.logo svg{width:40px;height:40px}.brand h1{font-size:23px;color:var(--g);line-height:1;font-weight:900}.brand small{font-size:10px;color:#56805f;font-weight:900;letter-spacing:.6px}.region{border:2px solid #b9ddc1;background:#eff9f0;color:#276f39;border-radius:28px;padding:10px 12px;font-weight:800}
 .search{margin-top:12px;border:2px solid #cce3d1;border-radius:17px;background:#fff;padding:12px 15px;display:flex;gap:8px}.search input{border:0;outline:0;width:100%;font-size:17px}.loc{margin-top:10px;background:var(--yel);border-radius:15px;padding:11px 14px;font-size:13px}.loc strong{display:block;color:#28743c;font-size:20px}
 .page{display:none;padding:15px 0 25px}.page.active{display:block}.title{padding:0 16px 11px;font-size:21px;font-weight:900;color:#175d2d}
-.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 14px}.cat{background:#fff;border:2px solid #e7f0e9;border-radius:21px;min-height:112px;padding:11px 4px;color:#397246;font-weight:800}.cat.active{border-color:var(--g);background:#edf8ef}.ico{font-size:30px;margin-bottom:5px}.chips{display:flex;gap:8px;overflow:auto;padding:10px 14px 15px}.chip{white-space:nowrap;border:1px solid #c7dec9;background:#fff;color:#477650;border-radius:25px;padding:8px 14px;font-weight:700}.chip.active{background:var(--g);color:#fff}
-.card{background:#fff;border:1px solid #e2eee4;border-radius:23px;margin:0 14px 14px;padding:16px;box-shadow:0 8px 28px #19502a0d}.phead{display:flex;gap:13px;align-items:center}.pimg{width:74px;height:74px;border-radius:17px;background:#e8f6ea;display:grid;place-items:center;font-size:38px}.pname{font-size:20px;font-weight:900}.desc{font-size:13px;color:#618067;margin-top:3px}.prices{margin-top:13px;border:1px solid #dcebdc;border-radius:16px;padding:10px}.pt{font-size:12px;color:#66856a;font-weight:900;margin-bottom:7px}.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.pr{border:1px solid #e4eee5;border-radius:10px;padding:6px;text-align:center;font-size:12px;color:#68736a}.pr b{display:block;color:#246b3b;font-size:15px}.main{width:100%;border:0;border-radius:14px;background:var(--g);color:#fff;padding:13px;font-weight:900;margin-top:11px}.ads{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 14px}.ad{background:#fff;border:1px solid var(--line);border-radius:17px;padding:13px}.ad i{font-size:28px;font-style:normal}.ad h3{font-size:14px;margin-top:5px}.ad small{display:block;color:var(--mut);margin:3px 0}.ad b{color:var(--g)}
-.form,.profile,.chat{margin:0 14px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px}.group{margin-bottom:12px}.group label{display:block;font-size:12px;font-weight:800;color:#607667;margin-bottom:5px}.group input,.group select,.group textarea{width:100%;padding:12px;border:1px solid #d7e5da;border-radius:12px;background:#f9fbf9;outline:0}.group textarea{min-height:85px}.messages{height:390px;overflow:auto;background:#edf2ef;padding:13px;display:flex;flex-direction:column;gap:9px}.chathead{margin:-16px -16px 0;padding:13px 15px;background:#f3f8f4;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}.online{color:#18813b;background:#e4f6e8;padding:4px 8px;border-radius:8px;font-size:10px;font-weight:900}.msg{max-width:78%;padding:10px 13px;border-radius:16px;font-size:13px}.me{align-self:flex-end;background:var(--g);color:#fff;border-bottom-right-radius:4px}.them{align-self:flex-start;background:#fff;border:1px solid #c9dfce;border-bottom-left-radius:4px}.sender{font-size:10px;font-weight:900;color:#238043;margin-bottom:3px}.me .sender{color:#d9ffe1}.mt{font-size:9px;opacity:.65;text-align:right;margin-top:3px}.chatin{display:flex;gap:7px;margin:12px -16px -16px;padding:11px;border-top:1px solid var(--line)}.chatin input{flex:1;border:1px solid #d7e5da;border-radius:12px;padding:10px;outline:0}.send{border:0;background:var(--g);color:#fff;border-radius:12px;padding:0 14px;font-weight:900}
-.avatar{width:78px;height:78px;border-radius:50%;background:#e6f5e9;border:3px solid #76c889;display:grid;place-items:center;font-size:35px;margin:auto auto 8px}.menu{margin-top:16px;border-top:1px solid var(--line)}.menu div{padding:14px 2px;border-bottom:1px solid #edf2ee;display:flex;justify-content:space-between;font-weight:700}
-.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:760px;height:76px;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:center;z-index:50}.nav{border:0;background:none;color:#83a38b;text-align:center;font-size:11px;font-weight:800;min-width:70px}.nav span{display:block;font-size:23px}.nav.active{color:var(--g)}.add{width:53px;height:53px;border-radius:50%;border:4px solid #fff;background:var(--g);color:#fff;font-size:30px;margin-top:-24px;box-shadow:0 5px 18px #08752d44}
-.modal{display:none;position:fixed;inset:0;background:#0009;z-index:100;align-items:center;justify-content:center;padding:18px}.modal.show{display:flex}.modalbox{background:#fff;border-radius:22px;padding:20px;width:100%;max-width:420px;position:relative}.close{position:absolute;right:15px;top:10px;border:0;background:none;font-size:20px}.tabs{display:flex;border-bottom:2px solid #e4ece5;margin-bottom:15px}.tab{flex:1;border:0;background:none;padding:10px;font-weight:900;color:#84938a}.tab.active{color:var(--g);border-bottom:2px solid var(--g)}.toast{position:fixed;bottom:92px;left:50%;transform:translateX(-50%);background:#173d22;color:#fff;padding:10px 15px;border-radius:12px;display:none;z-index:150;font-size:12px}.toast.show{display:block}.empty{text-align:center;padding:30px;color:#78907d}
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 14px}.cat{background:#fff;border:2px solid #e7f0e9;border-radius:18px;min-height:92px;padding:8px 4px;color:#397246;font-weight:800}.cat.active{border-color:var(--g);background:#edf8ef}.ico{font-size:24px;line-height:1;margin-bottom:6px}.chips{display:flex;gap:8px;overflow:auto;padding:10px 14px 15px}.chip{white-space:nowrap;border:1px solid #c7dec9;background:#fff;color:#477650;border-radius:25px;padding:8px 14px;font-weight:700}.chip.active{background:var(--g);color:#fff}
+.card{background:linear-gradient(145deg,#fff,#fbfefb);border:1px solid #dfece1;border-radius:21px;margin:0 14px 14px;padding:15px;box-shadow:0 10px 30px #19502a12;transition:.2s}.phead{display:flex;gap:13px;align-items:center}.pimg{width:64px;height:64px;border-radius:17px;background:#e8f6ea;display:grid;place-items:center;font-size:31px;flex:0 0 64px}.pname{font-size:20px;font-weight:900}.desc{font-size:13px;color:#618067;margin-top:3px}.prices{margin-top:13px;border:1px solid #dcebdc;border-radius:16px;padding:10px}.pt{font-size:12px;color:#66856a;font-weight:900;margin-bottom:7px}.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.pr{border:1px solid #e4eee5;border-radius:10px;padding:6px;text-align:center;font-size:12px;color:#68736a}.pr b{display:block;color:#246b3b;font-size:15px}.main{width:100%;border:0;border-radius:13px;background:linear-gradient(135deg,var(--g),#159444);color:#fff;padding:12px;font-weight:900;margin-top:11px;box-shadow:0 5px 13px #08752d25;transition:.15s}.main:disabled{opacity:.55;cursor:not-allowed}.ads{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 14px}.ad{background:linear-gradient(145deg,#fff,#fbfefb);border:1px solid var(--line);border-radius:18px;padding:13px;box-shadow:0 7px 20px #19502a0b}.ad i{font-size:22px;font-style:normal;display:inline-block;line-height:1;margin-bottom:2px}.ad h3{font-size:14px;margin-top:5px}.ad small{display:block;color:var(--mut);margin:3px 0}.ad b{color:var(--g)}
+.form,.profile,.chat{margin:0 14px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px}.group{margin-bottom:12px}.group label{display:block;font-size:12px;font-weight:800;color:#607667;margin-bottom:5px}.group input,.group select,.group textarea{width:100%;padding:12px;border:1px solid #d7e5da;border-radius:12px;background:#f9fbf9;outline:0}.group textarea{min-height:85px}.messages{height:390px;overflow:auto;background:#edf2ef;padding:13px;display:flex;flex-direction:column;gap:9px}.chathead{margin:-16px -16px 0;padding:13px 15px;background:#f3f8f4;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:8px}.online{color:#18813b;background:#e4f6e8;padding:4px 8px;border-radius:8px;font-size:10px;font-weight:900}.offline{color:#8a6d2b;background:#fff4d7;padding:4px 8px;border-radius:8px;font-size:10px;font-weight:900}.msg{max-width:78%;padding:10px 13px;border-radius:16px;font-size:13px;word-break:break-word}.me{align-self:flex-end;background:var(--g);color:#fff;border-bottom-right-radius:4px}.them{align-self:flex-start;background:#fff;border:1px solid #c9dfce;border-bottom-left-radius:4px}.sender{font-size:10px;font-weight:900;color:#238043;margin-bottom:3px}.me .sender{color:#d9ffe1}.mt{font-size:9px;opacity:.65;text-align:right;margin-top:3px}.chatin{display:flex;gap:7px;margin:12px -16px -16px;padding:11px;border-top:1px solid var(--line)}.chatin input{flex:1;border:1px solid #d7e5da;border-radius:12px;padding:10px;outline:0}.send{border:0;background:var(--g);color:#fff;border-radius:12px;padding:0 14px;font-weight:900}.usersbox{margin:12px 14px 0;background:#fff;border:1px solid var(--line);border-radius:18px;padding:13px}.usersbox h3{font-size:14px;margin-bottom:9px}.userslist{display:flex;gap:8px;overflow:auto;padding-bottom:2px}.userbtn{border:1px solid #cfe1d2;background:#f7fbf7;border-radius:13px;padding:9px 11px;min-width:125px;text-align:left}.userbtn.active{border-color:var(--g);background:#edf8ef}.userbtn b{display:block;font-size:12px;color:#225f34}.userbtn small{display:block;color:var(--mut);font-size:10px;margin-top:3px}.typing{height:18px;color:#5f7c67;font-size:11px;padding:3px 4px}.avatar{width:68px;height:68px;border-radius:50%;background:#e6f5e9;border:3px solid #76c889;display:grid;place-items:center;font-size:29px;margin:auto auto 8px}.menu{margin-top:16px;border-top:1px solid var(--line)}.menu div{padding:14px 2px;border-bottom:1px solid #edf2ee;display:flex;justify-content:space-between;font-weight:700;cursor:pointer}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:760px;height:76px;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:center;z-index:50}.nav{border:0;background:none;color:#83a38b;text-align:center;font-size:11px;font-weight:800;min-width:70px}.nav span{display:block;font-size:20px;line-height:1.1;margin-bottom:3px}.nav.active{color:var(--g)}.add{width:48px;height:48px;border-radius:50%;border:4px solid #fff;background:var(--g);color:#fff;font-size:26px;margin-top:-20px;box-shadow:0 5px 18px #08752d44}
+.modal{display:none;position:fixed;inset:0;background:#0009;z-index:100;align-items:center;justify-content:center;padding:18px}.modal.show{display:flex}.modalbox{background:linear-gradient(145deg,#fff,#f9fcfa);border-radius:24px;padding:20px;width:100%;max-width:420px;position:relative;box-shadow:0 20px 60px #0004}.close{position:absolute;right:15px;top:10px;border:0;background:none;font-size:20px}.tabs{display:flex;border-bottom:2px solid #e4ece5;margin-bottom:15px}.tab{flex:1;border:0;background:none;padding:10px;font-weight:900;color:#84938a}.tab.active{color:var(--g);border-bottom:2px solid var(--g)}.toast{position:fixed;bottom:92px;left:50%;transform:translateX(-50%);background:#173d22;color:#fff;padding:10px 15px;border-radius:12px;display:none;z-index:150;font-size:12px;max-width:90%;text-align:center}.toast.show{display:block}.empty{text-align:center;padding:30px;color:#78907d}.loginhint{background:#edf8ef;border:1px solid #cce3d1;border-radius:13px;padding:11px;color:#397246;font-size:12px;margin:0 14px 12px}
 @media(max-width:520px){.region{min-width:145px;font-size:12px}.cats{gap:6px}.cat{font-size:12px}.pg{grid-template-columns:repeat(3,1fr)}}@media(max-width:380px){.cats{grid-template-columns:repeat(2,1fr)}.ads{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="app">
 <div class="founders">Негиздөөчүлөр: <b>Кутман Баястанов</b> • <b>Амантур Арстанбеков</b></div>
-<header class="top"><div class="row"><div class="brand" onclick="page('home')"><div class="logo"><svg viewBox="0 0 100 100"><path fill="white" d="M18 78 45 18h12l-8 18 9-16 36 58H72L54 45 39 78z"/><path fill="#8bd697" d="M49 74c1-15 8-24 19-32-1 13-6 25-19 32zm8-1c1-12 8-20 19-25-2 11-7 20-19 25z"/></svg></div><div><h1>Apex</h1><small>АГРО МАРКЕТПЛЕЙС</small></div></div><button class="region" onclick="toast('Аймак тандоо жакында кошулат')">Бардык аймактар 📍⌄</button></div>
-<div class="search">🔍<input id="search" placeholder="Издөө..." oninput="render()"></div><div class="loc">Сиздин атыңыз / жайгашкан жериңиз:<strong id="loc">Кутман (Талас)</strong></div></header>
 
-<section id="page-home" class="page active"><div class="title">Категориялар</div><div class="cats">
-<button class="cat active" onclick="cat(this,'Өсүмдүктөр')"><div class="ico">🌱</div>Өсүмдүктөр</button>
-<button class="cat" onclick="cat(this,'Агрономдор')"><div class="ico">👨‍🌾</div>Агрономдор</button>
-<button class="cat" onclick="cat(this,'Дары & Семирткич')"><div class="ico">🧪</div>Дары &<br>Семирткич</button>
-<button class="cat" onclick="cat(this,'Мал чарбасы')"><div class="ico">🐄</div>Мал чарбасы</button></div>
-<div class="chips"><button class="chip active" onclick="chip(this,'')">Баардыгы</button><button class="chip" onclick="chip(this,'Жер-жемиш')">🥦 Жер-жемиш</button><button class="chip" onclick="chip(this,'Мөмө')">🍎 Мөмө</button><button class="chip" onclick="chip(this,'Дан')">🌾 Дан</button><button class="chip" onclick="chip(this,'Мал')">🐄 Мал</button><button class="chip" onclick="chip(this,'Техника')">🚜 Техника</button></div>
-<div class="title">🥔 Өсүмдүктөр тизмеси</div><div id="homeAds"></div></section>
+<header class="top">
+  <div class="row">
+    <div class="brand" onclick="page('home')">
+      <div class="logo"><svg viewBox="0 0 100 100"><path fill="white" d="M18 78 45 18h12l-8 18 9-16 36 58H72L54 45 39 78z"/><path fill="#8bd697" d="M49 74c1-15 8-24 19-32-1 13-6 25-19 32zm8-1c1-12 8-20 19-25-2 11-7 20-19 25z"/></svg></div>
+      <div><h1>Apex</h1><small>АГРО МАРКЕТПЛЕЙС</small></div>
+    </div>
+    <button class="region" onclick="toast('Аймак тандоо жакында кошулат')">Бардык аймактар 📍⌄</button>
+  </div>
+  <div class="search">🔍<input id="search" placeholder="Издөө..." oninput="render()"></div>
+  <div class="loc">Сиздин атыңыз / жайгашкан жериңиз:<strong id="loc">Конок</strong></div>
+</header>
 
-<section id="page-market" class="page"><div class="title">🔎 Бардык жарыялар</div><div id="marketAds" class="ads"></div></section>
+<section id="page-home" class="page active">
+  <div class="title">Категориялар</div>
+  <div class="cats">
+    <button class="cat active" onclick="cat(this,'Өсүмдүктөр')"><div class="ico">🌱</div>Өсүмдүктөр</button>
+    <button class="cat" onclick="cat(this,'Агрономдор')"><div class="ico">👨‍🌾</div>Агрономдор</button>
+    <button class="cat" onclick="cat(this,'Дары & Семирткич')"><div class="ico">🧪</div>Дары &<br>Семирткич</button>
+    <button class="cat" onclick="cat(this,'Мал чарбасы')"><div class="ico">🐄</div>Мал чарбасы</button>
+  </div>
+  <div class="chips">
+    <button class="chip active" onclick="chip(this,'')">Баардыгы</button>
+    <button class="chip" onclick="chip(this,'Жер-жемиш')">🥦 Жер-жемиш</button>
+    <button class="chip" onclick="chip(this,'Мөмө')">🍎 Мөмө</button>
+    <button class="chip" onclick="chip(this,'Дан')">🌾 Дан</button>
+    <button class="chip" onclick="chip(this,'Мал')">🐄 Мал</button>
+    <button class="chip" onclick="chip(this,'Техника')">🚜 Техника</button>
+  </div>
+  <div class="title">🥔 Өсүмдүктөр тизмеси</div>
+  <div id="homeAds"></div>
+</section>
 
-<section id="page-create" class="page"><div class="title">➕ Жаңы жарыя түзүү</div><div class="form">
-<div class="group"><label>Продукт / кызмат аты</label><input id="an" placeholder="Мисалы: Нарын картошкасы"></div>
-<div class="group"><label>Категория</label><select id="ac"><option>Өсүмдүктөр</option><option>Мал чарбасы</option><option>Дары & Семирткич</option><option>Техника</option><option>Агрономдор</option></select></div>
-<div class="group"><label>Баасы</label><input id="ap" placeholder="25 сом/кг"></div>
-<div class="group"><label>Аймак</label><select id="ar"><option>Талас</option><option>Чүй</option><option>Ош</option><option>Ысык-Көл</option><option>Баткен</option><option>Жалал-Абад</option><option>Нарын</option></select></div>
-<div class="group"><label>Маалымат</label><textarea id="ad" placeholder="Товар жөнүндө маалымат..."></textarea></div><button class="main" onclick="publish()">Жарыялоо</button></div></section>
+<section id="page-market" class="page">
+  <div class="title">🔎 Бардык жарыялар</div>
+  <div id="marketAds" class="ads"></div>
+</section>
 
-<section id="page-chat" class="page"><div class="title">💬 Агро Хаб & Чат</div><div class="chat"><div class="chathead"><b>Агро Хаб / Сүйлөшүү</b><span class="online">● Онлайн</span></div><div class="messages" id="messages"><div class="msg them"><div class="sender">Apex / Система</div>Салам! Apex Агро Хабга кош келиңиз!<div class="mt">Азыр</div></div></div><div class="chatin"><input id="mi" placeholder="Билдирүү жазыңыз..." onkeydown="if(event.key==='Enter')send()"><button class="send" onclick="send()">Жөнөтүү</button></div></div>
-<div class="card" style="margin-top:12px"><b>👥 Жеке эки адамдык чат</b><p style="color:var(--mut);font-size:12px;margin-top:5px">Интерфейс даяр. Реалдуу интернеттеги эки адамдын билдирүүсүн server.js/WebSocket аркылуу кийинки этапта туташтырабыз.</p></div></section>
+<section id="page-create" class="page">
+  <div class="title">➕ Жаңы жарыя түзүү</div>
+  <div id="createHint" class="loginhint">Жарыя берүү үчүн аккаунтка киришиңиз.</div>
+  <div class="form">
+    <div class="group"><label>Продукт / кызмат аты</label><input id="an" placeholder="Мисалы: Нарын картошкасы"></div>
+    <div class="group"><label>Категория</label><select id="ac"><option>Өсүмдүктөр</option><option>Мал чарбасы</option><option>Дары & Семирткич</option><option>Техника</option><option>Агрономдор</option></select></div>
+    <div class="group"><label>Баасы</label><input id="ap" placeholder="25 сом/кг"></div>
+    <div class="group"><label>Аймак</label><select id="ar"><option>Талас</option><option>Чүй</option><option>Ош</option><option>Ысык-Көл</option><option>Баткен</option><option>Жалал-Абад</option><option>Нарын</option></select></div>
+    <div class="group"><label>Маалымат</label><textarea id="ad" placeholder="Товар жөнүндө маалымат..."></textarea></div>
+    <button id="publishBtn" class="main" onclick="publish()">Жарыялоо</button>
+  </div>
+</section>
 
-<section id="page-profile" class="page"><div class="title">👤 Жеке бөлмө</div><div class="profile"><div class="avatar">👨‍🌾</div><div id="pn" style="font-size:20px;font-weight:900">Конок</div><div id="pp" style="font-size:12px;color:var(--mut)">Телефон: -</div><div id="pr" style="display:inline-block;margin-top:8px;background:#e6f5e9;color:#23723a;border-radius:20px;padding:5px 11px;font-size:11px;font-weight:900">Катталган эмес</div><div class="menu"><div onclick="auth('login')">🔑 Кирүү / Катталуу <span>›</span></div><div onclick="page('create')">📦 Жаңы жарыя берүү <span>›</span></div><div onclick="page('market')">🛒 Жарыялар <span>›</span></div><div onclick="toast('Орнотуулар жакында кошулат')">⚙️ Орнотуулар <span>›</span></div><div onclick="logout()" style="color:#d84949">🚪 Чыгуу <span>›</span></div></div></div></section>
+<section id="page-chat" class="page">
+  <div class="title">💬 Агро Хаб & Жеке чат</div>
+  <div id="chatLoginHint" class="loginhint">Чатка кирүү үчүн аккаунтка кириңиз.</div>
+  <div class="usersbox">
+    <h3>👥 Колдонуучулар</h3>
+    <div id="usersList" class="userslist"><div class="empty" style="padding:10px">Колдонуучуларды жүктөө үчүн кирүү керек.</div></div>
+  </div>
+  <div class="chat" style="margin-top:12px">
+    <div class="chathead">
+      <b id="chatTitle">Колдонуучуну тандаңыз</b>
+      <span id="chatStatus" class="offline">● Тандалган жок</span>
+    </div>
+    <div class="messages" id="messages">
+      <div class="msg them"><div class="sender">Apex / Система</div>Салам! Apex Agro Hub'га кош келиңиз. Жеке чат үчүн жогорудан колдонуучуну тандаңыз.<div class="mt">Азыр</div></div>
+    </div>
+    <div id="typing" class="typing"></div>
+    <div class="chatin">
+      <input id="mi" placeholder="Адегенде колдонуучуну тандаңыз..." disabled oninput="handleTyping()" onkeydown="if(event.key==='Enter')send()">
+      <button id="sendBtn" class="send" onclick="send()" disabled>Жөнөтүү</button>
+    </div>
+  </div>
+</section>
 
-<nav class="bottom"><button class="nav active" id="nav-home" onclick="page('home')"><span>🏠</span>Башкы</button><button class="nav" id="nav-market" onclick="page('market')"><span>📋</span>Бүтүмдөр</button><button class="add" onclick="page('create')">+</button><button class="nav" id="nav-chat" onclick="page('chat')"><span>💬</span>Чат</button><button class="nav" id="nav-profile" onclick="page('profile')"><span>👤</span>Профиль</button></nav>
+<section id="page-profile" class="page">
+  <div class="title">👤 Жеке бөлмө</div>
+  <div class="profile">
+    <div class="avatar">👨‍🌾</div>
+    <div id="pn" style="font-size:20px;font-weight:900">Конок</div>
+    <div id="pp" style="font-size:12px;color:var(--mut)">Телефон: -</div>
+    <div id="pr" style="display:inline-block;margin-top:8px;background:#e6f5e9;color:#23723a;border-radius:20px;padding:5px 11px;font-size:11px;font-weight:900">Катталган эмес</div>
+    <div class="menu">
+      <div onclick="auth('login')">🔑 Кирүү / Катталуу <span>›</span></div>
+      <div onclick="page('create')">📦 Жаңы жарыя берүү <span>›</span></div>
+      <div onclick="page('market')">🛒 Жарыялар <span>›</span></div>
+      <div onclick="page('chat')">💬 Жеке чат <span>›</span></div>
+      <div onclick="logout()" style="color:#d84949">🚪 Чыгуу <span>›</span></div>
+    </div>
+  </div>
+</section>
+
+<nav class="bottom">
+  <button class="nav active" id="nav-home" onclick="page('home')"><span>🏠</span>Башкы</button>
+  <button class="nav" id="nav-market" onclick="page('market')"><span>📋</span>Жарыялар</button>
+  <button class="add" onclick="page('create')">+</button>
+  <button class="nav" id="nav-chat" onclick="page('chat')"><span>💬</span>Чат</button>
+  <button class="nav" id="nav-profile" onclick="page('profile')"><span>👤</span>Профиль</button>
+</nav>
 </div>
 
-<div class="modal" id="modal"><div class="modalbox"><button class="close" onclick="closeAuth()">✕</button><div class="tabs"><button id="tl" class="tab active" onclick="authTab('login')">Кирүү</button><button id="tr" class="tab" onclick="authTab('register')">Катталуу</button></div>
-<div id="login"><div class="group"><label>Телефон номер</label><input id="lp" placeholder="+996 700 000 000"></div><div class="group"><label>Пароль</label><input id="lpass" type="password" placeholder="******"></div><button class="main" onclick="login()">Кирүү</button></div>
-<div id="register" style="display:none"><div class="group"><label>Толук аты-жөнүңүз</label><input id="rn" placeholder="Кутман Баястанов"></div><div class="group"><label>Телефон номер</label><input id="rp" placeholder="+996 700 000 000"></div><div class="group"><label>Пароль</label><input id="rpass" type="password" placeholder="******"></div><div class="group"><label>Ролуңуз</label><select id="rr"><option>Сатуучу (Фермер)</option><option>Сатып алуучу</option><option>Агро-эксперт / Агроном</option></select></div><button class="main" onclick="register()">Катталууну аяктоо</button></div></div></div><div id="toast" class="toast"></div>
+<div class="modal" id="modal">
+  <div class="modalbox">
+    <button class="close" onclick="closeAuth()">✕</button>
+    <div style="text-align:center;margin:2px 0 14px">
+      <div style="font-size:30px">🌱</div>
+      <div style="font-size:20px;font-weight:900;color:#17632e">Apex Agro</div>
+      <div style="font-size:11px;color:#708276;margin-top:3px">Фермерлер жана агро-бизнес үчүн бирдиктүү платформа</div>
+    </div>
+    <div class="tabs">
+      <button id="tl" class="tab active" onclick="authTab('login')">Кирүү</button>
+      <button id="tr" class="tab" onclick="authTab('register')">Катталуу</button>
+    </div>
+    <div id="login">
+      <div class="group"><label>Телефон номер</label><input id="lp" placeholder="+996 700 000 000"></div>
+      <div class="group"><label>Пароль</label><input id="lpass" type="password" placeholder="кеминде 6 белги"></div>
+      <button class="main" onclick="login()">Кирүү</button>
+    </div>
+    <div id="register" style="display:none">
+      <div class="group"><label>Толук аты-жөнүңүз</label><input id="rn" autocomplete="name" placeholder="Аты-жөнүңүз"></div>
+      <div class="group"><label>Телефон номер</label><input id="rp" autocomplete="tel" inputmode="tel" placeholder="+996 700 000 000"></div>
+      <div class="group"><label>Пароль</label><input id="rpass" type="password" autocomplete="new-password" placeholder="Кеминде 6 белги" oninput="passwordHint()"><div id="passHint" style="font-size:10px;color:#819286;margin-top:5px">Кеминде 6 белги</div></div>
+      <div class="group"><label>Ролуңуз</label><select id="rr"><option value="Сатуучу (Фермер)">Сатуучу (Фермер)</option><option value="Сатып алуучу">Сатып алуучу</option><option value="Агро-эксперт / Агроном">Агро-эксперт / Агроном</option></select></div>
+      <button class="main" onclick="register()">✓ Катталууну аяктоо</button>
+      <div style="text-align:center;font-size:10px;color:#809187;margin-top:9px">Катталуу менен Apex Agro'ну колдонууга макул болосуз.</div>
+    </div>
+  </div>
+</div>
+<div id="toast" class="toast"></div>
 
 <script>
 const base=[
-{id:1,title:'Картошка (Элитная)',cat:'Өсүмдүктөр',type:'Жер-жемиш',icon:'🥔',desc:'Жогорку түшүмдүү сорт',price:'25–40 сом/кг',region:'Талас',prices:{'Чүй':'30 сом','Талас':'25 сом','Ош':'26 сом','Ысык-Көл':'40 сом','Баткен':'32 сом','Жалал-Абад':'28 сом'}},
-{id:2,title:'Кызыл алма',cat:'Өсүмдүктөр',type:'Мөмө',icon:'🍎',desc:'Жаңы жыйналган алма',price:'65 сом/кг',region:'Талас'},
-{id:3,title:'Буудай',cat:'Өсүмдүктөр',type:'Дан',icon:'🌾',desc:'Сапаттуу дан',price:'32 сом/кг',region:'Нарын'},
-{id:4,title:'Ангус породасындагы уй',cat:'Мал чарбасы',type:'Мал',icon:'🐄',desc:'Дени сак мал',price:'120 000 сом',region:'Нарын'},
-{id:5,title:'НПК жер семирткичи 50 кг',cat:'Дары & Семирткич',type:'Дары',icon:'🧪',desc:'Айыл чарба үчүн',price:'2 400 сом',region:'Чүй'},
-{id:6,title:'MTZ-82 трактор ижарага',cat:'Техника',type:'Техника',icon:'🚜',desc:'Ижара кызматы',price:'1 500 сом/саат',region:'Талас'}];
-let ads=JSON.parse(localStorage.apexAds||'null')||base,user=JSON.parse(localStorage.apexUser||'null'),filter='';
-function esc(x){return String(x||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-function toast(x){let t=document.getElementById('toast');t.textContent=x;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
-function page(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById('page-'+p).classList.add('active');document.querySelectorAll('.nav').forEach(x=>x.classList.remove('active'));let n=document.getElementById('nav-'+p);if(n)n.classList.add('active');if(p==='market')render();scrollTo(0,0)}
-function render(){let q=(document.getElementById('search').value||'').toLowerCase();let a=ads.filter(x=>(!q||[x.title,x.cat,x.type,x.region].join(' ').toLowerCase().includes(q))&&(!filter||x.type===filter||x.cat===filter));document.getElementById('homeAds').innerHTML=a.length?a.map(x=>x.prices?product(x):ad(x)).join(''):'<div class="empty">Жарыялар табылган жок</div>';document.getElementById('marketAds').innerHTML=a.map(ad).join('')||'<div class="empty">Жарыялар табылган жок</div>'}
-function product(a){let r=['Чүй','Талас','Ош','Ысык-Көл','Баткен','Жалал-Абад'];return `<div class="card"><div class="phead"><div class="pimg">${a.icon}</div><div><div class="pname">${esc(a.title)}</div><div class="desc">${esc(a.desc)}</div></div></div><div class="prices"><div class="pt">ОБЛУСТАР БОЮНЧА БААЛАР:</div><div class="pg">${r.map(x=>`<div class="pr">${x}<b>${a.prices[x]||a.price}</b></div>`).join('')}</div></div><button class="main" onclick="order(${a.id})">Тапшырык берүү</button></div>`}
-function ad(a){return `<div class="ad"><i>${a.icon||'📦'}</i><h3>${esc(a.title)}</h3><small>${esc(a.cat)} • ${esc(a.region)}</small><small>${esc(a.desc)}</small><b>${esc(a.price)}</b><button class="main" style="padding:9px;font-size:12px" onclick="order(${a.id})">Карап чыгуу</button></div>`}
-function order(id){toast('Товар тандалды. Сатуучу менен байланышуу үчүн чат ачылды.');page('chat')}
-function cat(el,x){document.querySelectorAll('.cat').forEach(y=>y.classList.remove('active'));el.classList.add('active');filter=x;page('market');render()}
-function chip(el,x){document.querySelectorAll('.chip').forEach(y=>y.classList.remove('active'));el.classList.add('active');filter=x;render()}
-function publish(){let t=an.value.trim(),p=ap.value.trim();if(!t||!p)return toast('Аты жана баасы толтуруңуз');ads.unshift({id:Date.now(),title:t,cat:ac.value,type:'',icon:'📦',desc:ad.value||'Сатуучунун жарыясы',price:p,region:ar.value});localStorage.apexAds=JSON.stringify(ads);an.value='';ap.value='';ad.value='';toast('Жарыя кошулду');page('market');render()}
-function auth(t){document.getElementById('modal').classList.add('show');authTab(t)}
-function closeAuth(){document.getElementById('modal').classList.remove('show')}
-function authTab(t){login.style.display=t==='login'?'block':'none';register.style.display=t==='register'?'block':'none';tl.classList.toggle('active',t==='login');tr.classList.toggle('active',t==='register')}
-function register(){if(!rn.value||!rp.value||!rpass.value)return toast('Бардык талааларды толтуруңуз');user={name:rn.value,phone:rp.value,pass:rpass.value,role:rr.value};localStorage.apexUser=JSON.stringify(user);update();closeAuth();toast('Катталуу ийгиликтүү')}
-function login(){let u=JSON.parse(localStorage.apexUser||'null');if(!u||u.phone!==lp.value||u.pass!==lpass.value)return toast('Телефон же пароль туура эмес');user=u;update();closeAuth();toast('Кош келиңиз, '+u.name)}
-function update(){pn.textContent=user?user.name:'Конок';pp.textContent=user?'Тел: '+user.phone:'Телефон: -';pr.textContent=user?user.role:'Катталган эмес';loc.textContent=user?user.name+' (Талас)':'Кутман (Талас)'}
-function logout(){user=null;localStorage.removeItem('apexUser');update();toast('Аккаунттан чыктыңыз')}
-function send(){let x=mi.value.trim();if(!x)return;let d=document.createElement('div');d.className='msg me';d.innerHTML='<div class="sender">'+esc(user?user.name:'Кутман')+'</div>'+esc(x)+'<div class="mt">Азыр</div>';messages.appendChild(d);mi.value='';messages.scrollTop=messages.scrollHeight}
-update();render();
-</script>
-</body>
-  </html>
+ {id:'base-1',title:'Картошка (Элитная)',cat:'Өсүмдүктөр',type:'Жер-жемиш',icon:'🥔',desc:'Жогорку түшүмдүү сорт',price:'25–40 сом/кг',region:'Талас',prices:{'Чүй':'30 сом','Талас':'25 сом','Ош':'26 сом','Ысык-Көл':'40 сом','Баткен':'32 сом','Жалал-Абад':'28 сом'}},
+ {id:'base-2',title:'Кызыл алма',cat:'Өсүмдүктөр',type:'Мөмө',icon:'🍎',desc:'Жаңы жыйналган алма',price:'65 сом/кг',region:'Талас'},
+ {id:'base-3',title:'Буудай',cat:'Өсүмдүктөр',type:'Дан',icon:'🌾',desc:'Сапаттуу дан',price:'32 сом/кг',region:'Нарын'},
+ {id:'base-4',title:'Ангус породасындагы уй',cat:'Мал чарбасы',type:'Мал',icon:'🐄',desc:'Дени сак мал',price:'120 000 сом',region:'Нарын'},
+ {id:'base-5',title:'НПК жер семирткичи 50 кг',cat:'Дары & Семирткич',type:'Дары',icon:'🧪',desc:'Айыл чарба үчүн',price:'2 400 сом',region:'Чүй'},
+ {id:'base-6',title:'MTZ-82 трактор ижарага',cat:'Техника',type:'Техника',icon:'🚜',desc:'Ижара кызматы',price:'1 500 сом/саат',region:'Талас'}
+];
+
+let ads=[...base];
+let user=null;
+let users=[];
+let filter='';
+let socket=null;
+let selectedUser=null;
+let typingTimer=null;
+
+const tokenKey='apex_token';
+
+const $=id=>document.getElementById(id);
+
+function esc(x){
+ return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+}
+
+function toast(x){
+ const t=$('toast');
+ t.textContent=x;
+ t.classList.add('show');
+ clearTimeout(t._timer);
+ t._timer=setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+function page(p){
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+ $('page-'+p).classList.add('active');
+ document.querySelectorAll('.nav').forEach(x=>x.classList.remove('active'));
+ const n=$('nav-'+p); if(n)n.classList.add('active');
+ if(p==='market')render();
+ if(p==='chat' && user)loadUsers();
+ if(p==='create')updateAuthUI();
+ scrollTo(0,0);
+}
+
+function iconFor(category){
+ const map={'Өсүмдүктөр':'🌱','Мал чарбасы':'🐄','Дары & Семирткич':'🧪','Техника':'🚜','Агрономдор':'👨‍🌾'};
+ return map[category]||'📦';
+}
+
+function normalizeAd(a){
+ return {
+  ...a,
+  title:a.title||'Жарыя',
+  cat:a.cat||a.category||'Башка',
+  type:a.type||'',
+  icon:a.icon||iconFor(a.category||a.cat),
+  desc:a.desc||a.description||'',
+  price:a.price||'Баасы көрсөтүлгөн эмес',
+  region:a.region||'Кыргызстан',
+  seller:a.seller||null
+ };
+}
+
+function render(){
+ const q=($('search').value||'').toLowerCase().trim();
+ const a=ads.map(normalizeAd).filter(x=>{
+  const text=[x.title,x.cat,x.type,x.region,x.desc].join(' ').toLowerCase();
+  return (!q||text.includes(q))&&(!filter||x.type===filter||x.cat===filter);
+ });
+ $('homeAds').innerHTML=a.length?a.map(x=>x.prices?product(x):ad(x)).join(''):'<div class="empty">Жарыялар табылган жок</div>';
+ $('marketAds').innerHTML=a.map(ad).join('')||'<div class="empty">Жарыялар табылган жок</div>';
+}
+
+function product(a){
+ const r=['Чүй','Талас','Ош','Ысык-Көл','Баткен','Жалал-Абад'];
+ return `<div class="card">
+  <div class="phead"><div class="pimg">${esc(a.icon)}</div><div><div class="pname">${esc(a.title)}</div><div class="desc">${esc(a.desc)}</div></div></div>
+  <div class="p
