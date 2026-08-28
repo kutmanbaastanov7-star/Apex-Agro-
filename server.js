@@ -9,7 +9,12 @@ app.use((req, res, next) => {
   }
 
   res.sendFile(
-    path.join(__dirname, "index.html")
+    path.join(__dirname, "index.html"),
+    (error) => {
+      if (error) {
+        next(error);
+      }
+    }
   );
 
 });
