@@ -164,5 +164,1304 @@ header{position:sticky;top:0;z-index:30;background:#fff;padding:12px 15px;border
     }))];
   }
 
-  function filtered(){
+    function filtered(){
+    const q = $('search').value.trim().toLowerCase();
+
+    return products().filter(p => {
+
+      const matchCategory =
+        !state.category ||
+        p.category === state.category;
+
+      const matchType =
+        !state.type ||
+        p.type === state.type;
+
+      const text = `
+        ${p.title}
+        ${p.desc}
+        ${p.category}
+        ${p.region}
+      `.toLowerCase();
+
+      const matchSearch =
+        !q || text.includes(q);
+
+      return (
+        matchCategory &&
+        matchType &&
+        matchSearch
+      );
+    });
+  }
+
+  function renderPriceRows(){
+
+    const items = base
+      .filter(x => x.category === 'Өсүмдүктөр')
+      .slice(0, 6);
+
+    $('priceRows').innerHTML =
+      items.map(p => `
+        <tr>
+          <td>${esc(p.title)}</td>
+          <td>${esc(p.prices?.['Талас'] || '-')}</td>
+          <td>${esc(p.prices?.['Чүй'] || '-')}</td>
+          <td>${esc(p.prices?.['Ош'] || '-')}</td>
+          <td>${esc(p.prices?.['Нарын'] || '-')}</td>
+        </tr>
+      `).join('');
+  }
+
+  function productCard(p){
+
+    return `
+      <article class="card">
+
+        <div class="phead">
+
+          <div class="pimg">
+            ${esc(p.icon || '📦')}
+          </div>
+
+          <div>
+            <div class="pname">
+              ${esc(p.title)}
+            </div>
+
+            <div class="desc">
+              ${esc(p.desc || '')}
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tags">
+          <span class="tag">
+            ${esc(p.category)}
+          </span>
+
+          ${
+            p.type
+              ? `<span class="tag">${esc(p.type)}</span>`
+              : ''
+          }
+
+          <span class="tag">
+            📍 ${esc(p.region || 'Кыргызстан')}
+          </span>
+        </div>
+
+        ${
+          p.category === 'Өсүмдүктөр'
+            ? `
+              <div class="demand">
+                🔥 <b>Суроо-талап:</b>
+                Жогорку
+              </div>
+            `
+            : ''
+        }
+
+        <div class="price">
+          💰 Баасы
+          <b>${esc(p.price || 'Баасы көрсөтүлгөн эмес')}</b>
+
+          ${
+            p.prices
+              ? `
+                <div class="region-prices">
+
+                  <span>
+                    <b>Талас</b>
+                    ${esc(p.prices['Талас'] || '-')}
+                  </span>
+
+                  <span>
+                    <b>Чүй</b>
+                    ${esc(p.prices['Чүй'] || '-')}
+                  </span>
+
+                  <span>
+                    <b>Ош</b>
+                    ${esc(p.prices['Ош'] || '-')}
+                  </span>
+
+                  <span>
+                    <b>Нарын</b>
+                    ${esc(p.prices['Нарын'] || '-')}
+                  </span>
+
+                </div>
+              `
+              : ''
+          }
+
+        </div>
+
+        ${
+          p.id && String(p.id).startsWith('b')
+            ? `
+              <button
+                class="main"
+                data-contact="${esc(p.id)}"
+              >
+                💬 Сатуучу менен байланышуу
+              </button>
+            `
+            : `
+              <button
+                class="main"
+                data-contact-ad="${esc(p.id)}"
+              >
+                💬 Байланышуу
+              </button>
+            `
+        }
+
+      </article>
+    `;
+  }
+
+  function renderHome(){
+
+    const list = filtered();
+
+    if (!list.length){
+
+      $('homeList').innerHTML = `
+        <div class="empty">
+          🔍 Товар табылган жок.
+          <br>
+          Башка издөө сөзүн же категорияны
+          колдонуп көрүңүз.
+        </div>
+      `;
+
+      return;
+    }
+
+    $('homeList').innerHTML =
+      list.map(productCard).join('');
+
+    bindContactButtons();
+  }
+
+  function renderMarket(){
+
+    const list = products();
+
+    if (!list.length){
+
+      $('marketList').innerHTML = `
+        <div class="empty">
+          Азырынча жарыялар жок.
+        </div>
+      `;
+
+      return;
+    }
+
+    $('marketList').innerHTML =
+      list.map(p => `
+        <div>
+          ${productCard(p)}
+        </div>
+      `).join('');
+
+    bindContactButtons();
+  }
+
+  function bindContactButtons(){
+
+    document
+      .querySelectorAll('[data-contact]')
+      .forEach(btn => {
+
+        btn.onclick = () => {
+
+          const id = btn.dataset.contact;
+
+          if (!state.user){
+
+            toast('Байланышуу үчүн аккаунтка кириңиз');
+
+            openAuth();
+
+            return;
+          }
+
+          const ad = state.ads.find(
+            x => String(x.id) === String(id)
+          );
+
+          if (ad?.seller?.id){
+
+            openChatWithUser(ad.seller.id);
+
+          } else {
+
+            toast(
+              'Бул демо товар. Сатуучунун аккаунту азырынча жок.'
+            );
+
+          }
+
+        };
+
+      });
+
+    document
+      .querySelectorAll('[data-contact-ad]')
+      .forEach(btn => {
+
+        btn.onclick = () => {
+
+          if (!state.user){
+
+            toast('Адегенде аккаунтка кириңиз');
+
+            openAuth();
+
+            return;
+          }
+
+          const adId =
+            btn.dataset.contactAd;
+
+          const ad =
+            state.ads.find(
+              x => String(x.id) === String(adId)
+            );
+
+          if (
+            ad &&
+            ad.seller &&
+            ad.seller.id
+          ){
+
+            openChatWithUser(
+              ad.seller.id
+            );
+
+          } else {
+
+            toast(
+              'Сатуучунун маалыматы табылган жок'
+            );
+
+          }
+
+        };
+
+      });
+  }
+
+  async function api(url, options = {}){
+
+    const headers = {
+      ...(options.body
+        ? {'Content-Type':'application/json'}
+        : {}),
+      ...(options.headers || {})
+    };
+
+    if (state.token){
+
+      headers.Authorization =
+        `Bearer ${state.token}`;
+
+    }
+
+    const response =
+      await fetch(url, {
+        ...options,
+        headers
+      });
+
+    let data = {};
+
+    try {
+      data = await response.json();
+    } catch (_) {}
+
+    if (!response.ok){
+
+      throw new Error(
+        data.error ||
+        'Сервердик ката кетти'
+      );
+
+    }
+
+    return data;
+  }
+
+  async function loadAds(){
+
+    try {
+
+      const params =
+        new URLSearchParams();
+
+      const q =
+        $('search').value.trim();
+
+      if (q)
+        params.set('q', q);
+
+      const ads =
+        await api(
+          `/api/ads?${params.toString()}`
+        );
+
+      state.ads =
+        Array.isArray(ads)
+          ? ads
+          : [];
+
+      renderHome();
+
+      if (
+        $('marketPage').classList.contains('active')
+      ){
+
+        renderMarket();
+
+      }
+
+    } catch (error){
+
+      console.error(error);
+
+      $('homeList').innerHTML = `
+        <div class="empty">
+          ⚠️ Маалымат жүктөлгөн жок.
+          <br>
+          Серверди текшериңиз.
+        </div>
+      `;
+
+    }
+
+  }
+
+  function openAuth(){
+
+    $('authModal')
+      .classList.add('show');
+
+  }
+
+  function closeAuth(){
+
+    $('authModal')
+      .classList.remove('show');
+
+  }
+
+  function switchAuthTab(type){
+
+    const login =
+      type === 'login';
+
+    $('loginForm').style.display =
+      login ? 'block' : 'none';
+
+    $('registerForm').style.display =
+      login ? 'none' : 'block';
+
+    $('loginTab')
+      .classList.toggle('active', login);
+
+    $('registerTab')
+      .classList.toggle('active', !login);
+
+  }
+
+  function saveUser(data){
+
+    state.token =
+      data.token || '';
+
+    state.user =
+      data.user || null;
+
+    if (state.token){
+
+      localStorage.setItem(
+        'apex_token',
+        state.token
+      );
+
+    }
+
+    updateProfile();
+    updateHeader();
+
+  }
+
+  function updateHeader(){
+
+    $('loc').textContent =
+      state.user
+        ? `${state.user.name} — ${state.region}`
+        : 'Конок';
+
+  }
+
+  function updateProfile(){
+
+    if (!state.user){
+
+      $('profileName').textContent =
+        'Конок';
+
+      $('profilePhone').textContent =
+        'Телефон: -';
+
+      $('profileRole').textContent =
+        'Катталган эмес';
+
+      $('createHint').textContent =
+        'Жарыя берүү үчүн аккаунтка кириңиз.';
+
+      return;
+    }
+
+    $('profileName').textContent =
+      state.user.name;
+
+    $('profilePhone').textContent =
+      `Телефон: ${state.user.phone}`;
+
+    $('profileRole').textContent =
+      state.user.role;
+
+    $('createHint').textContent =
+      `Жарыя ${state.user.name} аккаунтунан берилет.`;
+
+  }
+
+  async function checkSession(){
+
+    if (!state.token){
+
+      updateProfile();
+      updateHeader();
+
+      return;
+
+    }
+
+    try {
+
+      const data =
+        await api('/api/me');
+
+      state.user =
+        data.user;
+
+      updateProfile();
+      updateHeader();
+
+    } catch (error){
+
+      localStorage.removeItem(
+        'apex_token'
+      );
+
+      state.token = '';
+      state.user = null;
+
+      updateProfile();
+      updateHeader();
+
+    }
+
+  }
+
+  async function login(){
+
+    const phone =
+      $('loginPhone').value.trim();
+
+    const password =
+      $('loginPass').value;
+
+    if (!phone || !password){
+
+      toast(
+        'Телефон жана пароль толтуруңуз'
+      );
+
+      return;
+
+    }
+
+    const btn =
+      $('loginBtn');
+
+    btn.disabled = true;
+
+    try {
+
+      const data =
+        await api('/api/login', {
+          method:'POST',
+          body:JSON.stringify({
+            phone,
+            password
+          })
+        });
+
+      saveUser(data);
+
+      closeAuth();
+
+      toast(
+        `Кош келиңиз, ${data.user.name}!`
+      );
+
+      $('loginPass').value = '';
+
+    } catch (error){
+
+      toast(error.message);
+
+    } finally {
+
+      btn.disabled = false;
+
+    }
+
+  }
+
+  async function register(){
+
+    const name =
+      $('regName').value.trim();
+
+    const phone =
+      $('regPhone').value.trim();
+
+    const password =
+      $('regPass').value;
+
+    const role =
+      $('regRole').value;
+
+    if (!name || !phone || !password){
+
+      toast(
+        'Бардык талааларды толтуруңуз'
+      );
+
+      return;
+
+    }
+
+    if (password.length < 6){
+
+      toast(
+        'Пароль кеминде 6 белгиден турушу керек'
+      );
+
+      return;
+
+    }
+
+    const btn =
+      $('registerBtn');
+
+    btn.disabled = true;
+
+    try {
+
+      const data =
+        await api('/api/register', {
+          method:'POST',
+          body:JSON.stringify({
+            name,
+            phone,
+            password,
+            role
+          })
+        });
+
+      saveUser(data);
+
+      closeAuth();
+
+      toast(
+        `Каттоо ийгиликтүү өттү. Кош келиңиз, ${name}!`
+      );
+
+      $('regName').value = '';
+      $('regPhone').value = '';
+      $('regPass').value = '';
+
+    } catch (error){
+
+      toast(error.message);
+
+    } finally {
+
+      btn.disabled = false;
+
+    }
+
+  }
+
+  async function logout(){
+
+    try {
+
+      if (state.token){
+
+        await api('/api/logout', {
+          method:'POST'
+        });
+
+      }
+
+    } catch (_) {}
+
+    state.token = '';
+    state.user = null;
+
+    if (state.socket){
+
+      state.socket.disconnect();
+      state.socket = null;
+
+    }
+
+    localStorage.removeItem(
+      'apex_token'
+    );
+
+    updateProfile();
+    updateHeader();
+
+    go('homePage');
+
+    toast('Аккаунттан чыктыңыз');
+
+  }
+
+  async function publishAd(){
+
+    if (!state.user){
+
+      toast(
+        'Жарыя берүү үчүн аккаунтка кириңиз'
+      );
+
+      openAuth();
+
+      return;
+
+    }
+
+    const title =
+      $('adTitle').value.trim();
+
+    const category =
+      $('adCategory').value;
+
+    const price =
+      $('adPrice').value.trim();
+
+    const region =
+      $('adRegion').value;
+
+    const description =
+      $('adDesc').value.trim();
+
+    if (
+      !title ||
+      !category ||
+      !price ||
+      !region
+    ){
+
+      toast(
+        'Товар, категория, баа жана аймакты толтуруңуз'
+      );
+
+      return;
+
+    }
+
+    const btn =
+      $('publishBtn');
+
+    btn.disabled = true;
+
+    try {
+
+      const ad =
+        await api('/api/ads', {
+          method:'POST',
+          body:JSON.stringify({
+            title,
+            category,
+            price,
+            region,
+            description
+          })
+        });
+
+      state.ads.push(ad);
+
+      $('adTitle').value = '';
+      $('adPrice').value = '';
+      $('adDesc').value = '';
+
+      toast(
+        '✅ Жарыя ийгиликтүү жарыяланды!'
+      );
+
+      renderHome();
+
+      setTimeout(() => {
+        go('marketPage');
+      }, 500);
+
+    } catch (error){
+
+      toast(error.message);
+
+    } finally {
+
+      btn.disabled = false;
+
+    }
+
+  }
+
+  async function loadUsers(){
+
+    if (!state.user){
+
+      $('usersList').innerHTML = `
+        <div class="empty">
+          💬 Чатты колдонуу үчүн аккаунтка кириңиз.
+        </div>
+      `;
+
+      return;
+
+    }
+
+    try {
+
+      const users =
+        await api('/api/users');
+
+      if (!users.length){
+
+        $('usersList').innerHTML = `
+          <div class="empty">
+            Азырынча башка колдонуучулар жок.
+          </div>
+        `;
+
+        return;
+
+      }
+
+      $('usersList').innerHTML =
+        users.map(user => `
+          <button
+            class="user"
+            data-user-id="${esc(user.id)}"
+          >
+            <b>👤 ${esc(user.name)}</b>
+            <small>
+              ${esc(user.role)}
+            </small>
+          </button>
+        `).join('');
+
+      document
+        .querySelectorAll('[data-user-id]')
+        .forEach(btn => {
+
+          btn.onclick = () => {
+
+            selectUser(
+              btn.dataset.userId
+            );
+
+          };
+
+        });
+
+    } catch (error){
+
+      toast(error.message);
+
+    }
+
+  }
+
+  function connectSocket(){
+
+    if (!state.user || !state.token){
+
+      return;
+
+    }
+
+    if (state.socket){
+
+      state.socket.disconnect();
+
+    }
+
+    if (
+      typeof io === 'undefined'
+    ){
+
+      console.warn(
+        'Socket.IO client жүктөлгөн жок'
+      );
+
+      return;
+
+    }
+
+    state.socket =
+      io({
+        auth:{
+          token: state.token
+        }
+      });
+
+    state.socket.on(
+      'connect',
+      () => {
+
+        console.log(
+          '🟢 Apex chat connected'
+        );
+
+        if (state.selectedUser){
+
+          state.socket.emit(
+            'join_chat',
+            {
+              otherUserId:
+                state.selectedUser.id
+            }
+          );
+
+        }
+
+      }
+    );
+
+    state.socket.on(
+      'chat_history',
+      history => {
+
+        renderMessages(
+          Array.isArray(history)
+            ? history
+            : []
+        );
+
+      }
+    );
+
+    state.socket.on(
+      'new_message',
+      message => {
+
+        if (
+          !state.selectedUser
+        ){
+
+          return;
+
+        }
+
+        const valid =
+          message.senderId ===
+            state.selectedUser.id ||
+          message.senderId ===
+            state.user.id;
+
+        if (!valid) return;
+
+        appendMessage(message);
+
+      }
+    );
+
+    state.socket.on(
+      'typing',
+      data => {
+
+        if (
+          !state.selectedUser ||
+          data.userId !==
+            state.selectedUser.id
+        ){
+
+          return;
+
+        }
+
+        const head =
+          $('chatHead');
+
+        if (data.isTyping){
+
+          head.innerHTML = `
+            <b>${esc(data.name)}</b>
+            <small style="color:var(--mut);margin-left:5px">
+              жазып жатат...
+            </small>
+          `;
+
+        } else {
+
+          head.innerHTML = `
+            <b>${esc(state.selectedUser.name)}</b>
+          `;
+
+        }
+
+      }
+    );
+
+    state.socket.on(
+      'chat_error',
+      data => {
+
+        toast(
+          data?.error ||
+          'Чатта ката кетти'
+        );
+
+      }
+    );
+
+    state.socket.on(
+      'connect_error',
+      error => {
+
+        console.error(
+          'Socket error:',
+          error.message
+        );
+
+      }
+    );
+
+  }
+
+  function selectUser(userId){
+
+    if (!state.user){
+
+      openAuth();
+
+      return;
+
+    }
+
+    fetchUsersAndSelect(
+      userId
+    );
+
+  }
+
+  async function fetchUsersAndSelect(userId){
+
+    try {
+
+      const users =
+        await api('/api/users');
+
+      const user =
+        users.find(
+          u =>
+            String(u.id) ===
+            String(userId)
+        );
+
+      if (!user){
+
+        toast(
+          'Колдонуучу табылган жок'
+        );
+
+        return;
+
+      }
+
+      state.selectedUser =
+        user;
+
+      $('chatHead').innerHTML = `
+        <b>👤 ${esc(user.name)}</b>
+        <small style="display:block;color:var(--mut);font-size:10px">
+          ${esc(user.role)}
+        </small>
+      `;
+
+      $('messageInput').disabled =
+        false;
+
+      $('sendBtn').disabled =
+        false;
+
+      if (!state.socket){
+
+        connectSocket();
+
+      }
+
+      if (state.socket){
+
+        state.socket.emit(
+          'join_chat',
+          {
+            otherUserId:
+              user.id
+          }
+        );
+
+      }
+
+      try {
+
+        const history =
+          await api(
+            `/api/chats/${encodeURIComponent(user.id)}/messages`
+          );
+
+        renderMessages(
+          Array.isArray(history)
+            ? history
+            : []
+        );
+
+      } catch (error){
+
+        console.error(error);
+
+      }
+
+    } catch (error){
+
+      toast(error.message);
+
+    }
+
+  }
+
+  async function openChatWithUser(userId){
+
+    if (!state.user){
+
+      openAuth();
+
+      return;
+
+    }
+
+    go('chatPage');
+
+    await loadUsers();
+
+    await fetchUsersAndSelect(
+      userId
+    );
+
+  }
+
+  function renderMessages(messages){
+
+    const box =
+      $('messages');
+
+    if (!messages.length){
+
+      box.innerHTML = `
+        <div class="msg them">
+          <div class="sender">
+            Apex / Система
+          </div>
+          Бул жаңы чат.
+          Билдирүү жөнөтүңүз.
+          <div class="mt">
+            Азыр
+          </div>
+        </div>
+      `;
+
+      return;
+
+    }
+
+    box.innerHTML =
+      messages
+        .map(messageHtml)
+        .join('');
+
+    box.scrollTop =
+      box.scrollHeight;
+
+  }
+
+  function appendMessage(message){
+
+    const box =
+      $('messages');
+
+    const system =
+      box.querySelector(
+        '.sender'
+      );
+
+    if (
+      box.children.length === 1 &&
+      system &&
+      system.textContent.includes('Apex')
+    ){
+
+      box.innerHTML = '';
+
+    }
+
+    box.insertAdjacentHTML(
+      'beforeend',
+      messageHtml(message)
+    );
+
+    box.scrollTop =
+      box.scrollHeight;
+
+  }
+
+  function messageHtml(message){
+
+    const mine =
+      String(message.senderId) ===
+      String(state.user?.id);
+
+    const date =
+      message.createdAt
+        ? new Date(
+            message.createdAt
+          ).toLocaleTimeString(
+            'ky-KG',
+            {
+              hour:'2-digit',
+              minute:'2-digit'
+            }
+          )
+        : 'Азыр';
+
+    return `
+      <div class="msg ${mine ? 'me' : 'them'}">
+
+        <div class="sender">
+          ${esc(message.senderName || '')}
+        </div>
+
+        ${esc(message.text)}
+
+        <div class="mt">
+          ${esc(date)}
+        </div>
+
+      </div>
+    `;
+
+  }
+
+  function sendMessage(){
+
+    if (
+      !state.user ||
+      !state.selectedUser
+    ){
+
+      toast(
+        'Алгач колдонуучуну тандаңыз'
+      );
+
+      return;
+
+    }
+
+    const input =
+      $('messageInput');
+
+    const text =
+      input.value.trim();
+
+    if (!text) return;
+
+    if (
+      !state.socket ||
+      !state.socket.connected
+    ){
+
+      toast(
+        'Чат серверине туташуу жок'
+      );
+
+      return;
+
+    }
+
+    state.socket.emit(
+      'send_message',
+      {
+        otherUserId:
+          state.selectedUser.id,
+
+        text
+      }
+    );
+
+    input.value = '';
+
+    state.socket.emit(
+      'typing',
+      {
+        otherUserId:
+          state.selectedUser.id,
+
+        isTyping:false
+      }
+    );
+
+  }
+
+  let typingTimer = null;
+
+  function typing(){
+
+    if (
+      !state.socket ||
+      !state.selectedUser
+    ){
+
+      return;
+
+    }
+
+    state.socket.emit(
+      'typing',
+      {
+        otherUserId:
+          state.selectedUser.id
  
