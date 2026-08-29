@@ -4,34 +4,33 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
-<meta name="google-site-verification" content="bOMomZc8gUdaLHM9lh0RAnoqAo1rH9i-8cgnUa8JxKE">
 <title>Apex Agro — Кыргызстандагы бирдиктүү агро рынок</title>
-<meta name="description" content="Apex Agro — Кыргызстандагы фермерлерди, сатып алуучуларды, агрономдорду жана агро-бизнести бириктирген агро маркетплейс.">
+<meta name="description" content="Apex Agro — Кыргызстандагы фермерлер, сатып алуучулар, агрономдор жана агро-бизнес үчүн бирдиктүү агро маркетплейс.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://apex-agro.onrender.com/">
-
-<meta property="og:title" content="Apex Agro — Бирдиктүү агро рынок">
-<meta property="og:description" content="Айыл чарба товарлары, агрономдор, жер семирткичтер, мал жана техника бир платформада.">
-<meta property="og:type" content="website">
 
 <script src="/socket.io/socket.io.js"></script>
 
 <style>
 :root{
   --g:#08752d;
-  --g2:#16843d;
+  --g2:#159444;
   --bg:#f4f8f5;
   --card:#fff;
   --txt:#17321f;
   --mut:#708276;
   --line:#dce9df;
-  --yel:#fff2c9;
+  --yellow:#fff2c9;
+  --red:#d84949;
 }
 
 *{
   box-sizing:border-box;
   margin:0;
-  padding:0
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
@@ -42,11 +41,15 @@ body{
 }
 
 button,input,select,textarea{
-  font:inherit
+  font:inherit;
 }
 
 button{
-  cursor:pointer
+  cursor:pointer;
+}
+
+button:active{
+  transform:scale(.98);
 }
 
 .app{
@@ -57,21 +60,10 @@ button{
   box-shadow:0 0 35px #0001;
 }
 
-.founders{
-  background:#123a20;
-  color:#fff;
-  text-align:center;
-  padding:8px;
-  font-size:11px;
-  font-weight:700;
-}
-
-.founders b{
-  color:#8de09d
-}
+/* HEADER */
 
 .top{
-  background:rgba(255,255,255,.96);
+  background:rgba(255,255,255,.97);
   backdrop-filter:blur(12px);
   padding:14px 16px 12px;
   position:sticky;
@@ -106,21 +98,21 @@ button{
 
 .logo svg{
   width:40px;
-  height:40px
+  height:40px;
 }
 
 .brand h1{
   font-size:23px;
   color:var(--g);
   line-height:1;
-  font-weight:900
+  font-weight:900;
 }
 
 .brand small{
   font-size:10px;
   color:#56805f;
   font-weight:900;
-  letter-spacing:.6px
+  letter-spacing:.6px;
 }
 
 .region{
@@ -129,7 +121,7 @@ button{
   color:#276f39;
   border-radius:28px;
   padding:10px 12px;
-  font-weight:800
+  font-weight:800;
 }
 
 .search{
@@ -151,7 +143,7 @@ button{
 
 .loc{
   margin-top:10px;
-  background:var(--yel);
+  background:var(--yellow);
   border-radius:15px;
   padding:11px 14px;
   font-size:13px;
@@ -160,24 +152,35 @@ button{
 .loc strong{
   display:block;
   color:#28743c;
-  font-size:20px
+  font-size:18px;
+  margin-top:2px;
 }
+
+/* PAGES */
 
 .page{
   display:none;
-  padding:15px 0 25px
+  padding:15px 0 25px;
 }
 
 .page.active{
-  display:block
+  display:block;
 }
 
 .title{
   padding:0 16px 11px;
   font-size:21px;
   font-weight:900;
-  color:#175d2d
+  color:#175d2d;
 }
+
+.subtitle{
+  padding:0 16px 14px;
+  font-size:12px;
+  color:var(--mut);
+}
+
+/* CATEGORIES */
 
 .cats{
   display:grid;
@@ -198,14 +201,17 @@ button{
 
 .cat.active{
   border-color:var(--g);
-  background:#edf8ef
+  background:#edf8ef;
+  color:var(--g);
 }
 
 .ico{
   font-size:24px;
   line-height:1;
-  margin-bottom:6px
+  margin-bottom:6px;
 }
+
+/* CHIPS */
 
 .chips{
   display:flex;
@@ -226,8 +232,10 @@ button{
 
 .chip.active{
   background:var(--g);
-  color:#fff
+  color:#fff;
 }
+
+/* CARDS */
 
 .card{
   background:linear-gradient(145deg,#fff,#fbfefb);
@@ -241,7 +249,7 @@ button{
 .phead{
   display:flex;
   gap:13px;
-  align-items:center
+  align-items:center;
 }
 
 .pimg{
@@ -252,60 +260,74 @@ button{
   display:grid;
   place-items:center;
   font-size:31px;
-  flex:0 0 64px
+  flex:0 0 64px;
 }
 
 .pname{
-  font-size:20px;
-  font-weight:900
+  font-size:19px;
+  font-weight:900;
 }
 
 .desc{
   font-size:13px;
   color:#618067;
-  margin-top:3px
+  margin-top:3px;
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:20px;
+  background:#e7f6ea;
+  color:#24723b;
+  font-size:10px;
+  font-weight:900;
+  margin-top:5px;
 }
 
 .prices{
   margin-top:13px;
   border:1px solid #dcebdc;
   border-radius:16px;
-  padding:10px
+  padding:10px;
 }
 
 .pt{
   font-size:12px;
   color:#66856a;
   font-weight:900;
-  margin-bottom:7px
+  margin-bottom:7px;
 }
 
 .pg{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:6px
+  gap:6px;
 }
 
 .pr{
   border:1px solid #e4eee5;
   border-radius:10px;
-  padding:6px;
+  padding:7px 4px;
   text-align:center;
-  font-size:12px;
-  color:#68736a
+  font-size:11px;
+  color:#68736a;
 }
 
 .pr b{
   display:block;
   color:#246b3b;
-  font-size:15px
+  font-size:14px;
+  margin-top:2px;
 }
+
+/* BUTTONS */
 
 .main{
   width:100%;
   border:0;
   border-radius:13px;
-  background:linear-gradient(135deg,var(--g),#159444);
+  background:linear-gradient(135deg,var(--g),var(--g2));
   color:#fff;
   padding:12px;
   font-weight:900;
@@ -315,14 +337,16 @@ button{
 
 .main:disabled{
   opacity:.55;
-  cursor:not-allowed
+  cursor:not-allowed;
 }
+
+/* ADS */
 
 .ads{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:10px;
-  padding:0 14px
+  padding:0 14px;
 }
 
 .ad{
@@ -330,40 +354,55 @@ button{
   border:1px solid var(--line);
   border-radius:18px;
   padding:13px;
-  box-shadow:0 7px 20px #19502a0b
+  box-shadow:0 7px 20px #19502a0b;
 }
 
 .ad i{
   font-size:27px;
   font-style:normal;
-  display:block
+  display:block;
 }
 
 .ad h3{
   font-size:14px;
-  margin-top:6px
+  margin-top:6px;
 }
 
 .ad small{
   display:block;
   color:var(--mut);
-  margin:4px 0
+  margin:4px 0;
 }
 
 .ad b{
-  color:var(--g)
+  color:var(--g);
 }
 
-.form,.profile,.chat{
+.ad button{
+  width:100%;
+  margin-top:8px;
+  border:0;
+  background:#edf8ef;
+  color:var(--g);
+  padding:8px;
+  border-radius:10px;
+  font-weight:800;
+}
+
+/* FORMS */
+
+.form,
+.profile,
+.chat{
   margin:0 14px;
   background:#fff;
   border:1px solid var(--line);
   border-radius:20px;
-  padding:16px
+  padding:16px;
 }
 
 .group{
-  margin-bottom:12px
+  margin-bottom:12px;
 }
 
 .group label{
@@ -371,7 +410,7 @@ button{
   font-size:12px;
   font-weight:800;
   color:#607667;
-  margin-bottom:5px
+  margin-bottom:5px;
 }
 
 .group input,
@@ -385,10 +424,114 @@ button{
   outline:0;
 }
 
+.group input:focus,
+.group select:focus,
+.group textarea:focus{
+  border-color:#77bb86;
+}
+
 .group textarea{
   min-height:85px;
-  resize:vertical
+  resize:vertical;
 }
+
+/* ANALYSIS */
+
+.analysis{
+  margin:0 14px 14px;
+  background:linear-gradient(135deg,#123a20,#176b34);
+  color:#fff;
+  border-radius:21px;
+  padding:16px;
+  box-shadow:0 10px 25px #123a2020;
+}
+
+.analysis h3{
+  font-size:17px;
+  margin-bottom:5px;
+}
+
+.analysis p{
+  font-size:12px;
+  opacity:.85;
+  line-height:1.5;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin-top:12px;
+}
+
+.stat{
+  background:#ffffff18;
+  border:1px solid #ffffff22;
+  border-radius:13px;
+  padding:10px 5px;
+  text-align:center;
+}
+
+.stat b{
+  display:block;
+  font-size:17px;
+}
+
+.stat span{
+  font-size:9px;
+  opacity:.75;
+}
+
+/* USERS */
+
+.usersbox{
+  margin:12px 14px 0;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:13px;
+}
+
+.usersbox h3{
+  font-size:14px;
+  margin-bottom:9px;
+}
+
+.userslist{
+  display:flex;
+  gap:8px;
+  overflow:auto;
+  padding-bottom:2px;
+}
+
+.userbtn{
+  border:1px solid #cfe1d2;
+  background:#f7fbf7;
+  border-radius:13px;
+  padding:9px 11px;
+  min-width:125px;
+  text-align:left;
+}
+
+.userbtn.active{
+  border-color:var(--g);
+  background:#edf8ef;
+}
+
+.userbtn b{
+  display:block;
+  font-size:12px;
+  color:#225f34;
+}
+
+.userbtn small{
+  display:block;
+  color:var(--mut);
+  font-size:10px;
+  margin-top:3px;
+}
+
+/* CHAT */
 
 .messages{
   height:390px;
@@ -397,7 +540,9 @@ button{
   padding:13px;
   display:flex;
   flex-direction:column;
-  gap:9px
+  gap:9px;
+  margin-top:10px;
+  border-radius:12px;
 }
 
 .chathead{
@@ -407,7 +552,8 @@ button{
   border-bottom:1px solid var(--line);
   display:flex;
   justify-content:space-between;
-  gap:8px
+  gap:8px;
+  align-items:center;
 }
 
 .online{
@@ -416,7 +562,7 @@ button{
   padding:4px 8px;
   border-radius:8px;
   font-size:10px;
-  font-weight:900
+  font-weight:900;
 }
 
 .offline{
@@ -425,7 +571,7 @@ button{
   padding:4px 8px;
   border-radius:8px;
   font-size:10px;
-  font-weight:900
+  font-weight:900;
 }
 
 .msg{
@@ -433,39 +579,39 @@ button{
   padding:10px 13px;
   border-radius:16px;
   font-size:13px;
-  word-break:break-word
+  word-break:break-word;
 }
 
 .me{
   align-self:flex-end;
   background:var(--g);
   color:#fff;
-  border-bottom-right-radius:4px
+  border-bottom-right-radius:4px;
 }
 
 .them{
   align-self:flex-start;
   background:#fff;
   border:1px solid #c9dfce;
-  border-bottom-left-radius:4px
+  border-bottom-left-radius:4px;
 }
 
 .sender{
   font-size:10px;
   font-weight:900;
   color:#238043;
-  margin-bottom:3px
+  margin-bottom:3px;
 }
 
 .me .sender{
-  color:#d9ffe1
+  color:#d9ffe1;
 }
 
 .mt{
   font-size:9px;
   opacity:.65;
   text-align:right;
-  margin-top:3px
+  margin-top:3px;
 }
 
 .chatin{
@@ -473,7 +619,7 @@ button{
   gap:7px;
   margin:12px -16px -16px;
   padding:11px;
-  border-top:1px solid var(--line)
+  border-top:1px solid var(--line);
 }
 
 .chatin input{
@@ -481,7 +627,7 @@ button{
   border:1px solid #d7e5da;
   border-radius:12px;
   padding:10px;
-  outline:0
+  outline:0;
 }
 
 .send{
@@ -490,62 +636,17 @@ button{
   color:#fff;
   border-radius:12px;
   padding:0 14px;
-  font-weight:900
-}
-
-.usersbox{
-  margin:12px 14px 0;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:13px
-}
-
-.usersbox h3{
-  font-size:14px;
-  margin-bottom:9px
-}
-
-.userslist{
-  display:flex;
-  gap:8px;
-  overflow:auto;
-  padding-bottom:2px
-}
-
-.userbtn{
-  border:1px solid #cfe1d2;
-  background:#f7fbf7;
-  border-radius:13px;
-  padding:9px 11px;
-  min-width:125px;
-  text-align:left
-}
-
-.userbtn.active{
-  border-color:var(--g);
-  background:#edf8ef
-}
-
-.userbtn b{
-  display:block;
-  font-size:12px;
-  color:#225f34
-}
-
-.userbtn small{
-  display:block;
-  color:var(--mut);
-  font-size:10px;
-  margin-top:3px
+  font-weight:900;
 }
 
 .typing{
   height:18px;
   color:#5f7c67;
   font-size:11px;
-  padding:3px 4px
+  padding:3px 4px;
 }
+
+/* PROFILE */
 
 .avatar{
   width:68px;
@@ -556,12 +657,12 @@ button{
   display:grid;
   place-items:center;
   font-size:29px;
-  margin:auto auto 8px
+  margin:auto auto 8px;
 }
 
 .menu{
   margin-top:16px;
-  border-top:1px solid var(--line)
+  border-top:1px solid var(--line);
 }
 
 .menu div{
@@ -570,8 +671,10 @@ button{
   display:flex;
   justify-content:space-between;
   font-weight:700;
-  cursor:pointer
+  cursor:pointer;
 }
+
+/* BOTTOM */
 
 .bottom{
   position:fixed;
@@ -586,7 +689,7 @@ button{
   display:flex;
   justify-content:space-around;
   align-items:center;
-  z-index:50
+  z-index:50;
 }
 
 .nav{
@@ -596,18 +699,18 @@ button{
   text-align:center;
   font-size:11px;
   font-weight:800;
-  min-width:70px
+  min-width:70px;
 }
 
 .nav span{
   display:block;
   font-size:20px;
   line-height:1.1;
-  margin-bottom:3px
+  margin-bottom:3px;
 }
 
 .nav.active{
-  color:var(--g)
+  color:var(--g);
 }
 
 .add{
@@ -619,8 +722,10 @@ button{
   color:#fff;
   font-size:26px;
   margin-top:-20px;
-  box-shadow:0 5px 18px #08752d44
+  box-shadow:0 5px 18px #08752d44;
 }
+
+/* MODAL */
 
 .modal{
   display:none;
@@ -630,11 +735,11 @@ button{
   z-index:100;
   align-items:center;
   justify-content:center;
-  padding:18px
+  padding:18px;
 }
 
 .modal.show{
-  display:flex
+  display:flex;
 }
 
 .modalbox{
@@ -644,7 +749,7 @@ button{
   width:100%;
   max-width:420px;
   position:relative;
-  box-shadow:0 20px 60px #0004
+  box-shadow:0 20px 60px #0004;
 }
 
 .close{
@@ -653,13 +758,13 @@ button{
   top:10px;
   border:0;
   background:none;
-  font-size:20px
+  font-size:20px;
 }
 
 .tabs{
   display:flex;
   border-bottom:2px solid #e4ece5;
-  margin-bottom:15px
+  margin-bottom:15px;
 }
 
 .tab{
@@ -668,13 +773,15 @@ button{
   background:none;
   padding:10px;
   font-weight:900;
-  color:#84938a
+  color:#84938a;
 }
 
 .tab.active{
   color:var(--g);
-  border-bottom:2px solid var(--g)
+  border-bottom:2px solid var(--g);
 }
+
+/* TOAST */
 
 .toast{
   position:fixed;
@@ -689,23 +796,17 @@ button{
   z-index:150;
   font-size:12px;
   max-width:90%;
-  text-align:center
+  text-align:center;
 }
 
 .toast.show{
-  display:block
+  display:block;
 }
 
 .empty{
   text-align:center;
   padding:30px;
-  color:#78907d
-}
-
-.logline{
-  padding:8px 14px;
-  font-size:11px;
-  color:#718276
+  color:#78907d;
 }
 
 .loginhint{
@@ -715,46 +816,44 @@ button{
   padding:11px;
   color:#397246;
   font-size:12px;
-  margin:0 14px 12px
+  margin:0 14px 12px;
 }
 
-.badge{
-  display:inline-block;
-  padding:4px 8px;
-  border-radius:20px;
-  background:#e7f6ea;
-  color:#24723b;
-  font-size:10px;
-  font-weight:900;
-  margin-top:5px
+.loading{
+  text-align:center;
+  padding:25px;
+  color:var(--mut);
+  font-size:13px;
 }
 
 @media(max-width:520px){
+
   .region{
     min-width:145px;
-    font-size:12px
+    font-size:12px;
   }
 
   .cats{
-    gap:6px
+    gap:6px;
   }
 
   .cat{
-    font-size:12px
+    font-size:12px;
   }
 
   .pg{
-    grid-template-columns:repeat(3,1fr)
+    grid-template-columns:repeat(3,1fr);
   }
 }
 
 @media(max-width:380px){
+
   .cats{
-    grid-template-columns:repeat(2,1fr)
+    grid-template-columns:repeat(2,1fr);
   }
 
   .ads{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
   }
 }
 </style>
@@ -764,12 +863,7 @@ button{
 
 <div class="app">
 
-<div class="founders">
-  Негиздөөчүлөр:
-  <b>Кутман Баястанов</b>
-  •
-  <b>Амантур Арстанбеков</b>
-</div>
+<!-- HEADER -->
 
 <header class="top">
 
@@ -799,11 +893,15 @@ button{
 
 <div class="search">
 🔍
-<input id="search" placeholder="Издөө..." oninput="render()">
+<input
+id="search"
+placeholder="Өсүмдүк, товар, кызмат издөө..."
+oninput="render()"
+>
 </div>
 
 <div class="loc">
-Сиздин атыңыз / жайгашкан жериңиз:
+Сиздин аккаунт:
 <strong id="loc">Конок</strong>
 </div>
 
@@ -814,7 +912,13 @@ button{
 
 <section id="page-home" class="page active">
 
-<div class="title">Категориялар</div>
+<div class="title">
+🌱 Агро рынок
+</div>
+
+<div class="subtitle">
+Кыргызстандын айыл чарба товарлары жана кызматтары
+</div>
 
 <div class="cats">
 
@@ -868,11 +972,43 @@ button{
 
 </div>
 
-<div class="title">
-🥔 Өсүмдүктөр тизмеси
+<div class="analysis">
+
+<h3>📊 Агро рыноктун анализи</h3>
+
+<p>
+Учурдагы Apex Agro маалымат базасындагы товарлардын негизинде
+рыноктун кыскача көрсөткүчтөрү.
+</p>
+
+<div class="stats">
+
+<div class="stat">
+<b id="statProducts">0</b>
+<span>Товар</span>
 </div>
 
-<div id="homeAds"></div>
+<div class="stat">
+<b id="statRegions">7</b>
+<span>Аймак</span>
+</div>
+
+<div class="stat">
+<b id="statAds">0</b>
+<span>Жарыя</span>
+</div>
+
+</div>
+
+</div>
+
+<div class="title">
+🥔 Өсүмдүктөр жана агро сунуштар
+</div>
+
+<div id="homeAds">
+<div class="loading">Маалымат жүктөлүүдө...</div>
+</div>
 
 </section>
 
@@ -882,10 +1018,16 @@ button{
 <section id="page-market" class="page">
 
 <div class="title">
-🔎 Бардык жарыялар
+📋 Бардык жарыялар
 </div>
 
-<div id="marketAds" class="ads"></div>
+<div class="subtitle">
+Фермерлердин жана агро-бизнестин сунуштары
+</div>
+
+<div id="marketAds" class="ads">
+<div class="loading">Жүктөлүүдө...</div>
+</div>
 
 </section>
 
@@ -911,6 +1053,7 @@ button{
 
 <div class="group">
 <label>Категория</label>
+
 <select id="ac">
 <option>Өсүмдүктөр</option>
 <option>Мал чарбасы</option>
@@ -918,6 +1061,7 @@ button{
 <option>Техника</option>
 <option>Агрономдор</option>
 </select>
+
 </div>
 
 <div class="group">
@@ -927,6 +1071,7 @@ button{
 
 <div class="group">
 <label>Аймак</label>
+
 <select id="ar">
 <option>Талас</option>
 <option>Чүй</option>
@@ -936,18 +1081,29 @@ button{
 <option>Жалал-Абад</option>
 <option>Нарын</option>
 </select>
+
 </div>
 
 <div class="group">
 <label>Маалымат</label>
-<textarea id="ad" placeholder="Товар жөнүндө маалымат..."></textarea>
+
+<textarea
+id="ad"
+placeholder="Товар жөнүндө маалымат..."
+></textarea>
+
 </div>
 
-<button id="publishBtn" class="main" onclick="publish()">
+<button
+id="publishBtn"
+class="main"
+onclick="publish()"
+>
 Жарыялоо
 </button>
 
 </div>
+
 </section>
 
 
@@ -968,9 +1124,11 @@ button{
 <h3>👥 Колдонуучулар</h3>
 
 <div id="usersList" class="userslist">
+
 <div class="empty" style="padding:10px">
 Колдонуучуларды жүктөө үчүн кирүү керек.
 </div>
+
 </div>
 
 </div>
@@ -997,8 +1155,8 @@ button{
 Apex / Система
 </div>
 
-Салам! Apex Agro Hub'га кош келиңиз.
-Жеке чат үчүн жогорудан колдонуучуну тандаңыз.
+Салам! Apex Agro'го кош келиңиз.
+Жеке чат үчүн колдонуучуну тандаңыз.
 
 <div class="mt">
 Азыр
@@ -1024,7 +1182,8 @@ onkeydown="if(event.key==='Enter')send()"
 id="sendBtn"
 class="send"
 onclick="send()"
-disabled>
+disabled
+>
 Жөнөтүү
 </button>
 
@@ -1049,11 +1208,17 @@ disabled>
 👨‍🌾
 </div>
 
-<div id="pn" style="font-size:20px;font-weight:900">
+<div
+id="pn"
+style="font-size:20px;font-weight:900"
+>
 Конок
 </div>
 
-<div id="pp" style="font-size:12px;color:var(--mut)">
+<div
+id="pp"
+style="font-size:12px;color:var(--mut)"
+>
 Телефон: -
 </div>
 
@@ -1083,7 +1248,10 @@ disabled>
 <span>›</span>
 </div>
 
-<div onclick="logout()" style="color:#d84949">
+<div
+onclick="logout()"
+style="color:#d84949"
+>
 🚪 Чыгуу
 <span>›</span>
 </div>
@@ -1099,26 +1267,45 @@ disabled>
 
 <nav class="bottom">
 
-<button class="nav active" id="nav-home" onclick="page('home')">
+<button
+class="nav active"
+id="nav-home"
+onclick="page('home')"
+>
 <span>🏠</span>
 Башкы
 </button>
 
-<button class="nav" id="nav-market" onclick="page('market')">
+<button
+class="nav"
+id="nav-market"
+onclick="page('market')"
+>
 <span>📋</span>
 Жарыялар
 </button>
 
-<button class="add" onclick="page('create')">
+<button
+class="add"
+onclick="page('create')"
+>
 +
 </button>
 
-<button class="nav" id="nav-chat" onclick="page('chat')">
+<button
+class="nav"
+id="nav-chat"
+onclick="page('chat')"
+>
 <span>💬</span>
 Чат
 </button>
 
-<button class="nav" id="nav-profile" onclick="page('profile')">
+<button
+class="nav"
+id="nav-profile"
+onclick="page('profile')"
+>
 <span>👤</span>
 Профиль
 </button>
@@ -1128,13 +1315,15 @@ disabled>
 </div>
 
 
-<!-- AUTH MODAL -->
+<!-- AUTH -->
 
 <div class="modal" id="modal">
 
 <div class="modalbox">
 
-<button class="close" onclick="closeAuth()">✕</button>
+<button class="close" onclick="closeAuth()">
+✕
+</button>
 
 <div style="text-align:center;margin:2px 0 14px">
 
@@ -1152,30 +1341,55 @@ Apex Agro
 
 </div>
 
-
 <div class="tabs">
 
-<button id="tl" class="tab active" onclick="authTab('login')">
+<button
+id="tl"
+class="tab active"
+onclick="authTab('login')"
+>
 Кирүү
 </button>
 
-<button id="tr" class="tab" onclick="authTab('register')">
+<button
+id="tr"
+class="tab"
+onclick="authTab('register')"
+>
 Катталуу
 </button>
 
 </div>
 
 
+<!-- LOGIN -->
+
 <div id="login">
 
 <div class="group">
+
 <label>Телефон номер</label>
-<input id="lp" placeholder="+996 700 000 000">
+
+<input
+id="lp"
+placeholder="+996 700 000 000"
+autocomplete="tel"
+inputmode="tel"
+>
+
 </div>
 
 <div class="group">
+
 <label>Пароль</label>
-<input id="lpass" type="password" placeholder="кеминде 6 белги">
+
+<input
+id="lpass"
+type="password"
+placeholder="кеминде 6 белги"
+autocomplete="current-password"
+>
+
 </div>
 
 <button class="main" onclick="login()">
@@ -1185,16 +1399,33 @@ Apex Agro
 </div>
 
 
+<!-- REGISTER -->
+
 <div id="register" style="display:none">
 
 <div class="group">
+
 <label>Толук аты-жөнүңүз</label>
-<input id="rn" autocomplete="name" placeholder="Аты-жөнүңүз">
+
+<input
+id="rn"
+autocomplete="name"
+placeholder="Аты-жөнүңүз"
+>
+
 </div>
 
 <div class="group">
+
 <label>Телефон номер</label>
-<input id="rp" autocomplete="tel" inputmode="tel" placeholder="+996 700 000 000">
+
+<input
+id="rp"
+autocomplete="tel"
+inputmode="tel"
+placeholder="+996 700 000 000"
+>
+
 </div>
 
 <div class="group">
@@ -1209,7 +1440,10 @@ placeholder="Кеминде 6 белги"
 oninput="passwordHint()"
 >
 
-<div id="passHint" style="font-size:10px;color:#819286;margin-top:5px">
+<div
+id="passHint"
+style="font-size:10px;color:#819286;margin-top:5px"
+>
 Кеминде 6 белги
 </div>
 
@@ -1238,119 +1472,4 @@ oninput="passwordHint()"
 </div>
 
 <button class="main" onclick="register()">
-✓ Катталууну аяктоо
-</button>
-
-<div style="text-align:center;font-size:10px;color:#809187;margin-top:9px">
-Катталуу менен Apex Agro'ну колдонууга макул болосуз.
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<div id="toast" class="toast"></div>
-
-
-<script>
-
-/* =========================
-   BASE DATA
-========================= */
-
-const base=[
-
-{
- id:'base-1',
- title:'Картошка (Элитная)',
- cat:'Өсүмдүктөр',
- type:'Жер-жемиш',
- icon:'🥔',
- desc:'Жогорку түшүмдүү сорт',
- price:'25–40 сом/кг',
- region:'Талас',
- prices:{
-  'Чүй':'30 сом',
-  'Талас':'25 сом',
-  'Ош':'26 сом',
-  'Ысык-Көл':'40 сом',
-  'Баткен':'32 сом',
-  'Жалал-Абад':'28 сом'
- }
-},
-
-{
- id:'base-2',
- title:'Кызыл алма',
- cat:'Өсүмдүктөр',
- type:'Мөмө',
- icon:'🍎',
- desc:'Жаңы жыйналган алма',
- price:'65 сом/кг',
- region:'Талас'
-},
-
-{
- id:'base-3',
- title:'Буудай',
- cat:'Өсүмдүктөр',
- type:'Дан',
- icon:'🌾',
- desc:'Сапаттуу дан',
- price:'32 сом/кг',
- region:'Нарын'
-},
-
-{
- id:'base-4',
- title:'Ангус породасындагы уй',
- cat:'Мал чарбасы',
- type:'Мал',
- icon:'🐄',
- desc:'Дени сак мал',
- price:'120 000 сом',
- region:'Нарын'
-},
-
-{
- id:'base-5',
- title:'НПК жер семирткичи 50 кг',
- cat:'Дары & Семирткич',
- type:'Дары',
- icon:'🧪',
- desc:'Айыл чарба үчүн',
- price:'2 400 сом',
- region:'Чүй'
-},
-
-{
- id:'base-6',
- title:'MTZ-82 трактор ижарага',
- cat:'Техника',
- type:'Техника',
- icon:'🚜',
- desc:'Ижара кызматы',
- price:'1 500 сом/саат',
- region:'Талас'
-}
-
-];
-
-let ads=[...base];
-
-let user=null;
-let users=[];
-let filter='';
-let socket=null;
-let selectedUser=null;
-let typingTimer=null;
-
-const tokenKey='apex_token';
-
-const $=id=>document.getElementById(id);
-
-
-/* =========================
-   HEL
+✓ Катталууну аякто
