@@ -1,27 +1,27 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ky">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Apex Agro — Кыргызстандагы агро рынок</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#08783a">
+<title>Apex — Агро маркетплейс</title>
 
 <style>
 :root{
-  --green:#08752d;
-  --green2:#159447;
-  --light:#f3f8f4;
+  --green:#08783a;
+  --green2:#0b9148;
+  --light:#eef8f1;
+  --bg:#f4f8f5;
   --white:#fff;
-  --text:#17321f;
-  --muted:#718277;
-  --line:#dce9df;
+  --text:#214b31;
+  --muted:#7d8b82;
+  --line:#dbe8df;
   --yellow:#fff1c7;
-  --red:#d94a4a;
+  --shadow:0 8px 25px rgba(20,70,40,.07);
 }
 
 *{
   box-sizing:border-box;
-  margin:0;
-  padding:0;
 }
 
 html{
@@ -29,13 +29,22 @@ html{
 }
 
 body{
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-  background:#e7eee9;
+  margin:0;
+  background:var(--bg);
   color:var(--text);
-  padding-bottom:82px;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 }
 
-button,input,select,textarea{
+button,
+input,
+select,
+textarea{
   font:inherit;
 }
 
@@ -48,257 +57,269 @@ button{
   max-width:760px;
   min-height:100vh;
   margin:auto;
-  background:var(--light);
-  box-shadow:0 0 30px #0001;
+  background:var(--bg);
 }
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
-header{
+.header{
   position:sticky;
   top:0;
   z-index:50;
-  background:#fff;
-  padding:13px 15px;
-  border-bottom:1px solid var(--line);
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(14px);
+  padding:18px 18px 12px;
+  border-bottom:1px solid #e3ece6;
 }
 
-.top{
+.header-row{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:10px;
+  gap:12px;
 }
 
 .brand{
   display:flex;
   align-items:center;
-  gap:10px;
-  cursor:pointer;
+  gap:12px;
 }
 
 .logo{
-  width:52px;
-  height:52px;
-  border-radius:17px;
-  background:linear-gradient(145deg,#08752d,#159447);
-  display:grid;
-  place-items:center;
-  color:#fff;
-  font-size:32px;
-  font-weight:900;
-  box-shadow:0 5px 15px #08752d33;
-}
-
-.brand h1{
-  color:var(--green);
-  font-size:27px;
-  line-height:1;
-}
-
-.brand small{
-  display:block;
-  margin-top:5px;
-  color:#63816c;
-  font-size:10px;
-  font-weight:800;
-}
-
-.region{
-  border:2px solid #bdddC3;
-  background:#f1faf3;
-  color:#2c713d;
-  border-radius:28px;
-  padding:11px 15px;
-  font-weight:900;
-}
-
-.search{
-  margin-top:12px;
+  width:62px;
+  height:62px;
+  border-radius:19px;
+  background:linear-gradient(145deg,#07823f,#0b6e38);
   display:flex;
   align-items:center;
-  gap:9px;
-  background:#fff;
-  border:2px solid #cfe2d3;
-  border-radius:17px;
-  padding:12px 14px;
+  justify-content:center;
+  box-shadow:0 7px 18px rgba(8,120,58,.18);
 }
 
-.search span{
-  font-size:22px;
+.logo svg{
+  width:44px;
+  height:44px;
 }
 
-.search input{
+.brand-name{
+  font-size:35px;
+  font-weight:800;
+  line-height:1;
+  color:var(--green);
+  letter-spacing:-1px;
+}
+
+.brand-sub{
+  margin-top:7px;
+  font-size:13px;
+  font-weight:700;
+  color:#718078;
+}
+
+.region-btn{
+  border:2px solid #c8dfd0;
+  background:#f5fbf6;
+  color:#2c6a45;
+  border-radius:28px;
+  padding:13px 16px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.search-box{
+  margin-top:14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border:2px solid #d5e3da;
+  border-radius:23px;
+  background:#fbfdfb;
+  padding:0 15px;
+}
+
+.search-icon{
+  font-size:27px;
+}
+
+.search-box input{
   width:100%;
   border:0;
   outline:0;
-  font-size:17px;
   background:transparent;
+  padding:16px 0;
+  font-size:18px;
 }
 
-.loc{
-  margin-top:10px;
-  padding:10px 13px;
+.profile-bar{
+  margin-top:12px;
   background:var(--yellow);
-  border-radius:15px;
-  color:#6b684d;
-  font-size:12px;
+  border-radius:17px;
+  padding:13px 16px;
+  color:#6d6245;
 }
 
-.loc b{
-  display:block;
-  color:#28743c;
-  font-size:17px;
-  margin-top:2px;
+.profile-bar b{
+  color:#287346;
 }
 
-/* PAGES */
+/* =========================
+   MAIN
+========================= */
+
+main{
+  padding:20px 18px 110px;
+}
 
 .page{
   display:none;
-  padding:15px 0 30px;
 }
 
 .page.active{
   display:block;
 }
 
-.title{
-  padding:0 15px 12px;
-  font-size:21px;
-  font-weight:900;
-  color:#175d2d;
-}
-
-/* HERO */
+/* =========================
+   HERO
+========================= */
 
 .hero{
-  margin:0 14px 18px;
-  padding:21px;
-  border-radius:24px;
-  background:linear-gradient(135deg,#075b2b,#218b4b);
-  color:#fff;
-  box-shadow:0 10px 25px #08752d22;
+  background:
+    linear-gradient(
+      135deg,
+      #066d36,
+      #0a8844 65%,
+      #159b51
+    );
+  color:white;
+  border-radius:30px;
+  padding:27px 25px 25px;
+  box-shadow:0 15px 35px rgba(8,120,58,.16);
 }
 
-.hero small{
+.hero-small{
+  font-size:15px;
   font-weight:800;
-  opacity:.9;
+  opacity:.88;
 }
 
-.hero h2{
-  margin-top:8px;
-  font-size:27px;
-  line-height:1.12;
+.hero h1{
+  margin:13px 0 12px;
+  font-size:31px;
+  line-height:1.1;
+  letter-spacing:-.7px;
 }
 
 .hero p{
-  margin-top:10px;
-  font-size:14px;
-  line-height:1.5;
-  opacity:.9;
+  margin:0 0 21px;
+  color:#e5f6eb;
+  font-size:16px;
+  line-height:1.6;
 }
 
 .hero-buttons{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-  margin-top:15px;
 }
 
-.hero button{
+.hero-btn{
+  min-height:58px;
+  border-radius:17px;
+  font-weight:800;
   border:0;
-  border-radius:15px;
-  padding:13px 10px;
-  font-weight:900;
-  font-size:14px;
+  padding:12px;
 }
 
-.market-btn{
-  background:#fff;
-  color:var(--green);
+.hero-primary{
+  background:white;
+  color:#13723c;
 }
 
-.add-btn{
-  background:#ffffff1c;
-  border:1px solid #ffffff55!important;
-  color:#fff;
+.hero-secondary{
+  color:white;
+  background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.35);
 }
 
-/* CATEGORIES */
+/* =========================
+   SECTION
+========================= */
 
-.catalog-head{
+.section-title{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 15px 12px;
+  margin:27px 2px 12px;
 }
 
-.catalog-head h2{
-  font-size:21px;
-  color:#175d2d;
+.section-title h2{
+  margin:0;
+  font-size:26px;
+  letter-spacing:-.4px;
 }
 
-.catalog-head button{
+.section-link{
   border:0;
-  background:none;
-  color:#779080;
-  font-size:12px;
+  background:transparent;
+  color:#839087;
 }
 
-.cats{
+/* =========================
+   CATEGORIES
+========================= */
+
+.categories{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-  padding:0 14px;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
 }
 
-.cat{
-  min-height:130px;
-  background:#fff;
-  border:2px solid #e0ebe2;
-  border-radius:21px;
-  padding:15px;
-  color:#376847;
+.category{
+  min-height:145px;
+  border:2px solid #e1ebe4;
+  background:white;
+  border-radius:25px;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:8px;
-  transition:.2s;
+  gap:10px;
+  color:#416a50;
+  box-shadow:0 5px 18px rgba(20,70,40,.04);
 }
 
-.cat:hover{
-  transform:translateY(-2px);
-}
-
-.cat.active{
+.category.active{
   border-color:var(--green);
-  background:#edf8ef;
-  box-shadow:0 4px 14px #08752d15;
+  background:#eef9f1;
 }
 
-.cat-icon{
-  width:55px;
-  height:55px;
-  border-radius:18px;
-  background:#f0f8f1;
-  display:grid;
-  place-items:center;
-  font-size:30px;
+.category-icon{
+  width:60px;
+  height:60px;
+  border-radius:20px;
+  background:#f0f8f2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:37px;
 }
 
-.cat strong{
-  font-size:14px;
+.category strong{
+  font-size:16px;
 }
 
-/* CHIPS */
+/* =========================
+   CHIPS
+========================= */
 
 .chips{
   display:flex;
-  gap:8px;
+  gap:9px;
   overflow-x:auto;
-  padding:13px 14px;
+  padding:3px 2px 8px;
+  scrollbar-width:none;
 }
 
 .chips::-webkit-scrollbar{
@@ -306,614 +327,471 @@ header{
 }
 
 .chip{
-  white-space:nowrap;
-  border:1px solid #c9ddcc;
-  background:#fff;
-  color:#4d7258;
-  border-radius:25px;
-  padding:9px 14px;
-  font-size:12px;
-  font-weight:800;
+  flex:none;
+  border:1px solid #cfded4;
+  background:white;
+  color:#52745e;
+  border-radius:22px;
+  padding:10px 15px;
+  font-weight:700;
 }
 
 .chip.active{
   background:var(--green);
-  color:#fff;
+  color:white;
   border-color:var(--green);
 }
 
-/* ANALYSIS */
+/* =========================
+   PRICE TABLE
+========================= */
 
-.analysis{
-  margin:2px 14px 16px;
-  background:#fff;
+.price-card{
+  background:white;
   border:1px solid var(--line);
-  border-radius:20px;
-  padding:14px;
-}
-
-.analysis h3{
-  color:var(--green);
-  font-size:15px;
-  margin-bottom:10px;
-}
-
-.analysis-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-}
-
-.analysis-item{
-  background:#f8fbf9;
-  border:1px solid #e5eee7;
-  border-radius:14px;
-  padding:12px 6px;
-  text-align:center;
-}
-
-.analysis-item .big{
-  font-size:25px;
-}
-
-.analysis-item b{
-  display:block;
-  margin-top:4px;
-  font-size:11px;
-}
-
-.analysis-item small{
-  display:block;
-  margin-top:3px;
-  color:#819087;
-  font-size:9px;
-}
-
-/* PRICE */
-
-.pricebox{
-  margin:0 14px 18px;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:13px;
+  border-radius:24px;
+  padding:15px;
+  box-shadow:var(--shadow);
   overflow:auto;
-}
-
-.pricebox h3{
-  color:var(--green);
-  margin-bottom:9px;
 }
 
 .price-table{
   width:100%;
   border-collapse:collapse;
-  font-size:11px;
-  min-width:500px;
+  font-size:14px;
 }
 
 .price-table th,
 .price-table td{
-  padding:9px 6px;
-  border-bottom:1px solid #edf2ee;
-  text-align:center;
-}
-
-.price-table th:first-child,
-.price-table td:first-child{
   text-align:left;
+  padding:12px 7px;
+  border-bottom:1px solid #edf1ee;
+  white-space:nowrap;
 }
 
-.price-table td{
-  color:#236c3a;
-  font-weight:900;
+.price-table th{
+  color:#718078;
 }
 
-/* PRODUCTS */
+.green-price{
+  color:#08783a;
+  font-weight:800;
+}
 
-.products{
-  display:flex;
-  flex-direction:column;
+/* =========================
+   PRODUCT CARDS
+========================= */
+
+.cards{
+  display:grid;
   gap:12px;
 }
 
 .product{
-  margin:0 14px;
-  background:#fff;
-  border:1px solid #dfece1;
-  border-radius:20px;
-  padding:14px;
-  box-shadow:0 6px 18px #19502a0a;
-}
-
-.product-top{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:15px;
   display:flex;
-  gap:11px;
-  align-items:center;
+  gap:14px;
+  box-shadow:var(--shadow);
 }
 
 .product-icon{
-  width:62px;
-  height:62px;
-  background:#edf8ef;
-  border-radius:17px;
-  display:grid;
-  place-items:center;
-  font-size:32px;
+  width:78px;
+  height:78px;
+  border-radius:20px;
+  background:#eef8f1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:42px;
+  flex:none;
 }
 
-.product-name{
-  font-size:16px;
-  font-weight:900;
+.product-info{
+  min-width:0;
+  flex:1;
 }
 
-.product-desc{
-  color:#69806f;
-  font-size:11px;
-  margin-top:4px;
+.product-title{
+  margin:0 0 6px;
+  font-size:18px;
+}
+
+.product-meta{
+  color:#7c8981;
+  font-size:13px;
+  line-height:1.5;
 }
 
 .product-price{
-  margin-top:11px;
-  background:#f6faf7;
-  border:1px solid #e4eee6;
-  border-radius:12px;
-  padding:9px;
-}
-
-.product-price small{
-  color:#7b8d82;
-}
-
-.product-price b{
-  display:block;
-  color:var(--green);
-  font-size:17px;
-  margin-top:2px;
-}
-
-.product-bottom{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-top:9px;
-}
-
-.product-region{
-  font-size:10px;
-  color:#718278;
-}
-
-.details{
-  border:0;
-  background:var(--green);
-  color:#fff;
-  border-radius:10px;
-  padding:8px 12px;
-  font-size:11px;
-  font-weight:900;
-}
-
-/* SERVICES */
-
-.service-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-  padding:0 14px;
-}
-
-.service{
-  border:1px solid var(--line);
-  background:#fff;
-  border-radius:18px;
-  padding:14px;
-  text-align:left;
-}
-
-.service-icon{
-  font-size:27px;
-}
-
-.service b{
-  display:block;
-  margin-top:6px;
-  font-size:13px;
-}
-
-.service span{
-  display:block;
-  color:#718278;
-  font-size:10px;
-  margin-top:4px;
-}
-
-.service strong{
-  display:block;
-  color:var(--green);
-  font-size:10px;
-  margin-top:7px;
-}
-
-/* MARKET */
-
-.market-tools{
-  padding:0 14px 13px;
-  display:flex;
-  gap:8px;
-}
-
-.market-tools select{
-  flex:1;
-  border:1px solid #cfe1d2;
-  border-radius:12px;
-  padding:10px;
-  background:#fff;
-  outline:0;
-}
-
-.market-list{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-/* FORMS */
-
-.form{
-  margin:0 14px;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:15px;
-}
-
-.group{
-  margin-bottom:12px;
-}
-
-.group label{
-  display:block;
-  color:#607667;
-  font-size:11px;
-  font-weight:900;
-  margin-bottom:5px;
-}
-
-.group input,
-.group select,
-.group textarea{
-  width:100%;
-  border:1px solid #d5e3d8;
-  background:#f9fbf9;
-  border-radius:12px;
-  padding:11px;
-  outline:0;
-}
-
-.group textarea{
-  min-height:90px;
-  resize:vertical;
-}
-
-.main{
-  width:100%;
-  border:0;
-  border-radius:13px;
-  background:linear-gradient(135deg,var(--green),var(--green2));
-  color:#fff;
-  padding:12px;
-  font-weight:900;
-}
-
-/* PROFILE */
-
-.profile{
-  margin:0 14px;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:18px;
-  text-align:center;
-}
-
-.avatar{
-  width:75px;
-  height:75px;
-  margin:auto;
-  border-radius:50%;
-  background:#e7f6ea;
-  border:3px solid #7bc98a;
-  display:grid;
-  place-items:center;
-  font-size:34px;
-}
-
-.profile-name{
   margin-top:8px;
-  font-size:20px;
-  font-weight:900;
+  color:#08783a;
+  font-size:18px;
+  font-weight:850;
 }
 
-.profile-phone{
-  margin-top:3px;
-  color:#75857b;
-  font-size:12px;
-}
-
-.profile-role{
-  color:var(--green);
-  font-weight:800;
-  margin-top:5px;
-}
-
-.menu{
-  margin-top:15px;
-  border-top:1px solid #edf2ee;
-}
-
-.menu button{
-  width:100%;
+.small-btn{
   border:0;
-  border-bottom:1px solid #edf2ee;
-  background:#fff;
-  padding:14px 4px;
-  text-align:left;
+  background:#eaf7ee;
+  color:#08783a;
+  border-radius:13px;
+  padding:10px 12px;
   font-weight:800;
 }
 
-/* CHAT */
-
-.users{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding:0 14px 12px;
-}
-
-.user{
-  min-width:145px;
-  border:1px solid #cfe1d2;
-  background:#fff;
-  border-radius:14px;
-  padding:10px;
-  text-align:left;
-}
-
-.user b{
-  display:block;
-  font-size:11px;
-  color:#225f34;
-}
-
-.user small{
-  display:block;
-  color:#78907d;
-  margin-top:3px;
-  font-size:9px;
-}
-
-.chat{
-  margin:0 14px;
-  background:#fff;
+.empty{
+  background:white;
   border:1px solid var(--line);
-  border-radius:20px;
-  padding:12px;
+  border-radius:22px;
+  padding:28px 15px;
+  text-align:center;
+  color:#89948e;
 }
 
-.chat-head{
-  padding:5px 3px 10px;
-  font-weight:900;
+.loading{
+  padding:25px;
+  text-align:center;
+  color:#839087;
 }
 
-.messages{
-  height:360px;
-  overflow:auto;
-  background:#edf2ef;
-  border-radius:15px;
-  padding:11px;
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom-nav{
+  position:fixed;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  z-index:60;
+
+  width:min(760px,100%);
+  height:82px;
+
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1fr 1fr;
+  align-items:end;
+
+  background:rgba(255,255,255,.98);
+  border-top:1px solid #e0e9e4;
+
+  padding:
+    7px
+    10px
+    calc(7px + env(safe-area-inset-bottom));
+}
+
+.nav-btn{
+  border:0;
+  background:transparent;
+  color:#89968f;
+
   display:flex;
   flex-direction:column;
-  gap:8px;
+  align-items:center;
+  gap:3px;
+
+  font-size:11px;
+  font-weight:700;
 }
 
-.msg{
-  max-width:78%;
-  padding:9px 11px;
-  border-radius:15px;
-  font-size:12px;
-  word-break:break-word;
+.nav-btn.active{
+  color:var(--green);
 }
 
-.me{
-  align-self:flex-end;
-  background:var(--green);
-  color:#fff;
+.nav-icon{
+  font-size:25px;
 }
 
-.them{
-  align-self:flex-start;
-  background:#fff;
-  border:1px solid #c9dfce;
+.plus-btn{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  border:6px solid white;
+  background:#087e3d;
+  color:white;
+  font-size:35px;
+  line-height:1;
+  margin-top:-25px;
+  box-shadow:0 7px 20px rgba(8,120,58,.25);
 }
 
-.chat-input{
-  display:flex;
-  gap:7px;
-  margin-top:9px;
-}
-
-.chat-input input{
-  flex:1;
-  border:1px solid #d6e4d9;
-  border-radius:12px;
-  padding:10px;
-  outline:0;
-}
-
-.send{
-  border:0;
-  background:var(--green);
-  color:#fff;
-  border-radius:12px;
-  padding:0 15px;
-  font-weight:900;
-}
-
-/* MODAL */
+/* =========================
+   MODAL
+========================= */
 
 .modal{
-  display:none;
   position:fixed;
   inset:0;
-  background:#0009;
   z-index:100;
-  align-items:center;
+
+  display:none;
+  align-items:flex-end;
   justify-content:center;
-  padding:18px;
+
+  background:rgba(10,30,18,.45);
 }
 
 .modal.show{
   display:flex;
 }
 
-.modal-box{
-  position:relative;
-  width:100%;
-  max-width:420px;
-  background:#fff;
-  border-radius:22px;
-  padding:18px;
+.sheet{
+  width:min(760px,100%);
+  max-height:92vh;
+  overflow:auto;
+
+  background:white;
+  border-radius:28px 28px 0 0;
+
+  padding:
+    20px
+    18px
+    calc(25px + env(safe-area-inset-bottom));
+}
+
+.sheet-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:16px;
+}
+
+.sheet-header h3{
+  margin:0;
+  font-size:23px;
 }
 
 .close{
-  position:absolute;
-  top:9px;
-  right:12px;
+  width:40px;
+  height:40px;
   border:0;
-  background:none;
-  font-size:20px;
+  border-radius:50%;
+  background:#f0f4f1;
+  font-size:22px;
 }
+
+.field{
+  margin:12px 0;
+}
+
+.field label{
+  display:block;
+  margin-bottom:6px;
+  color:#64736a;
+  font-size:13px;
+  font-weight:800;
+}
+
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  border:1px solid #d5e1d9;
+  border-radius:14px;
+  background:#fbfdfb;
+  padding:13px;
+  outline:none;
+}
+
+.field textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+.submit-btn{
+  width:100%;
+  border:0;
+  border-radius:15px;
+  padding:14px;
+  background:var(--green);
+  color:white;
+  font-weight:850;
+}
+
+/* =========================
+   AUTH
+========================= */
 
 .tabs{
   display:flex;
-  border-bottom:2px solid #e5ece6;
+  background:#eef4ef;
+  padding:4px;
+  border-radius:14px;
   margin-bottom:15px;
 }
 
 .tab{
   flex:1;
   border:0;
-  background:none;
-  padding:9px;
-  font-weight:900;
-  color:#87958c;
+  background:transparent;
+  border-radius:11px;
+  padding:11px;
+  color:#718077;
+  font-weight:800;
 }
 
 .tab.active{
+  background:white;
   color:var(--green);
-  border-bottom:2px solid var(--green);
 }
 
-/* BOTTOM */
+/* =========================
+   PROFILE
+========================= */
 
-.bottom{
-  position:fixed;
-  left:50%;
-  bottom:0;
-  transform:translateX(-50%);
-  width:100%;
-  max-width:760px;
-  height:78px;
-  background:#fff;
-  border-top:1px solid var(--line);
+.profile-card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:25px;
+  padding:20px;
+}
+
+.avatar{
+  width:68px;
+  height:68px;
+  border-radius:50%;
+  background:#eaf7ee;
   display:flex;
   align-items:center;
-  justify-content:space-around;
-  z-index:80;
+  justify-content:center;
+  font-size:34px;
+  margin-bottom:12px;
 }
 
-.nav{
-  width:65px;
-  border:0;
-  background:none;
-  color:#8aa08f;
-  font-size:10px;
-  font-weight:900;
+/* =========================
+   CHAT
+========================= */
+
+.users{
+  display:grid;
+  gap:9px;
 }
 
-.nav span{
+.user{
+  width:100%;
+  text-align:left;
+  border:1px solid var(--line);
+  background:white;
+  border-radius:15px;
+  padding:13px;
+}
+
+.chat{
+  margin-top:12px;
+  background:white;
+  border:1px solid var(--line);
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.messages{
+  height:300px;
+  overflow-y:auto;
+  padding:12px;
+  background:#f5f8f6;
+}
+
+.message{
+  max-width:78%;
+  padding:9px 12px;
+  border-radius:15px;
+  background:white;
+  margin:7px 0;
+}
+
+.message.mine{
+  margin-left:auto;
+  background:#dff3e5;
+}
+
+.message small{
   display:block;
-  font-size:22px;
-  margin-bottom:2px;
+  margin-top:4px;
+  font-size:10px;
+  color:#87928c;
 }
 
-.nav.active{
-  color:var(--green);
+.chat-send{
+  display:flex;
+  gap:7px;
+  padding:8px;
 }
 
-.add{
-  width:52px;
-  height:52px;
-  margin-top:-22px;
-  border-radius:50%;
-  border:4px solid #fff;
+.chat-send input{
+  flex:1;
+  border:1px solid #d7e1da;
+  border-radius:12px;
+  padding:11px;
+}
+
+.chat-send button{
+  width:48px;
+  border:0;
+  border-radius:12px;
   background:var(--green);
-  color:#fff;
-  font-size:29px;
-  box-shadow:0 5px 18px #08752d55;
+  color:white;
 }
 
-/* TOAST */
+/* =========================
+   TOAST
+========================= */
 
 .toast{
   position:fixed;
   left:50%;
-  bottom:92px;
-  transform:translateX(-50%);
-  z-index:150;
-  background:#173d22;
-  color:#fff;
-  padding:11px 15px;
-  border-radius:13px;
-  display:none;
-  font-size:11px;
+  bottom:98px;
+  z-index:200;
+
   max-width:90%;
-  text-align:center;
+
+  transform:
+    translateX(-50%)
+    translateY(20px);
+
+  opacity:0;
+  pointer-events:none;
+
+  background:#183f28;
+  color:white;
+
+  border-radius:14px;
+  padding:12px 16px;
+
+  transition:.25s;
 }
 
 .toast.show{
-  display:block;
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
 }
-
-.empty{
-  margin:0 14px;
-  background:#fff;
-  border:1px dashed #cadbcf;
-  border-radius:17px;
-  padding:25px;
-  text-align:center;
-  color:#78907d;
-}
-
-/* MOBILE */
 
 @media(max-width:430px){
 
-  .hero h2{
-    font-size:25px;
+  .brand-name{
+    font-size:32px;
   }
 
-  .analysis-grid{
-    grid-template-columns:1fr;
+  .region-btn{
+    padding:12px 13px;
   }
 
-  .service-grid{
-    grid-template-columns:1fr;
+  .hero h1{
+    font-size:29px;
   }
 
-  .cats{
-    grid-template-columns:repeat(2,1fr);
+}
+
+@media(min-width:700px){
+
+  .categories{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .category{
+    min-height:155px;
   }
 
 }
@@ -924,68 +802,115 @@ header{
 
 <div class="app">
 
-<!-- HEADER -->
+<!-- =========================
+     HEADER
+========================= -->
 
-<header>
+<header class="header">
 
-  <div class="top">
+  <div class="header-row">
 
-    <div class="brand" id="brandBtn">
-      <div class="logo">A</div>
+    <div class="brand">
+
+      <div class="logo">
+
+        <svg viewBox="0 0 64 64"
+             xmlns="http://www.w3.org/2000/svg">
+
+          <path
+            d="M10 50 29 12l8 15 7-11 10 34H43l-5-16-7 16H10Z"
+            fill="white"/>
+
+          <path
+            d="M27 40c7-7 14-8 24-7-6 2-10 5-14 10l-10 5v-8Z"
+            fill="#8DD35B"/>
+
+        </svg>
+
+      </div>
 
       <div>
-        <h1>Apex</h1>
-        <small>АГРО МАРКЕТПЛЕЙС</small>
+        <div class="brand-name">Apex</div>
+        <div class="brand-sub">АГРО МАРКЕТПЛЕЙС</div>
       </div>
+
     </div>
 
-    <button class="region" id="regionBtn">
+    <button
+      class="region-btn"
+      id="regionBtn">
+
       Талас 📍⌄
+
     </button>
 
   </div>
 
-  <div class="search">
-    <span>🔍</span>
+  <div class="search-box">
+
+    <span class="search-icon">🔍</span>
+
     <input
-      id="searchInput"
-      placeholder="Картошка, фасоль, трактор, агроном..."
-    >
+      id="globalSearch"
+      placeholder="Картошка, фасоль, трактор, агроном...">
+
   </div>
 
-  <div class="loc">
+  <div class="profile-bar">
+
     Сиздин профилиңиз:
-    <b id="headerUser">Конок</b>
+    <b id="profileName">Конок</b>
+
   </div>
 
 </header>
 
 
+<!-- =========================
+     MAIN
+========================= -->
+
+<main>
+
 <!-- HOME -->
 
-<section class="page active" id="homePage">
+<section
+  id="homePage"
+  class="page active">
 
   <div class="hero">
 
-    <small>🌱 APEX AGRO PLATFORM</small>
+    <div class="hero-small">
+      🌱 APEX AGRO PLATFORM
+    </div>
 
-    <h2>
-      Кыргызстандагы бирдиктүү агро рынок
-    </h2>
+    <h1>
+      Кыргызстандагы<br>
+      бирдиктүү агро рынок
+    </h1>
 
     <p>
       Айыл чарба товарлары, мал, агрономдор,
-      техника, дары-дармек жана агро кызматтар бир жерде.
+      техника, дары-дармек жана агро кызматтар
+      бир жерде.
     </p>
 
     <div class="hero-buttons">
 
-      <button class="market-btn" id="heroMarket">
+      <button
+        class="hero-btn hero-primary"
+        id="marketBtn">
+
         🛒 Рынокту көрүү
+
       </button>
 
-      <button class="add-btn" id="heroAdd">
+      <button
+        class="hero-btn hero-secondary"
+        id="addBtn">
+
         ＋ Жарыя берүү
+
       </button>
 
     </div>
@@ -993,47 +918,101 @@ header{
   </div>
 
 
-  <div class="catalog-head">
+  <!-- CATEGORIES -->
+
+  <div class="section-title">
 
     <h2>Каталогдор</h2>
 
-    <button id="allCatalog">
+    <button
+      class="section-link"
+      id="allCategories">
+
       Баарын көрүү
+
     </button>
 
   </div>
 
 
-  <div class="cats">
+  <div
+    class="categories"
+    id="categories">
 
-    <button class="cat active" data-category="Өсүмдүктөр">
-      <div class="cat-icon">🌱</div>
-      <strong>Өсүмдүктөр</strong>
+    <button
+      class="category active"
+      data-category="Өсүмдүктөр">
+
+      <span class="category-icon">
+        🌱
+      </span>
+
+      <strong>
+        Өсүмдүктөр
+      </strong>
+
     </button>
 
-    <button class="cat" data-category="Мал чарбасы">
-      <div class="cat-icon">🐄</div>
-      <strong>Мал чарбасы</strong>
+
+    <button
+      class="category"
+      data-category="Мал чарбасы">
+
+      <span class="category-icon">
+        🐄
+      </span>
+
+      <strong>
+        Мал чарбасы
+      </strong>
+
     </button>
 
-    <button class="cat" data-category="Дары & Семирткич">
-      <div class="cat-icon">🧪</div>
-      <strong>Дары & Семирткич</strong>
+
+    <button
+      class="category"
+      data-category="Дары & Семирткич">
+
+      <span class="category-icon">
+        🧪
+      </span>
+
+      <strong>
+        Дары & Семирткич
+      </strong>
+
     </button>
 
-    <button class="cat" data-category="Агрономдор">
-      <div class="cat-icon">👨‍🌾</div>
-      <strong>Агрономдор</strong>
+
+    <button
+      class="category"
+      data-category="Агрономдор">
+
+      <span class="category-icon">
+        👨‍🌾
+      </span>
+
+      <strong>
+        Агрономдор
+      </strong>
+
     </button>
 
-    <button class="cat" data-category="Техника">
-      <div class="cat-icon">🚜</div>
-      <strong>Техника</strong>
-    </button>
+  </div>
 
-    <button class="cat" data-category="Логистика">
-      <div class="cat-icon">🚚</div>
-      <strong>Логистика</strong>
+
+  <!-- CHIPS -->
+
+  <div class="section-title">
+
+    <h2>Рынок</h2>
+
+    <button
+      class="section-link"
+      id="openMarket">
+
+      Баарын көрүү
+
     </button>
 
   </div>
@@ -1041,69 +1020,72 @@ header{
 
   <div class="chips">
 
-    <button class="chip active" data-type="">
+    <button
+      class="chip active"
+      data-chip="all">
+
       Баардыгы
+
     </button>
 
-    <button class="chip" data-type="Жер-жемиш">
+    <button
+      class="chip"
+      data-chip="Жер-жемиш">
+
       🥦 Жер-жемиш
+
     </button>
 
-    <button class="chip" data-type="Мөмө">
+    <button
+      class="chip"
+      data-chip="Мөмө">
+
       🍎 Мөмө
+
     </button>
 
-    <button class="chip" data-type="Дан">
+    <button
+      class="chip"
+      data-chip="Дан">
+
       🌾 Дан
+
     </button>
 
-    <button class="chip" data-type="Мал">
+    <button
+      class="chip"
+      data-chip="Мал">
+
       🐄 Мал
+
     </button>
 
-    <button class="chip" data-type="Техника">
+    <button
+      class="chip"
+      data-chip="Техника">
+
       🚜 Техника
+
     </button>
 
   </div>
 
 
-  <div class="analysis">
+  <!-- PRICES -->
 
-    <h3>📊 Рынок анализи</h3>
+  <div class="section-title">
 
-    <div class="analysis-grid">
-
-      <div class="analysis-item">
-        <div class="big">📈</div>
-        <b>Баалар</b>
-        <small>Аймак боюнча салыштыруу</small>
-      </div>
-
-      <div class="analysis-item">
-        <div class="big">🔥</div>
-        <b>Суроо-талап</b>
-        <small>Өтүмдүү товарлар</small>
-      </div>
-
-      <div class="analysis-item">
-        <div class="big">🧠</div>
-        <b>Прогноз</b>
-        <small>Сезондук багыт</small>
-      </div>
-
-    </div>
+    <h2>💰 Аймактык баалар</h2>
 
   </div>
 
 
-  <div class="pricebox">
-
-    <h3>💰 Аймактык баалар</h3>
+  <div class="price-card">
 
     <table class="price-table">
 
       <thead>
+
         <tr>
           <th>Продукт</th>
           <th>Талас</th>
@@ -1111,124 +1093,433 @@ header{
           <th>Ош</th>
           <th>Нарын</th>
         </tr>
+
       </thead>
 
-      <tbody id="priceRows"></tbody>
+      <tbody id="priceBody"></tbody>
 
     </table>
 
   </div>
 
 
-  <div class="title" id="homeTitle">
-    🌱 Өсүмдүктөр тизмеси
+  <!-- PRODUCTS -->
+
+  <div class="section-title">
+
+    <h2>🌱 Өсүмдүктөр тизмеси</h2>
+
+    <button
+      class="section-link"
+      id="plantsMore">
+
+      Баарын көрүү
+
+    </button>
+
   </div>
 
-  <div id="homeProducts" class="products"></div>
 
+  <div
+    class="cards"
+    id="products">
 
-  <div class="title">
-    🧑‍🌾 Агро кызматтар
+    <div class="loading">
+      Маалымат даярдалууда...
+    </div>
+
   </div>
 
-  <div class="service-grid" id="services"></div>
+
+  <!-- AGRONOMISTS -->
+
+  <div class="section-title">
+
+    <h2>👨‍🌾 Агрономдор</h2>
+
+    <button
+      class="section-link"
+      id="agronomistsMore">
+
+      Баарын көрүү
+
+    </button>
+
+  </div>
+
+
+  <div
+    class="cards"
+    id="agronomists">
+  </div>
 
 </section>
 
 
 <!-- MARKET -->
 
-<section class="page" id="marketPage">
+<section
+  id="marketPage"
+  class="page">
 
-  <div class="title">
-    🛒 Бардык жарыялар
-  </div>
+  <div class="section-title">
 
-  <div class="market-tools">
+    <h2>🛒 Бардык жарыялар</h2>
 
-    <select id="marketCategory">
-      <option value="">Бардык категориялар</option>
-      <option>Өсүмдүктөр</option>
-      <option>Мал чарбасы</option>
-      <option>Дары & Семирткич</option>
-      <option>Техника</option>
-      <option>Агрономдор</option>
-    </select>
+    <button
+      class="section-link"
+      id="refreshAds">
 
-    <select id="marketRegion">
-      <option value="">Бардык аймактар</option>
-      <option>Талас</option>
-      <option>Чүй</option>
-      <option>Ош</option>
-      <option>Нарын</option>
-      <option>Ысык-Көл</option>
-      <option>Баткен</option>
-      <option>Жалал-Абад</option>
-    </select>
+      Жаңыртуу
+
+    </button>
 
   </div>
 
-  <div id="marketProducts" class="market-list"></div>
+
+  <div class="search-box">
+
+    <span class="search-icon">🔍</span>
+
+    <input
+      id="marketSearch"
+      placeholder="Товар же кызмат издөө...">
+
+  </div>
+
+
+  <div
+    class="cards"
+    id="ads">
+
+  </div>
 
 </section>
 
 
-<!-- CREATE -->
+<!-- CHAT -->
 
-<section class="page" id="createPage">
+<section
+  id="chatPage"
+  class="page">
 
-  <div class="title">
-    ➕ Жаңы жарыя түзүү
+  <div class="section-title">
+
+    <h2>💬 Жеке чат</h2>
+
   </div>
 
-  <div class="form">
 
-    <div class="group">
-      <label>Продукт / кызмат аты</label>
-      <input id="adTitle" placeholder="Мисалы: Нарын картошкасы">
+  <div
+    class="cards"
+    id="chatUsers">
+
+  </div>
+
+
+  <div
+    id="chatBox"
+    class="chat"
+    style="display:none">
+
+    <div
+      id="messages"
+      class="messages">
     </div>
 
-    <div class="group">
-      <label>Категория</label>
+    <div class="chat-send">
 
-      <select id="adCategory">
-        <option>Өсүмдүктөр</option>
-        <option>Мал чарбасы</option>
-        <option>Дары & Семирткич</option>
-        <option>Техника</option>
-        <option>Агрономдор</option>
-      </select>
+      <input
+        id="messageInput"
+        placeholder="Билдирүү жазыңыз...">
 
-    </div>
-
-    <div class="group">
-      <label>Баасы</label>
-      <input id="adPrice" placeholder="25 сом/кг">
-    </div>
-
-    <div class="group">
-      <label>Аймак</label>
-
-      <select id="adRegion">
-        <option>Талас</option>
-        <option>Чүй</option>
-        <option>Ош</option>
-        <option>Нарын</option>
-        <option>Ысык-Көл</option>
-        <option>Баткен</option>
-        <option>Жалал-Абад</option>
-      </select>
+      <button id="sendMessage">
+        ➤
+      </button>
 
     </div>
 
-    <div class="group">
-      <label>Маалымат</label>
+  </div>
 
-      <textarea
-        id="adDescription"
-        placeholder="Товар жөнүндө маалымат..."
-      ></textarea>
+</section>
+
+
+<!-- PROFILE -->
+
+<section
+  id="profilePage"
+  class="page">
+
+  <div class="section-title">
+
+    <h2>👤 Профиль</h2>
+
+  </div>
+
+
+  <div
+    class="profile-card"
+    id="profileCard">
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================
+     BOTTOM NAV
+========================= -->
+
+<nav class="bottom-nav">
+
+  <button
+    class="nav-btn active"
+    data-page="homePage">
+
+    <span class="nav-icon">
+      🏠
+    </span>
+
+    Башкы
+
+  </button>
+
+
+  <button
+    class="nav-btn"
+    data-page="marketPage">
+
+    <span class="nav-icon">
+      📋
+    </span>
+
+    Рынок
+
+  </button>
+
+
+  <button
+    class="plus-btn"
+    id="plusButton">
+
+    ＋
+
+  </button>
+
+
+  <button
+    class="nav-btn"
+    data-page="chatPage">
+
+    <span class="nav-icon">
+      💬
+    </span>
+
+    Чат
+
+  </button>
+
+
+  <button
+    class="nav-btn"
+    data-page="profilePage">
+
+    <span class="nav-icon">
+      👤
+    </span>
+
+    Профиль
+
+  </button>
+
+</nav>
+
+</div>
+
+
+<!-- =========================
+     MODAL
+========================= -->
+
+<div
+  class="modal"
+  id="modal">
+
+  <div class="sheet">
+
+    <div class="sheet-header">
+
+      <h3 id="modalTitle">
+        Apex
+      </h3>
+
+      <button
+        class="close"
+        id="closeModal">
+
+        ×
+
+      </button>
 
     </div>
 
-    <button class="
+    <div id="modalBody"></div>
+
+  </div>
+
+</div>
+
+
+<div
+  class="toast"
+  id="toast">
+</div>
+
+
+<!-- Socket.IO -->
+<script src="/socket.io/socket.io.js"></script>
+
+
+<script>
+
+"use strict";
+
+
+/* =====================================================
+   APEX FRONTEND
+===================================================== */
+
+const state = {
+
+  token:
+    localStorage.getItem("apex_token") || "",
+
+  user:null,
+
+  ads:[],
+
+  category:"Өсүмдүктөр",
+
+  chip:"all",
+
+  selectedUser:null,
+
+  socket:null
+
+};
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+const $ =
+  selector =>
+    document.querySelector(selector);
+
+
+const $$ =
+  selector =>
+    [...document.querySelectorAll(selector)];
+
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replace(/[&<>"']/g,char => ({
+
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+
+    }[char]));
+
+}
+
+
+function toast(message){
+
+  const element =
+    $("#toast");
+
+  element.textContent =
+    message;
+
+  element.classList.add("show");
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer =
+    setTimeout(
+      () =>
+        element.classList.remove("show"),
+      2500
+    );
+
+}
+
+
+/* =====================================================
+   API
+===================================================== */
+
+async function api(
+  url,
+  options={}
+){
+
+  const controller =
+    new AbortController();
+
+  const timeout =
+    setTimeout(
+      () => controller.abort(),
+      7000
+    );
+
+
+  const headers =
+    {
+      "Content-Type":
+        "application/json"
+    };
+
+
+  if(state.token){
+
+    headers.Authorization =
+      "Bearer " + state.token;
+
+  }
+
+
+  try{
+
+    const response =
+      await fetch(
+        url,
+        {
+          ...options,
+          headers,
+          signal:
+            controller.signal,
+          cache:"no-store"
+        }
+      );
+
+
+    const text =
+      await response.text();
+
+
+    let data={};
+
+
+    try{
+
+      data =
+        t
