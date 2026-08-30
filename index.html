@@ -1,40 +1,30 @@
 <!DOCTYPE html>
 <html lang="ky">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
->
-
-<meta
-  name="theme-color"
-  content="#08783a"
->
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#08783a">
 <title>Apex — Агро маркетплейс</title>
 
 <style>
-
 :root{
   --green:#08783a;
-  --green2:#0a9348;
+  --green2:#0b9148;
   --dark:#075b2d;
   --bg:#f3f7f4;
-  --white:#ffffff;
-  --text:#183b27;
-  --muted:#718078;
+  --white:#fff;
+  --text:#173d27;
+  --muted:#75837b;
   --line:#dce8e0;
-  --soft:#eaf6ee;
-  --yellow:#fff3c9;
-  --danger:#c93b3b;
+  --soft:#eaf7ee;
+  --yellow:#fff2c8;
+  --red:#d43d3d;
   --shadow:0 8px 25px rgba(20,70,40,.07);
 }
 
 *{
   box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
 html{
@@ -45,29 +35,19 @@ body{
   margin:0;
   background:var(--bg);
   color:var(--text);
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
-button,
-input,
-select,
-textarea{
+button,input,select,textarea{
   font:inherit;
 }
 
 button{
   cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
 }
 
 button:active{
-  transform:scale(.98);
+  transform:scale(.97);
 }
 
 .app{
@@ -75,6 +55,7 @@ button:active{
   max-width:760px;
   min-height:100vh;
   margin:auto;
+  background:var(--bg);
 }
 
 /* HEADER */
@@ -83,40 +64,34 @@ button:active{
   position:sticky;
   top:0;
   z-index:50;
-  background:rgba(255,255,255,.96);
-  backdrop-filter:blur(15px);
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(16px);
   border-bottom:1px solid #e1ebe4;
-  padding:16px 16px 12px;
+  padding:15px 16px 11px;
 }
 
 .header-row{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:12px;
+  gap:10px;
 }
 
 .brand{
   display:flex;
   align-items:center;
-  gap:11px;
+  gap:10px;
 }
 
 .logo{
-  width:56px;
-  height:56px;
+  width:55px;
+  height:55px;
   border-radius:18px;
-  background:linear-gradient(
-    145deg,
-    #087d3d,
-    #075e2e
-  );
+  background:linear-gradient(145deg,#087d3d,#075e2e);
   display:flex;
   align-items:center;
   justify-content:center;
-  box-shadow:
-    0 8px 20px
-    rgba(8,120,58,.18);
+  box-shadow:0 7px 18px rgba(8,120,58,.18);
 }
 
 .logo svg{
@@ -126,49 +101,47 @@ button:active{
 
 .brand-name{
   color:var(--green);
-  font-size:34px;
-  font-weight:900;
+  font-size:33px;
   line-height:1;
+  font-weight:900;
   letter-spacing:-1.5px;
 }
 
 .brand-sub{
   margin-top:5px;
-  font-size:10px;
+  font-size:9px;
   font-weight:900;
   letter-spacing:.8px;
-  color:#748178;
+  color:#75827a;
 }
 
 .region-btn{
-  border:1.5px solid #c8ddd0;
-  background:#f4faf6;
-  color:#276943;
+  border:1.5px solid #c9ded1;
+  background:#f5fbf6;
+  color:#286943;
   border-radius:22px;
-  padding:11px 13px;
+  padding:10px 12px;
   font-weight:800;
 }
 
 .search-box{
-  margin-top:13px;
+  margin-top:12px;
   display:flex;
   align-items:center;
-  gap:9px;
-  border:1.5px solid #d5e2d9;
-  border-radius:20px;
+  gap:8px;
+  border:1.5px solid #d4e2d9;
+  border-radius:19px;
   background:#fbfdfb;
   padding:0 13px;
 }
 
 .search-box:focus-within{
   border-color:var(--green);
-  box-shadow:
-    0 0 0 3px
-    rgba(8,120,58,.08);
+  box-shadow:0 0 0 3px rgba(8,120,58,.07);
 }
 
 .search-icon{
-  font-size:21px;
+  font-size:20px;
 }
 
 .search-box input{
@@ -176,17 +149,17 @@ button:active{
   border:0;
   outline:0;
   background:transparent;
-  padding:14px 0;
+  padding:13px 0;
   font-size:15px;
 }
 
 .profile-bar{
-  margin-top:10px;
+  margin-top:9px;
   background:var(--yellow);
-  border-radius:14px;
-  padding:10px 13px;
+  border-radius:13px;
+  padding:9px 12px;
   color:#746846;
-  font-size:13px;
+  font-size:12px;
 }
 
 .profile-bar b{
@@ -196,7 +169,7 @@ button:active{
 /* MAIN */
 
 main{
-  padding:18px 16px 110px;
+  padding:17px 16px 105px;
 }
 
 .page{
@@ -210,26 +183,18 @@ main{
 /* HERO */
 
 .hero{
-  background:
-    linear-gradient(
-      135deg,
-      #075f2f,
-      #087c3d 55%,
-      #10974b
-    );
-  color:white;
+  background:linear-gradient(135deg,#075f2f,#087c3d 55%,#10974b);
+  color:#fff;
   border-radius:27px;
   padding:24px 21px;
-  box-shadow:
-    0 15px 35px
-    rgba(8,120,58,.16);
+  box-shadow:0 15px 35px rgba(8,120,58,.16);
 }
 
 .hero-small{
   font-size:12px;
   font-weight:900;
   letter-spacing:.8px;
-  opacity:.85;
+  opacity:.87;
 }
 
 .hero h1{
@@ -241,9 +206,9 @@ main{
 
 .hero p{
   margin:0 0 19px;
-  color:#e1f5e8;
-  line-height:1.55;
+  color:#e2f5e9;
   font-size:14px;
+  line-height:1.55;
 }
 
 .hero-buttons{
@@ -253,23 +218,22 @@ main{
 }
 
 .hero-btn{
-  border:0;
   min-height:53px;
   border-radius:16px;
+  border:0;
   padding:10px;
   font-weight:900;
 }
 
 .hero-primary{
-  background:white;
+  background:#fff;
   color:var(--green);
 }
 
 .hero-secondary{
   background:rgba(255,255,255,.12);
-  color:white;
-  border:1px solid
-    rgba(255,255,255,.35);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.35);
 }
 
 /* SECTION */
@@ -278,7 +242,7 @@ main{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:10px;
+  gap:8px;
   margin:24px 2px 11px;
 }
 
@@ -291,8 +255,8 @@ main{
 .section-link{
   border:0;
   background:transparent;
-  color:#728078;
-  font-weight:700;
+  color:#718078;
+  font-weight:800;
 }
 
 /* CATEGORIES */
@@ -306,7 +270,7 @@ main{
 .category{
   min-height:125px;
   border:1.5px solid #dce8e0;
-  background:white;
+  background:#fff;
   border-radius:22px;
   display:flex;
   flex-direction:column;
@@ -320,6 +284,7 @@ main{
 .category.active{
   border-color:var(--green);
   background:#edf8f0;
+  box-shadow:0 6px 18px rgba(8,120,58,.08);
 }
 
 .category-icon{
@@ -354,7 +319,7 @@ main{
 .chip{
   flex:none;
   border:1px solid #ceddd3;
-  background:white;
+  background:#fff;
   color:#52745e;
   border-radius:20px;
   padding:9px 13px;
@@ -364,17 +329,17 @@ main{
 
 .chip.active{
   background:var(--green);
-  color:white;
+  color:#fff;
   border-color:var(--green);
 }
 
 /* PRICE */
 
 .price-card{
-  background:white;
+  background:#fff;
   border:1px solid var(--line);
   border-radius:21px;
-  padding:10px;
+  padding:9px;
   overflow:auto;
   box-shadow:var(--shadow);
 }
@@ -395,7 +360,6 @@ main{
 
 .price-table th{
   color:#7a8780;
-  font-weight:800;
 }
 
 .green-price{
@@ -411,7 +375,7 @@ main{
 }
 
 .product{
-  background:white;
+  background:#fff;
   border:1px solid var(--line);
   border-radius:21px;
   padding:13px;
@@ -467,21 +431,17 @@ main{
 }
 
 .empty{
-  background:white;
+  background:#fff;
   border:1px solid var(--line);
   border-radius:20px;
-  padding:25px 15px;
+  padding:26px 15px;
   text-align:center;
   color:#849189;
 }
 
-.loading{
-  background:white;
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:24px;
-  text-align:center;
-  color:#849189;
+.empty-icon{
+  font-size:35px;
+  margin-bottom:7px;
 }
 
 /* MARKET */
@@ -493,12 +453,156 @@ main{
 }
 
 .market-filter select{
+  min-width:0;
   flex:1;
   border:1px solid var(--line);
   border-radius:13px;
-  padding:11px;
-  background:white;
+  padding:10px;
+  background:#fff;
   outline:none;
+}
+
+/* PROFILE */
+
+.profile-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:23px;
+  padding:19px;
+  box-shadow:var(--shadow);
+}
+
+.avatar{
+  width:65px;
+  height:65px;
+  border-radius:50%;
+  background:#eaf7ee;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:31px;
+  margin-bottom:10px;
+}
+
+.profile-name{
+  font-size:22px;
+  font-weight:900;
+}
+
+.profile-role{
+  color:var(--muted);
+  margin-top:3px;
+}
+
+.profile-row{
+  margin-top:15px;
+  display:grid;
+  gap:8px;
+}
+
+.profile-item{
+  background:#f5f9f6;
+  border-radius:13px;
+  padding:11px;
+}
+
+.logout-btn{
+  width:100%;
+  margin-top:15px;
+  border:0;
+  background:#fff0f0;
+  color:var(--red);
+  border-radius:13px;
+  padding:12px;
+  font-weight:900;
+}
+
+/* CHAT */
+
+.users{
+  display:grid;
+  gap:8px;
+}
+
+.user{
+  width:100%;
+  text-align:left;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:15px;
+  padding:12px;
+}
+
+.user strong{
+  display:block;
+}
+
+.user span{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.chat{
+  margin-top:10px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:19px;
+  overflow:hidden;
+}
+
+.chat-head{
+  padding:12px;
+  border-bottom:1px solid var(--line);
+  font-weight:900;
+}
+
+.messages{
+  height:290px;
+  overflow-y:auto;
+  padding:11px;
+  background:#f5f8f6;
+}
+
+.message{
+  max-width:78%;
+  padding:9px 11px;
+  border-radius:14px;
+  background:#fff;
+  margin:6px 0;
+}
+
+.message.mine{
+  margin-left:auto;
+  background:#dff3e5;
+}
+
+.message small{
+  display:block;
+  margin-top:3px;
+  color:#89948e;
+  font-size:9px;
+}
+
+.chat-send{
+  display:flex;
+  gap:6px;
+  padding:8px;
+}
+
+.chat-send input{
+  flex:1;
+  border:1px solid #d7e1da;
+  border-radius:12px;
+  padding:10px;
+  outline:none;
+}
+
+.chat-send button{
+  width:45px;
+  border:0;
+  border-radius:12px;
+  background:var(--green);
+  color:#fff;
 }
 
 /* BOTTOM NAV */
@@ -516,10 +620,7 @@ main{
   align-items:end;
   background:rgba(255,255,255,.98);
   border-top:1px solid #e0e9e4;
-  padding:
-    6px
-    8px
-    calc(6px + env(safe-area-inset-bottom));
+  padding:6px 8px calc(6px + env(safe-area-inset-bottom));
 }
 
 .nav-btn{
@@ -547,14 +648,12 @@ main{
   height:57px;
   margin:0 auto -2px;
   border-radius:50%;
-  border:5px solid white;
+  border:5px solid #fff;
   background:var(--green);
-  color:white;
+  color:#fff;
   font-size:32px;
   line-height:1;
-  box-shadow:
-    0 7px 20px
-    rgba(8,120,58,.28);
+  box-shadow:0 7px 20px rgba(8,120,58,.28);
 }
 
 /* MODAL */
@@ -577,12 +676,9 @@ main{
   width:min(760px,100%);
   max-height:92vh;
   overflow:auto;
-  background:white;
+  background:#fff;
   border-radius:27px 27px 0 0;
-  padding:
-    18px
-    16px
-    calc(25px + env(safe-area-inset-bottom));
+  padding:18px 16px calc(25px + env(safe-area-inset-bottom));
 }
 
 .sheet-header{
@@ -630,7 +726,7 @@ main{
 }
 
 .field textarea{
-  min-height:95px;
+  min-height:90px;
   resize:vertical;
 }
 
@@ -640,146 +736,9 @@ main{
   border-radius:14px;
   padding:14px;
   background:var(--green);
-  color:white;
+  color:#fff;
   font-weight:900;
   margin-top:7px;
-}
-
-/* AUTH */
-
-.tabs{
-  display:flex;
-  background:#eef4ef;
-  padding:4px;
-  border-radius:13px;
-  margin-bottom:13px;
-}
-
-.tab{
-  flex:1;
-  border:0;
-  background:transparent;
-  border-radius:10px;
-  padding:10px;
-  color:#718077;
-  font-weight:900;
-}
-
-.tab.active{
-  background:white;
-  color:var(--green);
-}
-
-/* PROFILE */
-
-.profile-card{
-  background:white;
-  border:1px solid var(--line);
-  border-radius:23px;
-  padding:19px;
-  box-shadow:var(--shadow);
-}
-
-.avatar{
-  width:65px;
-  height:65px;
-  border-radius:50%;
-  background:#eaf7ee;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:31px;
-  margin-bottom:10px;
-}
-
-.logout-btn{
-  width:100%;
-  margin-top:15px;
-  border:0;
-  background:#fff0f0;
-  color:var(--danger);
-  border-radius:13px;
-  padding:12px;
-  font-weight:900;
-}
-
-/* CHAT */
-
-.users{
-  display:grid;
-  gap:8px;
-}
-
-.user{
-  width:100%;
-  text-align:left;
-  border:1px solid var(--line);
-  background:white;
-  border-radius:15px;
-  padding:12px;
-}
-
-.chat{
-  margin-top:10px;
-  background:white;
-  border:1px solid var(--line);
-  border-radius:19px;
-  overflow:hidden;
-}
-
-.chat-head{
-  padding:12px;
-  border-bottom:1px solid var(--line);
-  font-weight:900;
-}
-
-.messages{
-  height:290px;
-  overflow-y:auto;
-  padding:11px;
-  background:#f5f8f6;
-}
-
-.message{
-  max-width:78%;
-  padding:9px 11px;
-  border-radius:14px;
-  background:white;
-  margin:6px 0;
-}
-
-.message.mine{
-  margin-left:auto;
-  background:#dff3e5;
-}
-
-.message small{
-  display:block;
-  margin-top:3px;
-  color:#89948e;
-  font-size:9px;
-}
-
-.chat-send{
-  display:flex;
-  gap:6px;
-  padding:8px;
-}
-
-.chat-send input{
-  flex:1;
-  border:1px solid #d7e1da;
-  border-radius:12px;
-  padding:10px;
-  outline:none;
-}
-
-.chat-send button{
-  width:45px;
-  border:0;
-  border-radius:12px;
-  background:var(--green);
-  color:white;
 }
 
 /* TOAST */
@@ -790,13 +749,11 @@ main{
   bottom:94px;
   z-index:200;
   max-width:90%;
-  transform:
-    translateX(-50%)
-    translateY(20px);
+  transform:translateX(-50%) translateY(20px);
   opacity:0;
   pointer-events:none;
   background:#173d27;
-  color:white;
+  color:#fff;
   border-radius:13px;
   padding:11px 15px;
   transition:.25s;
@@ -806,25 +763,18 @@ main{
 
 .toast.show{
   opacity:1;
-  transform:
-    translateX(-50%)
-    translateY(0);
+  transform:translateX(-50%) translateY(0);
 }
 
-/* DESKTOP */
-
 @media(min-width:700px){
-
   .categories{
-    grid-template-columns:
-      repeat(4,1fr);
+    grid-template-columns:repeat(4,1fr);
   }
 
   .category{
     min-height:145px;
   }
 }
-
 </style>
 </head>
 
@@ -832,6 +782,7 @@ main{
 
 <div class="app">
 
+<!-- HEADER -->
 <header class="header">
 
   <div class="header-row">
@@ -839,69 +790,43 @@ main{
     <div class="brand">
 
       <div class="logo">
-
-        <svg
-          viewBox="0 0 64 64"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-
+        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M10 50 29 12l8 15 7-11 10 34H43l-5-16-7 16H10Z"
             fill="white"
           />
-
           <path
             d="M27 40c7-7 14-8 24-7-6 2-10 5-14 10l-10 5v-8Z"
             fill="#8DD35B"
           />
-
         </svg>
-
       </div>
 
       <div>
-
-        <div class="brand-name">
-          Apex
-        </div>
-
-        <div class="brand-sub">
-          АГРО МАРКЕТПЛЕЙС
-        </div>
-
+        <div class="brand-name">Apex</div>
+        <div class="brand-sub">АГРО МАРКЕТПЛЕЙС</div>
       </div>
 
     </div>
 
-    <button
-      class="region-btn"
-      id="regionBtn"
-    >
+    <button class="region-btn" id="regionBtn">
       Талас 📍
     </button>
 
   </div>
 
   <div class="search-box">
-
-    <span class="search-icon">
-      🔍
-    </span>
-
+    <span class="search-icon">🔍</span>
     <input
       id="globalSearch"
+      type="search"
       placeholder="Картошка, фасоль, трактор, агроном..."
     >
-
   </div>
 
   <div class="profile-bar">
-
     Сиздин профилиңиз:
-    <b id="profileName">
-      Конок
-    </b>
-
+    <b id="profileName">Конок</b>
   </div>
 
 </header>
@@ -909,12 +834,9 @@ main{
 
 <main>
 
-<!-- HOME -->
+<!-- ================= HOME ================= -->
 
-<section
-  id="homePage"
-  class="page active"
->
+<section id="homePage" class="page active">
 
   <div class="hero">
 
@@ -936,17 +858,11 @@ main{
 
     <div class="hero-buttons">
 
-      <button
-        class="hero-btn hero-primary"
-        id="marketBtn"
-      >
+      <button class="hero-btn hero-primary" id="marketBtn">
         🛒 Рынокту көрүү
       </button>
 
-      <button
-        class="hero-btn hero-secondary"
-        id="addBtn"
-      >
+      <button class="hero-btn hero-secondary" id="addBtn">
         ＋ Жарыя берүү
       </button>
 
@@ -955,103 +871,51 @@ main{
   </div>
 
 
+  <!-- CATEGORIES -->
+
   <div class="section-title">
 
-    <h2>
-      Каталогдор
-    </h2>
+    <h2>Каталогдор</h2>
 
-    <button
-      class="section-link"
-      id="allCategories"
-    >
+    <button class="section-link" id="allCategories">
       Баарын көрүү
     </button>
 
   </div>
 
 
-  <div
-    class="categories"
-    id="categories"
-  >
+  <div class="categories">
 
-    <button
-      class="category active"
-      data-category="Өсүмдүктөр"
-    >
-
-      <span class="category-icon">
-        🌱
-      </span>
-
-      <strong>
-        Өсүмдүктөр
-      </strong>
-
+    <button class="category active" data-category="Өсүмдүктөр">
+      <span class="category-icon">🌱</span>
+      <strong>Өсүмдүктөр</strong>
     </button>
 
-
-    <button
-      class="category"
-      data-category="Мал чарбасы"
-    >
-
-      <span class="category-icon">
-        🐄
-      </span>
-
-      <strong>
-        Мал чарбасы
-      </strong>
-
+    <button class="category" data-category="Мал чарбасы">
+      <span class="category-icon">🐄</span>
+      <strong>Мал чарбасы</strong>
     </button>
 
-
-    <button
-      class="category"
-      data-category="Дары & Семирткич"
-    >
-
-      <span class="category-icon">
-        🧪
-      </span>
-
-      <strong>
-        Дары & Семирткич
-      </strong>
-
+    <button class="category" data-category="Дары & Семирткич">
+      <span class="category-icon">🧪</span>
+      <strong>Дары & Семирткич</strong>
     </button>
 
-
-    <button
-      class="category"
-      data-category="Агрономдор"
-    >
-
-      <span class="category-icon">
-        👨‍🌾
-      </span>
-
-      <strong>
-        Агрономдор
-      </strong>
-
+    <button class="category" data-category="Агрономдор">
+      <span class="category-icon">👨‍🌾</span>
+      <strong>Агрономдор</strong>
     </button>
 
   </div>
 
 
+  <!-- MARKET -->
+
   <div class="section-title">
 
-    <h2>
-      Рынок
-    </h2>
+    <h2>Рынок</h2>
 
-    <button
-      class="section-link"
-      id="openMarket"
-    >
+    <button class="section-link" id="openMarket">
       Баарын көрүү
     </button>
 
@@ -1060,66 +924,44 @@ main{
 
   <div class="chips">
 
-    <button
-      class="chip active"
-      data-chip="all"
-    >
+    <button class="chip active" data-chip="all">
       Баардыгы
     </button>
 
-    <button
-      class="chip"
-      data-chip="Жер-жемиш"
-    >
+    <button class="chip" data-chip="Жер-жемиш">
       🥦 Жер-жемиш
     </button>
 
-    <button
-      class="chip"
-      data-chip="Мөмө"
-    >
+    <button class="chip" data-chip="Мөмө">
       🍎 Мөмө
     </button>
 
-    <button
-      class="chip"
-      data-chip="Дан"
-    >
+    <button class="chip" data-chip="Дан">
       🌾 Дан
     </button>
 
-    <button
-      class="chip"
-      data-chip="Мал"
-    >
+    <button class="chip" data-chip="Мал">
       🐄 Мал
     </button>
 
-    <button
-      class="chip"
-      data-chip="Техника"
-    >
+    <button class="chip" data-chip="Техника">
       🚜 Техника
     </button>
 
   </div>
 
 
+  <!-- PRICES -->
+
   <div class="section-title">
-
-    <h2>
-      💰 Аймактык баалар
-    </h2>
-
+    <h2>💰 Аймактык баалар</h2>
   </div>
-
 
   <div class="price-card">
 
     <table class="price-table">
 
       <thead>
-
         <tr>
           <th>Продукт</th>
           <th>Талас</th>
@@ -1127,7 +969,6 @@ main{
           <th>Ош</th>
           <th>Нарын</th>
         </tr>
-
       </thead>
 
       <tbody id="priceBody"></tbody>
@@ -1137,70 +978,50 @@ main{
   </div>
 
 
+  <!-- PRODUCTS -->
+
   <div class="section-title">
 
-    <h2>
+    <h2 id="productSectionTitle">
       🌱 Өсүмдүктөр
     </h2>
 
-    <button
-      class="section-link"
-      id="plantsMore"
-    >
+    <button class="section-link" id="plantsMore">
       Баарын көрүү
     </button>
 
   </div>
 
+  <div class="cards" id="products"></div>
 
-  <div
-    class="cards"
-    id="products"
-  ></div>
 
+  <!-- AGRONOMISTS -->
 
   <div class="section-title">
 
-    <h2>
-      👨‍🌾 Агрономдор
-    </h2>
+    <h2>👨‍🌾 Агрономдор</h2>
 
-    <button
-      class="section-link"
-      id="agronomistsMore"
-    >
+    <button class="section-link" id="agronomistsMore">
       Баарын көрүү
     </button>
 
   </div>
 
-
-  <div
-    class="cards"
-    id="agronomists"
-  ></div>
+  <div class="cards" id="agronomists"></div>
 
 </section>
 
 
-<!-- MARKET -->
+<!-- ================= MARKET ================= -->
 
-<section
-  id="marketPage"
-  class="page"
->
+<section id="marketPage" class="page">
 
   <div class="section-title">
 
-    <h2>
-      🛒 Бардык жарыялар
-    </h2>
+    <h2>🛒 Бардык жарыялар</h2>
 
-    <button
-      class="section-link"
-      id="refreshAds"
-    >
-      ↻
+    <button class="section-link" id="refreshAds">
+      ↻ Жаңыртуу
     </button>
 
   </div>
@@ -1208,12 +1029,11 @@ main{
 
   <div class="search-box">
 
-    <span class="search-icon">
-      🔍
-    </span>
+    <span class="search-icon">🔍</span>
 
     <input
       id="marketSearch"
+      type="search"
       placeholder="Товар же кызмат издөө..."
     >
 
@@ -1224,66 +1044,26 @@ main{
 
     <select id="marketCategory">
 
-      <option value="">
-        Бардык категориялар
-      </option>
-
-      <option>
-        Өсүмдүктөр
-      </option>
-
-      <option>
-        Мал чарбасы
-      </option>
-
-      <option>
-        Дары & Семирткич
-      </option>
-
-      <option>
-        Агрономдор
-      </option>
-
-      <option>
-        Техника
-      </option>
+      <option value="">Бардык категориялар</option>
+      <option value="Өсүмдүктөр">Өсүмдүктөр</option>
+      <option value="Мал чарбасы">Мал чарбасы</option>
+      <option value="Дары & Семирткич">Дары & Семирткич</option>
+      <option value="Агрономдор">Агрономдор</option>
+      <option value="Техника">Техника</option>
 
     </select>
 
 
     <select id="marketRegion">
 
-      <option value="">
-        Бардык аймактар
-      </option>
-
-      <option>
-        Талас
-      </option>
-
-      <option>
-        Чүй
-      </option>
-
-      <option>
-        Ош
-      </option>
-
-      <option>
-        Нарын
-      </option>
-
-      <option>
-        Ысык-Көл
-      </option>
-
-      <option>
-        Жалал-Абад
-      </option>
-
-      <option>
-        Баткен
-      </option>
+      <option value="">Бардык аймактар</option>
+      <option value="Талас">Талас</option>
+      <option value="Чүй">Чүй</option>
+      <option value="Ош">Ош</option>
+      <option value="Нарын">Нарын</option>
+      <option value="Ысык-Көл">Ысык-Көл</option>
+      <option value="Жалал-Абад">Жалал-Абад</option>
+      <option value="Баткен">Баткен</option>
 
     </select>
 
@@ -1299,43 +1079,21 @@ main{
 </section>
 
 
-<!-- CHAT -->
+<!-- ================= CHAT ================= -->
 
-<section
-  id="chatPage"
-  class="page"
->
+<section id="chatPage" class="page">
 
   <div class="section-title">
-
-    <h2>
-      💬 Жеке чат
-    </h2>
-
+    <h2>💬 Жеке чат</h2>
   </div>
 
+  <div class="users" id="chatUsers"></div>
 
-  <div
-    class="users"
-    id="chatUsers"
-  ></div>
+  <div id="chatBox" class="chat" style="display:none">
 
+    <div id="chatHead" class="chat-head"></div>
 
-  <div
-    id="chatBox"
-    class="chat"
-    style="display:none"
-  >
-
-    <div
-      id="chatHead"
-      class="chat-head"
-    ></div>
-
-    <div
-      id="messages"
-      class="messages"
-    ></div>
+    <div id="messages" class="messages"></div>
 
     <div class="chat-send">
 
@@ -1355,97 +1113,47 @@ main{
 </section>
 
 
-<!-- PROFILE -->
+<!-- ================= PROFILE ================= -->
 
-<section
-  id="profilePage"
-  class="page"
->
+<section id="profilePage" class="page">
 
   <div class="section-title">
-
-    <h2>
-      👤 Профиль
-    </h2>
-
+    <h2>👤 Профиль</h2>
   </div>
 
-
-  <div
-    class="profile-card"
-    id="profileCard"
-  ></div>
+  <div class="profile-card" id="profileCard"></div>
 
 </section>
 
 </main>
 
 
-<!-- NAV -->
+<!-- ================= NAV ================= -->
 
 <nav class="bottom-nav">
 
-  <button
-    class="nav-btn active"
-    data-page="homePage"
-  >
-
-    <span class="nav-icon">
-      🏠
-    </span>
-
+  <button class="nav-btn active" data-page="homePage">
+    <span class="nav-icon">🏠</span>
     Башкы
-
   </button>
 
-
-  <button
-    class="nav-btn"
-    data-page="marketPage"
-  >
-
-    <span class="nav-icon">
-      🛒
-    </span>
-
+  <button class="nav-btn" data-page="marketPage">
+    <span class="nav-icon">🛒</span>
     Рынок
-
   </button>
 
-
-  <button
-    class="plus-btn"
-    id="plusButton"
-  >
+  <button class="plus-btn" id="plusButton">
     ＋
   </button>
 
-
-  <button
-    class="nav-btn"
-    data-page="chatPage"
-  >
-
-    <span class="nav-icon">
-      💬
-    </span>
-
+  <button class="nav-btn" data-page="chatPage">
+    <span class="nav-icon">💬</span>
     Чат
-
   </button>
 
-
-  <button
-    class="nav-btn"
-    data-page="profilePage"
-  >
-
-    <span class="nav-icon">
-      👤
-    </span>
-
+  <button class="nav-btn" data-page="profilePage">
+    <span class="nav-icon">👤</span>
     Профиль
-
   </button>
 
 </nav>
@@ -1453,25 +1161,17 @@ main{
 </div>
 
 
-<!-- MODAL -->
+<!-- ================= MODAL ================= -->
 
-<div
-  class="modal"
-  id="modal"
->
+<div class="modal" id="modal">
 
   <div class="sheet">
 
     <div class="sheet-header">
 
-      <h3 id="modalTitle">
-        Apex
-      </h3>
+      <h3 id="modalTitle">Apex</h3>
 
-      <button
-        class="close"
-        id="closeModal"
-      >
+      <button class="close" id="closeModal">
         ×
       </button>
 
@@ -1484,45 +1184,44 @@ main{
 </div>
 
 
-<div
-  class="toast"
-  id="toast"
-></div>
+<div class="toast" id="toast"></div>
 
-
-<script src="/socket.io/socket.io.js"></script>
 
 <script>
-
 "use strict";
 
+/*
+========================================================
+ APEX AGRO — STANDALONE FRONTEND
+ -------------------------------------------------------
+ Бул версия:
+ - Backend талап кылбайт
+ - API талап кылбайт
+ - Socket.IO талап кылбайт
+ - Render static/server deployment менен иштейт
+ - Бардык негизги кнопкалар иштейт
+ - localStorage колдонот
+========================================================
+*/
+
+
 /* =====================================================
-   APEX APP
+   STATE
 ===================================================== */
 
 const state = {
-
-  token:
-    localStorage.getItem(
-      "apex_token"
-    ) || "",
-
-  user:null,
-
-  ads:[],
-
-  socket:null,
-
-  selectedUser:null,
-
-  currentPage:"homePage"
-
+  currentPage: "homePage",
+  category: "Өсүмдүктөр",
+  chip: "all",
+  selectedUser: null,
+  user: null,
+  ads: [],
+  messages: {}
 };
 
 
 /* =====================================================
    DEMO DATA
-   НИКАКОГО БЕСКОНЕЧНОГО LOADING
 ===================================================== */
 
 const prices = [
@@ -1536,7 +1235,7 @@ const prices = [
   },
 
   {
-    product:"🍎 Яблоко",
+    product:"🍎 Алма",
     talas:"65 сом",
     chui:"70 сом",
     osh:"75 сом",
@@ -1544,7 +1243,7 @@ const prices = [
   },
 
   {
-    product:"🌾 Пшеница",
+    product:"🌾 Буудай",
     talas:"27 сом",
     chui:"29 сом",
     osh:"30 сом",
@@ -1555,3 +1254,45 @@ const prices = [
     product:"🫘 Фасоль",
     talas:"115 сом",
     chui:"120 сом",
+    osh:"125 сом",
+    naryn:"130 сом"
+  },
+
+  {
+    product:"🥕 Сабиз",
+    talas:"35 сом",
+    chui:"38 сом",
+    osh:"40 сом",
+    naryn:"42 сом"
+  }
+
+];
+
+
+const products = [
+
+  {
+    id:1,
+    title:"Элиталык картошка",
+    icon:"🥔",
+    category:"Өсүмдүктөр",
+    type:"Жер-жемиш",
+    region:"Талас",
+    price:"38 сом/кг",
+    seller:"Асылбек фермер"
+  },
+
+  {
+    id:2,
+    title:"Кызыл алма",
+    icon:"🍎",
+    category:"Өсүмдүктөр",
+    type:"Мөмө",
+    region:"Чүй",
+    price:"65 сом/кг",
+    seller:"Нурбек фермер"
+  },
+
+  {
+    id:3,
+ 
