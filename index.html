@@ -3,11 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-
 <title>Apex Agro — Кыргызстандагы агро рынок</title>
-
-<meta name="description"
-content="Apex Agro — Кыргызстандагы бирдиктүү агро маркетплейс.">
+<meta name="description" content="Apex Agro — Кыргызстандагы бирдиктүү агро маркетплейс">
 
 <script src="/socket.io/socket.io.js"></script>
 
@@ -15,47 +12,30 @@ content="Apex Agro — Кыргызстандагы бирдиктүү агро 
 :root{
   --green:#08752d;
   --green2:#159447;
-  --dark:#12351f;
-  --bg:#f3f8f4;
-  --card:#ffffff;
-  --muted:#718276;
+  --dark:#12351e;
+  --bg:#f3f7f4;
+  --white:#fff;
+  --text:#17321f;
+  --muted:#718077;
   --line:#dce9df;
-  --soft:#edf8f0;
-  --yellow:#fff4cf;
-  --danger:#d94141;
+  --light:#edf8ef;
+  --yellow:#fff5d6;
+  --red:#d94a4a;
 }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-  background:#e7eee9;
-  color:var(--dark);
-  padding-bottom:80px;
+  background:#e5ece7;
+  color:var(--text);
+  padding-bottom:82px;
 }
 
-button,
-input,
-select,
-textarea{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-button:active{
-  transform:scale(.98);
-}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
 
 .app{
   width:100%;
@@ -63,22 +43,21 @@ button:active{
   min-height:100vh;
   margin:auto;
   background:var(--bg);
-  box-shadow:0 0 40px #0002;
+  box-shadow:0 0 35px #0002;
 }
 
-/* ================= HEADER ================= */
+/* HEADER */
 
 header{
   position:sticky;
   top:0;
   z-index:50;
   background:#fff;
+  padding:12px 15px 13px;
   border-bottom:1px solid var(--line);
-  padding:12px 15px;
-  box-shadow:0 4px 18px #0000000d;
 }
 
-.row{
+.header-row{
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -95,82 +74,78 @@ header{
   width:47px;
   height:47px;
   border-radius:15px;
-  background:var(--green);
+  background:linear-gradient(135deg,#08752d,#1aa04d);
   display:grid;
   place-items:center;
+  color:white;
+  font-size:27px;
+  box-shadow:0 5px 14px #08752d35;
 }
 
-.logo svg{
-  width:39px;
-  height:39px;
-}
-
-.brand h1{
+.brand-name{
   color:var(--green);
   font-size:25px;
   line-height:1;
   font-weight:950;
 }
 
-.brand small{
+.brand-sub{
   display:block;
-  margin-top:3px;
+  color:#64806b;
   font-size:9px;
-  color:#598064;
   font-weight:900;
+  margin-top:3px;
+  letter-spacing:.5px;
 }
 
-.region{
-  border:2px solid #b9ddc1;
-  background:#eff9f0;
-  color:#276f39;
+.region-btn{
+  border:1px solid #bcdcc3;
+  background:#eff9f1;
+  color:#276c39;
   border-radius:25px;
-  padding:8px 11px;
+  padding:9px 12px;
   font-size:12px;
-  font-weight:900;
+  font-weight:850;
 }
 
 .search{
   margin-top:11px;
   display:flex;
   align-items:center;
-  gap:8px;
-  border:2px solid #cce3d1;
-  background:#fff;
+  gap:9px;
+  background:#f5f8f5;
+  border:1px solid #d6e4d9;
   border-radius:15px;
-  padding:10px 13px;
+  padding:11px 13px;
 }
 
 .search input{
   width:100%;
   border:0;
   outline:0;
+  background:transparent;
   font-size:15px;
 }
 
-.loc{
+.location{
   margin-top:8px;
   background:var(--yellow);
-  border-radius:13px;
-  padding:8px 11px;
-  font-size:11px;
+  border-radius:11px;
+  padding:7px 10px;
+  font-size:10px;
+  color:#7d6b3a;
 }
 
-.loc strong{
-  color:#28743c;
-  font-size:15px;
-}
+.location b{color:#39753f}
 
-/* ================= PAGES ================= */
+/* PAGES */
 
 .page{
   display:none;
   padding:15px 0 25px;
 }
 
-.page.active{
-  display:block;
-}
+.page.active{display:block}
 
 .title{
   padding:0 15px 11px;
@@ -179,25 +154,29 @@ header{
   color:#175d2d;
 }
 
-/* ================= HERO ================= */
+/* HERO */
 
 .hero{
-  margin:0 14px 15px;
-  padding:20px;
+  margin:0 14px 16px;
   border-radius:22px;
-  background:linear-gradient(135deg,#0e5b31,#24874b);
-  color:#fff;
+  padding:19px;
+  color:white;
+  background:
+    radial-gradient(circle at 90% 10%,#50bd7040,transparent 35%),
+    linear-gradient(135deg,#075d2d,#21894b);
+  box-shadow:0 9px 25px #08752d20;
 }
 
-.hero small{
+.hero-label{
   font-size:10px;
   font-weight:900;
+  opacity:.8;
 }
 
 .hero h2{
-  font-size:24px;
+  font-size:25px;
   line-height:1.08;
-  margin:6px 0 8px;
+  margin:7px 0;
 }
 
 .hero p{
@@ -206,63 +185,114 @@ header{
   opacity:.9;
 }
 
-.hero button{
+.hero-actions{
+  display:flex;
+  gap:8px;
   margin-top:13px;
+}
+
+.hero button{
   border:0;
   border-radius:12px;
-  background:#fff;
-  color:var(--green);
-  padding:11px 15px;
+  padding:11px 14px;
   font-weight:900;
 }
 
-/* ================= CATEGORIES ================= */
+.hero-market{
+  color:var(--green);
+  background:white;
+}
 
-.cats{
+.hero-add{
+  background:#ffffff20;
+  color:white;
+  border:1px solid #ffffff50!important;
+}
+
+/* CATEGORY */
+
+.section-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 15px 10px;
+}
+
+.section-head h3{
+  font-size:18px;
+  color:#175d2d;
+}
+
+.section-head span{
+  font-size:10px;
+  color:var(--muted);
+}
+
+.category-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:8px;
+  gap:9px;
   padding:0 14px;
 }
 
-.cat{
-  min-height:92px;
-  border:2px solid #e0ebe2;
+.category{
+  min-height:106px;
+  border:1px solid #dce9df;
   background:#fff;
-  border-radius:17px;
-  padding:8px 4px;
-  color:#397246;
-  font-weight:900;
+  border-radius:18px;
+  padding:10px 5px;
+  text-align:center;
+  transition:.2s;
+  box-shadow:0 5px 15px #174d2610;
 }
 
-.cat.active{
-  border-color:var(--green);
+.category:active{
+  transform:scale(.97);
+}
+
+.category.active{
+  border:2px solid var(--green);
   background:#edf8ef;
-  color:var(--green);
 }
 
-.cat .emoji{
+.category-icon{
+  width:48px;
+  height:48px;
+  margin:auto;
+  display:grid;
+  place-items:center;
+  border-radius:15px;
+  background:#eef8f0;
+  font-size:27px;
+}
+
+.category b{
   display:block;
-  font-size:29px;
-  margin-bottom:5px;
-}
-
-.cat .name{
+  margin-top:7px;
   font-size:11px;
+  color:#315f3b;
+  line-height:1.15;
 }
 
-/* ================= CHIPS ================= */
+/* SUB CATEGORIES */
 
-.chips{
+.catalog{
+  margin-top:16px;
+}
+
+.subcategories{
   display:flex;
   gap:8px;
   overflow:auto;
-  padding:11px 14px 14px;
+  padding:0 14px 12px;
+  scrollbar-width:none;
 }
 
-.chip{
+.subcategories::-webkit-scrollbar{display:none}
+
+.subcat{
   white-space:nowrap;
-  border:1px solid #c7dec9;
+  border:1px solid #cfe1d3;
   background:#fff;
   color:#477650;
   border-radius:25px;
@@ -271,26 +301,37 @@ header{
   font-weight:800;
 }
 
-.chip.active{
+.subcat.active{
   background:var(--green);
   color:#fff;
   border-color:var(--green);
 }
 
-/* ================= ANALYSIS ================= */
+/* ANALYSIS */
 
 .analysis{
-  margin:0 14px 14px;
+  margin:2px 14px 15px;
   background:#fff;
   border:1px solid var(--line);
   border-radius:18px;
   padding:13px;
 }
 
-.analysis h3{
+.analysis-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+.analysis-title b{
   color:var(--green);
   font-size:14px;
-  margin-bottom:9px;
+}
+
+.analysis-title span{
+  font-size:9px;
+  color:var(--muted);
 }
 
 .analysis-grid{
@@ -300,57 +341,72 @@ header{
 }
 
 .analysis-item{
-  text-align:center;
   background:#f7faf8;
-  border:1px solid #e7eee9;
   border-radius:12px;
-  padding:10px 5px;
+  padding:9px 5px;
+  text-align:center;
+  border:1px solid #e8eee9;
 }
 
-.analysis-item .emoji{
-  font-size:20px;
+.analysis-item strong{
+  display:block;
+  font-size:17px;
 }
 
 .analysis-item b{
   display:block;
-  font-size:11px;
+  font-size:10px;
   margin-top:3px;
 }
 
 .analysis-item span{
   display:block;
-  font-size:9px;
   color:var(--muted);
+  font-size:8px;
   margin-top:2px;
 }
 
-/* ================= PRICE TABLE ================= */
+/* PRICE */
 
-.pricebox{
-  margin:0 14px 15px;
-  background:#fff;
+.price-box{
+  margin:0 14px 16px;
+  background:white;
   border:1px solid var(--line);
   border-radius:18px;
-  padding:12px;
-  overflow:auto;
+  padding:13px;
+  overflow:hidden;
 }
 
-.pricebox h3{
+.price-head{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:9px;
+}
+
+.price-head b{
   color:var(--green);
   font-size:14px;
-  margin-bottom:8px;
+}
+
+.price-head span{
+  color:var(--muted);
+  font-size:9px;
 }
 
 .price-table{
   width:100%;
   border-collapse:collapse;
-  min-width:430px;
-  font-size:10px;
+  font-size:9px;
+}
+
+.price-table th{
+  color:#789080;
+  font-weight:800;
 }
 
 .price-table th,
 .price-table td{
-  padding:8px 5px;
+  padding:8px 3px;
   border-bottom:1px solid #edf2ee;
   text-align:center;
 }
@@ -361,133 +417,88 @@ header{
 }
 
 .price-table td{
-  color:#246b3b;
+  color:#28683b;
   font-weight:900;
 }
 
-/* ================= PRODUCT CARD ================= */
+/* PRODUCT CARDS */
 
 .products{
-  display:flex;
-  flex-direction:column;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
   gap:10px;
+  padding:0 14px;
 }
 
 .product{
-  margin:0 14px;
   background:#fff;
-  border:1px solid #dfece1;
-  border-radius:19px;
-  padding:14px;
-  box-shadow:0 7px 20px #19502a0b;
+  border:1px solid #dfeae1;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 5px 17px #194e290c;
 }
 
-.phead{
-  display:flex;
-  align-items:center;
-  gap:11px;
-}
-
-.pimg{
-  width:60px;
-  height:60px;
-  flex:0 0 60px;
-  border-radius:15px;
-  background:#e8f6ea;
+.product-image{
+  height:125px;
+  background:linear-gradient(145deg,#edf8ef,#e0f1e4);
   display:grid;
   place-items:center;
-  font-size:31px;
+  font-size:55px;
 }
 
-.pname{
-  font-size:17px;
-  font-weight:950;
+.product-body{
+  padding:11px;
 }
 
-.desc{
-  color:#618067;
-  font-size:11px;
-  margin-top:3px;
-  line-height:1.4;
-}
-
-.tags{
-  display:flex;
-  flex-wrap:wrap;
-  gap:5px;
-  margin-top:9px;
-}
-
-.tag{
-  background:#f1f7f2;
-  color:#4f6658;
+.product-tag{
+  display:inline-block;
+  background:#edf8ef;
+  color:#347345;
   padding:4px 7px;
-  border-radius:8px;
-  font-size:9px;
-  font-weight:800;
-}
-
-.price{
-  margin-top:9px;
-  background:#f8fbf9;
-  border:1px solid #e7eee9;
-  border-radius:11px;
-  padding:9px;
-  color:var(--muted);
-  font-size:10px;
-}
-
-.price b{
-  display:block;
-  color:var(--green);
-  font-size:16px;
-  margin-top:2px;
-}
-
-.region-prices{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:5px;
-  margin-top:7px;
-}
-
-.region-prices span{
-  background:#edf8f0;
-  padding:6px;
   border-radius:7px;
   font-size:8px;
-  display:flex;
-  justify-content:space-between;
-  gap:4px;
+  font-weight:850;
 }
 
-.region-prices b{
+.product h3{
+  font-size:14px;
+  margin-top:7px;
+  line-height:1.2;
+}
+
+.product-desc{
+  color:var(--muted);
+  font-size:9px;
+  margin-top:4px;
+  min-height:25px;
+}
+
+.product-price{
   color:var(--green);
-}
-
-.main{
-  width:100%;
-  border:0;
-  border-radius:12px;
-  background:linear-gradient(135deg,var(--green),var(--green2));
-  color:#fff;
-  padding:11px;
-  font-weight:900;
-  margin-top:9px;
-}
-
-.secondary{
-  width:100%;
-  border:1px solid #cde1d1;
-  border-radius:12px;
-  background:#f5faf6;
-  color:var(--green);
-  padding:10px;
-  font-weight:900;
+  font-size:15px;
+  font-weight:950;
   margin-top:7px;
 }
 
-/* ================= SERVICES ================= */
+.product-region{
+  color:#78887d;
+  font-size:9px;
+  margin-top:3px;
+}
+
+.product button{
+  width:100%;
+  margin-top:8px;
+  border:0;
+  background:var(--green);
+  color:#fff;
+  border-radius:10px;
+  padding:8px;
+  font-size:10px;
+  font-weight:900;
+}
+
+/* SERVICES */
 
 .service-grid{
   display:grid;
@@ -499,25 +510,25 @@ header{
 .service{
   background:#fff;
   border:1px solid var(--line);
-  border-radius:16px;
+  border-radius:17px;
   padding:13px;
   text-align:left;
 }
 
-.service .icon{
-  font-size:25px;
+.service-icon{
+  font-size:27px;
 }
 
 .service b{
   display:block;
   font-size:12px;
-  margin-top:5px;
+  margin-top:6px;
 }
 
 .service span{
   display:block;
+  font-size:9px;
   color:var(--muted);
-  font-size:10px;
   margin-top:3px;
 }
 
@@ -528,38 +539,40 @@ header{
   margin-top:6px;
 }
 
-/* ================= MARKET ================= */
+/* MARKET */
 
-.market-controls{
-  padding:0 14px 12px;
+.market-tools{
+  margin:0 14px 13px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:11px;
+}
+
+.market-filter-row{
   display:flex;
-  gap:8px;
+  gap:7px;
 }
 
-.market-controls select{
+.market-filter-row select{
   flex:1;
-  border:1px solid #d3e3d7;
-  background:#fff;
-  border-radius:11px;
-  padding:9px;
-  outline:none;
+  border:1px solid #d6e4d9;
+  border-radius:10px;
+  background:#f8faf8;
+  padding:8px;
+  font-size:10px;
 }
 
-.empty{
-  text-align:center;
-  padding:28px 18px;
-  color:#78907d;
-  background:#fff;
-  border:1px dashed #ccdacf;
-  border-radius:16px;
-  margin:0 14px;
+.market-list{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  padding:0 14px;
 }
 
-/* ================= FORMS ================= */
+/* FORM */
 
-.form,
-.profile,
-.chat{
+.form{
   margin:0 14px;
   background:#fff;
   border:1px solid var(--line);
@@ -568,14 +581,14 @@ header{
 }
 
 .group{
-  margin-bottom:11px;
+  margin-bottom:12px;
 }
 
 .group label{
   display:block;
-  color:#607667;
   font-size:11px;
-  font-weight:900;
+  font-weight:850;
+  color:#5d7063;
   margin-bottom:5px;
 }
 
@@ -583,7 +596,7 @@ header{
 .group select,
 .group textarea{
   width:100%;
-  border:1px solid #d7e5da;
+  border:1px solid #d4e3d7;
   background:#f9fbf9;
   border-radius:11px;
   padding:11px;
@@ -595,7 +608,77 @@ header{
   resize:vertical;
 }
 
-/* ================= CHAT ================= */
+.main-btn{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--green),var(--green2));
+  color:white;
+  padding:12px;
+  font-weight:900;
+}
+
+/* PROFILE */
+
+.profile{
+  margin:0 14px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:17px;
+}
+
+.avatar{
+  width:75px;
+  height:75px;
+  border-radius:50%;
+  background:#e8f6eb;
+  border:3px solid #76c889;
+  display:grid;
+  place-items:center;
+  font-size:34px;
+  margin:auto;
+}
+
+.profile-name{
+  text-align:center;
+  font-size:20px;
+  font-weight:950;
+  margin-top:7px;
+}
+
+.profile-phone{
+  text-align:center;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:3px;
+}
+
+.profile-role{
+  text-align:center;
+  color:var(--green);
+  font-weight:850;
+  font-size:11px;
+  margin-top:5px;
+}
+
+.menu{
+  margin-top:17px;
+  border-top:1px solid var(--line);
+}
+
+.menu button{
+  width:100%;
+  background:#fff;
+  border:0;
+  border-bottom:1px solid #edf2ee;
+  padding:14px 3px;
+  text-align:left;
+  font-size:12px;
+  font-weight:800;
+}
+
+/* CHAT */
 
 .users{
   display:flex;
@@ -605,11 +688,11 @@ header{
 }
 
 .user{
-  min-width:140px;
-  border:1px solid #cfe1d2;
+  min-width:145px;
   background:#fff;
-  border-radius:13px;
-  padding:9px;
+  border:1px solid #cfe1d3;
+  border-radius:14px;
+  padding:10px;
   text-align:left;
 }
 
@@ -620,65 +703,79 @@ header{
 }
 
 .user small{
+  display:block;
   color:var(--muted);
   font-size:9px;
+  margin-top:3px;
+}
+
+.chat{
+  margin:0 14px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:19px;
+  padding:12px;
+}
+
+.chat-head{
+  padding:5px 2px 11px;
+  font-size:12px;
 }
 
 .messages{
-  height:370px;
+  height:360px;
   overflow:auto;
   background:#edf2ef;
-  padding:12px;
+  border-radius:14px;
+  padding:11px;
   display:flex;
   flex-direction:column;
   gap:8px;
-  border-radius:12px;
-  margin-top:10px;
 }
 
 .msg{
   max-width:80%;
   padding:9px 11px;
-  border-radius:15px;
-  font-size:12px;
+  border-radius:14px;
+  font-size:11px;
   word-break:break-word;
 }
 
 .me{
   align-self:flex-end;
   background:var(--green);
-  color:#fff;
+  color:white;
 }
 
 .them{
   align-self:flex-start;
-  background:#fff;
-  border:1px solid #c9dfce;
+  background:white;
+  border:1px solid #d5e4d8;
 }
 
 .sender{
-  font-size:9px;
+  font-size:8px;
   font-weight:900;
   margin-bottom:3px;
 }
 
 .mt{
-  font-size:8px;
-  opacity:.65;
+  font-size:7px;
+  opacity:.6;
   text-align:right;
   margin-top:3px;
 }
 
-.chatin{
+.chat-input{
   display:flex;
   gap:7px;
-  margin-top:10px;
+  margin-top:9px;
 }
 
-.chatin input{
+.chat-input input{
   flex:1;
-  border:1px solid #d7e5da;
-  border-radius:12px;
+  border:1px solid #d5e3d8;
+  border-radius:11px;
   padding:10px;
   outline:none;
 }
@@ -686,67 +783,13 @@ header{
 .send{
   border:0;
   background:var(--green);
-  color:#fff;
-  border-radius:12px;
-  padding:0 14px;
+  color:white;
+  border-radius:11px;
+  padding:0 15px;
   font-weight:900;
 }
 
-/* ================= PROFILE ================= */
-
-.avatar{
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  background:#e6f5e9;
-  border:3px solid #76c889;
-  display:grid;
-  place-items:center;
-  font-size:31px;
-  margin:0 auto 8px;
-}
-
-.profile-name{
-  font-size:20px;
-  font-weight:950;
-  text-align:center;
-}
-
-.profile-phone{
-  font-size:12px;
-  color:var(--muted);
-  text-align:center;
-  margin-top:3px;
-}
-
-.profile-role{
-  text-align:center;
-  color:var(--green);
-  font-weight:900;
-  font-size:12px;
-  margin-top:6px;
-}
-
-.menu{
-  margin-top:15px;
-  border-top:1px solid var(--line);
-}
-
-.menu button{
-  width:100%;
-  border:0;
-  border-bottom:1px solid #edf2ee;
-  background:#fff;
-  padding:14px 2px;
-  text-align:left;
-  font-weight:800;
-}
-
-.menu button.danger{
-  color:var(--danger);
-}
-
-/* ================= BOTTOM NAV ================= */
+/* BOTTOM */
 
 .bottom{
   position:fixed;
@@ -756,22 +799,21 @@ header{
   width:100%;
   max-width:760px;
   height:76px;
-  background:#fff;
+  background:white;
   border-top:1px solid var(--line);
   display:flex;
   justify-content:space-around;
   align-items:center;
-  z-index:80;
+  z-index:60;
 }
 
 .nav{
   border:0;
   background:none;
-  color:#83a38b;
-  text-align:center;
-  font-size:10px;
-  font-weight:900;
-  min-width:65px;
+  color:#8ba091;
+  min-width:63px;
+  font-size:9px;
+  font-weight:850;
 }
 
 .nav span{
@@ -780,54 +822,48 @@ header{
   margin-bottom:2px;
 }
 
-.nav.active{
-  color:var(--green);
-}
+.nav.active{color:var(--green)}
 
-.add{
-  width:49px;
-  height:49px;
+.add-btn{
+  width:50px;
+  height:50px;
   border-radius:50%;
-  border:4px solid #fff;
+  border:4px solid white;
   background:var(--green);
-  color:#fff;
-  font-size:27px;
-  margin-top:-20px;
-  box-shadow:0 5px 15px #08752d44;
+  color:white;
+  font-size:28px;
+  margin-top:-22px;
+  box-shadow:0 6px 16px #08752d40;
 }
 
-/* ================= MODAL ================= */
+/* MODAL */
 
 .modal{
   display:none;
   position:fixed;
   inset:0;
-  background:#0009;
   z-index:200;
+  background:#0008;
   align-items:center;
   justify-content:center;
-  padding:18px;
+  padding:17px;
 }
 
-.modal.show{
-  display:flex;
-}
+.modal.show{display:flex}
 
-.modalbox{
-  background:#fff;
-  border-radius:22px;
-  padding:18px;
+.modal-box{
   width:100%;
   max-width:420px;
+  background:white;
+  border-radius:22px;
+  padding:18px;
   position:relative;
-  max-height:90vh;
-  overflow:auto;
 }
 
 .close{
   position:absolute;
   right:13px;
-  top:9px;
+  top:10px;
   border:0;
   background:none;
   font-size:20px;
@@ -835,8 +871,8 @@ header{
 
 .tabs{
   display:flex;
-  border-bottom:2px solid #e4ece5;
-  margin-bottom:14px;
+  border-bottom:2px solid #e5ece6;
+  margin-bottom:15px;
 }
 
 .tab{
@@ -853,68 +889,75 @@ header{
   border-bottom:2px solid var(--green);
 }
 
-/* ================= TOAST ================= */
+/* TOAST */
 
 .toast{
   position:fixed;
   left:50%;
-  bottom:90px;
+  bottom:91px;
   transform:translateX(-50%);
   background:#173d22;
   color:#fff;
-  padding:10px 14px;
+  padding:10px 15px;
   border-radius:12px;
-  display:none;
-  z-index:300;
   font-size:11px;
+  z-index:300;
+  display:none;
   max-width:90%;
   text-align:center;
 }
 
-.toast.show{
-  display:block;
+.toast.show{display:block}
+
+.empty{
+  margin:0 14px;
+  background:white;
+  border:1px dashed #cadace;
+  border-radius:16px;
+  padding:25px 15px;
+  text-align:center;
+  color:#78907d;
+  font-size:12px;
 }
 
-/* ================= LOADING ================= */
-
 .loading{
-  text-align:center;
   padding:25px;
+  text-align:center;
   color:var(--muted);
 }
 
-.spinner{
-  width:25px;
-  height:25px;
-  border:3px solid #d8e7dc;
-  border-top-color:var(--green);
-  border-radius:50%;
-  animation:spin .8s linear infinite;
-  margin:0 auto 9px;
-}
+/* RESPONSIVE */
 
-@keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
-}
+@media(max-width:430px){
 
-/* ================= RESPONSIVE ================= */
-
-@media(max-width:500px){
-
-  .cats{
+  .category-grid{
     grid-template-columns:repeat(2,1fr);
+  }
+
+  .products,
+  .market-list{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .product-image{
+    height:105px;
   }
 
   .analysis-grid{
     grid-template-columns:1fr;
   }
+}
 
-  .service-grid{
+@media(max-width:350px){
+
+  .products,
+  .market-list{
     grid-template-columns:1fr;
   }
 
+  .hero h2{
+    font-size:21px;
+  }
 }
 </style>
 </head>
@@ -923,406 +966,390 @@ header{
 
 <div class="app">
 
-<!-- ================= HEADER ================= -->
+<!-- HEADER -->
 
 <header>
 
-  <div class="row">
+<div class="header-row">
 
-    <div class="brand" id="brand">
+<div class="brand" onclick="go('homePage')">
+<div class="logo">🌱</div>
+<div>
+<div class="brand-name">Apex</div>
+<span class="brand-sub">АГРО МАРКЕТПЛЕЙС</span>
+</div>
+</div>
 
-      <div class="logo">
-        <svg viewBox="0 0 100 100">
-          <path fill="white"
-          d="M18 78 45 18h12l-8 18 9-16 36 58H72L54 45 39 78z"/>
-          <path fill="#8bd697"
-          d="M49 74c1-15 8-24 19-32-1 13-6 25-19 32zm8-1c1-12 8-20 19-25-2 11-7 20-19 25z"/>
-        </svg>
-      </div>
+<button class="region-btn" id="regionBtn">
+Талас 📍
+</button>
 
-      <div>
-        <h1>Apex</h1>
-        <small>АГРО МАРКЕТПЛЕЙС</small>
-      </div>
+</div>
 
-    </div>
+<div class="search">
+<span>🔍</span>
+<input id="search" placeholder="Картошка, фасоль, трактор, агроном...">
+</div>
 
-    <button class="region" id="regionBtn">
-      Талас 📍
-    </button>
-
-  </div>
-
-  <div class="search">
-    🔍
-    <input
-      id="searchInput"
-      placeholder="Картошка, фасоль, трактор, агроном..."
-    >
-  </div>
-
-  <div class="loc">
-    Сиздин профилиңиз:
-    <strong id="headerUser">
-      Конок
-    </strong>
-  </div>
+<div class="location">
+Сиздин профилиңиз: <b id="locationName">Конок</b>
+</div>
 
 </header>
 
 
-<!-- ================= HOME ================= -->
+<!-- HOME -->
 
 <section class="page active" id="homePage">
 
-  <div class="hero">
+<div class="hero">
 
-    <small>🌱 APEX AGRO PLATFORM</small>
+<div class="hero-label">🌱 APEX AGRO PLATFORM</div>
 
-    <h2>
-      Кыргызстандагы<br>
-      бирдиктүү агро рынок
-    </h2>
+<h2>
+Кыргызстандагы бирдиктүү агро рынок
+</h2>
 
-    <p>
-      Айыл чарба товарлары, агрономдор,
-      техника, логистика жана башка
-      агро кызматтар бир жерде.
-    </p>
+<p>
+Айыл чарба товарлары, мал, агрономдор,
+техника, дары-дармек жана агро кызматтар
+бир жерде.
+</p>
 
-    <button id="heroMarket">
-      Рынокту көрүү →
-    </button>
+<div class="hero-actions">
 
-  </div>
+<button class="hero-market" onclick="go('marketPage')">
+🛒 Рынокту көрүү
+</button>
 
+<button class="hero-add" onclick="go('createPage')">
+＋ Жарыя берүү
+</button>
 
-  <div class="title">
-    Категориялар
-  </div>
+</div>
 
-
-  <div class="cats">
-
-    <button class="cat active" data-category="Өсүмдүктөр">
-      <span class="emoji">🌱</span>
-      <span class="name">Өсүмдүктөр</span>
-    </button>
-
-    <button class="cat" data-category="Агрономдор">
-      <span class="emoji">👨‍🌾</span>
-      <span class="name">Агрономдор</span>
-    </button>
-
-    <button class="cat" data-category="Дары & Семирткич">
-      <span class="emoji">🧪</span>
-      <span class="name">Дары & Семирткич</span>
-    </button>
-
-    <button class="cat" data-category="Мал чарбасы">
-      <span class="emoji">🐄</span>
-      <span class="name">Мал чарбасы</span>
-    </button>
-
-  </div>
+</div>
 
 
-  <div class="chips">
+<!-- CATEGORIES -->
 
-    <button class="chip active" data-type="">
-      Баардыгы
-    </button>
+<div class="section-head">
+<h3>Каталогдор</h3>
+<span>Баарын көрүү</span>
+</div>
 
-    <button class="chip" data-type="Жер-жемиш">
-      🥦 Жер-жемиш
-    </button>
+<div class="category-grid">
 
-    <button class="chip" data-type="Мөмө">
-      🍎 Мөмө
-    </button>
+<button class="category active" data-category="Өсүмдүктөр">
+<div class="category-icon">🌱</div>
+<b>Өсүмдүктөр</b>
+</button>
 
-    <button class="chip" data-type="Дан">
-      🌾 Дан
-    </button>
+<button class="category" data-category="Мал чарбасы">
+<div class="category-icon">🐄</div>
+<b>Мал чарбасы</b>
+</button>
 
-    <button class="chip" data-type="Мал">
-      🐄 Мал
-    </button>
+<button class="category" data-category="Дары & Семирткич">
+<div class="category-icon">🧪</div>
+<b>Дары & Семирткич</b>
+</button>
 
-    <button class="chip" data-type="Техника">
-      🚜 Техника
-    </button>
+<button class="category" data-category="Агрономдор">
+<div class="category-icon">👨‍🌾</div>
+<b>Агрономдор</b>
+</button>
 
-  </div>
+<button class="category" data-category="Техника">
+<div class="category-icon">🚜</div>
+<b>Техника</b>
+</button>
 
+<button class="category" data-category="Логистика">
+<div class="category-icon">🚚</div>
+<b>Логистика</b>
+</button>
 
-  <div class="analysis">
+<button class="category" data-category="Кызматтар">
+<div class="category-icon">🛠️</div>
+<b>Кызматтар</b>
+</button>
 
-    <h3>
-      📊 Рынок анализи
-    </h3>
+<button class="category" data-category="Тоют">
+<div class="category-icon">🌾</div>
+<b>Тоют</b>
+</button>
 
-    <div class="analysis-grid">
-
-      <div class="analysis-item">
-        <div class="emoji">📈</div>
-        <b>Баалар</b>
-        <span>Аймак боюнча салыштыруу</span>
-      </div>
-
-      <div class="analysis-item">
-        <div class="emoji">🔥</div>
-        <b>Суроо-талап</b>
-        <span>Өтүмдүү товарлар</span>
-      </div>
-
-      <div class="analysis-item">
-        <div class="emoji">🧠</div>
-        <b>Прогноз</b>
-        <span>Сезондук багыт</span>
-      </div>
-
-    </div>
-
-  </div>
+</div>
 
 
-  <!-- PRICE TABLE -->
+<!-- SUBCATALOG -->
 
-  <div class="pricebox">
+<div class="catalog">
 
-    <h3>
-      💰 Аймактык баалар
-    </h3>
+<div class="section-head">
+<h3 id="catalogTitle">Өсүмдүктөр</h3>
+<span id="catalogCount">6 түр</span>
+</div>
 
-    <table class="price-table">
+<div class="subcategories" id="subcategories"></div>
 
-      <thead>
-        <tr>
-          <th>Продукт</th>
-          <th>Талас</th>
-          <th>Чүй</th>
-          <th>Ош</th>
-          <th>Нарын</th>
-        </tr>
-      </thead>
-
-      <tbody id="priceRows">
-      </tbody>
-
-    </table>
-
-  </div>
+</div>
 
 
-  <div class="title" id="homeTitle">
-    🌱 Өсүмдүктөр тизмеси
-  </div>
+<!-- ANALYSIS -->
 
-  <div id="homeList" class="products">
-  </div>
+<div class="analysis">
+
+<div class="analysis-title">
+<b>📊 Рынок анализи</b>
+<span>Кыргызстан</span>
+</div>
+
+<div class="analysis-grid">
+
+<div class="analysis-item">
+<strong>📈</strong>
+<b>Баалар</b>
+<span>Аймак боюнча</span>
+</div>
+
+<div class="analysis-item">
+<strong>🔥</strong>
+<b>Суроо-талап</b>
+<span>Өтүмдүү товарлар</span>
+</div>
+
+<div class="analysis-item">
+<strong>🧠</strong>
+<b>Прогноз</b>
+<span>Сезондук анализ</span>
+</div>
+
+</div>
+
+</div>
 
 
-  <div class="title">
-    🧑‍🌾 Агро кызматтар
-  </div>
+<!-- PRICE -->
 
-  <div id="serviceList" class="service-grid">
-  </div>
+<div class="price-box">
+
+<div class="price-head">
+<b>💰 Аймактык баалар</b>
+<span>сом / кг</span>
+</div>
+
+<table class="price-table">
+
+<thead>
+<tr>
+<th>Продукт</th>
+<th>Талас</th>
+<th>Чүй</th>
+<th>Ош</th>
+<th>Нарын</th>
+</tr>
+</thead>
+
+<tbody id="priceRows"></tbody>
+
+</table>
+
+</div>
+
+
+<!-- PRODUCTS -->
+
+<div class="section-head">
+<h3 id="productTitle">🌱 Өсүмдүктөр</h3>
+<span>Көрүү →</span>
+</div>
+
+<div id="homeProducts" class="products"></div>
+
+
+<!-- SERVICES -->
+
+<div style="height:20px"></div>
+
+<div class="section-head">
+<h3>🧑‍🌾 Агро кызматтар</h3>
+<span>8 кызмат</span>
+</div>
+
+<div id="serviceList" class="service-grid"></div>
 
 </section>
 
 
-<!-- ================= MARKET ================= -->
+<!-- MARKET -->
 
 <section class="page" id="marketPage">
 
-  <div class="title">
-    🛒 Бардык жарыялар
-  </div>
+<div class="title">🛒 Бардык жарыялар</div>
 
-  <div class="market-controls">
+<div class="market-tools">
 
-    <select id="marketCategory">
+<div class="market-filter-row">
 
-      <option value="">
-        Бардык категория
-      </option>
+<select id="marketCategory">
+<option value="">Бардык категория</option>
+<option>Өсүмдүктөр</option>
+<option>Мал чарбасы</option>
+<option>Дары & Семирткич</option>
+<option>Техника</option>
+<option>Агрономдор</option>
+</select>
 
-      <option value="Өсүмдүктөр">
-        🌱 Өсүмдүктөр
-      </option>
+<select id="marketRegion">
+<option value="">Бардык аймак</option>
+<option>Талас</option>
+<option>Чүй</option>
+<option>Ош</option>
+<option>Ысык-Көл</option>
+<option>Баткен</option>
+<option>Жалал-Абад</option>
+<option>Нарын</option>
+</select>
 
-      <option value="Агрономдор">
-        👨‍🌾 Агрономдор
-      </option>
+</div>
 
-      <option value="Дары & Семирткич">
-        🧪 Дары & Семирткич
-      </option>
+</div>
 
-      <option value="Мал чарбасы">
-        🐄 Мал чарбасы
-      </option>
-
-      <option value="Техника">
-        🚜 Техника
-      </option>
-
-    </select>
-
-    <select id="marketRegion">
-
-      <option value="">
-        Бардык аймак
-      </option>
-
-      <option>Талас</option>
-      <option>Чүй</option>
-      <option>Ош</option>
-      <option>Ысык-Көл</option>
-      <option>Баткен</option>
-      <option>Жалал-Абад</option>
-      <option>Нарын</option>
-
-    </select>
-
-  </div>
-
-  <div id="marketList" class="products">
-  </div>
+<div id="marketList" class="market-list"></div>
 
 </section>
 
 
-<!-- ================= CREATE ================= -->
+<!-- CREATE -->
 
 <section class="page" id="createPage">
 
-  <div class="title">
-    ➕ Жаңы жарыя түзүү
-  </div>
+<div class="title">➕ Жаңы жарыя</div>
 
-  <div id="createHint" class="empty" style="margin-bottom:12px;">
-    Жарыя берүү үчүн аккаунтка кириңиз.
-  </div>
+<div id="createHint" class="empty" style="margin-bottom:12px">
+Жарыя берүү үчүн аккаунтка кириңиз.
+</div>
 
-  <div class="form">
+<div class="form">
 
-    <div class="group">
-      <label>Продукт / кызмат аты</label>
-      <input
-        id="adTitle"
-        placeholder="Мисалы: Нарын картошкасы"
-      >
-    </div>
+<div class="group">
+<label>Продукт / кызмат аты</label>
+<input id="adTitle" placeholder="Мисалы: Талас картошкасы">
+</div>
 
-    <div class="group">
+<div class="group">
+<label>Категория</label>
+<select id="adCategory">
+<option>Өсүмдүктөр</option>
+<option>Мал чарбасы</option>
+<option>Дары & Семирткич</option>
+<option>Техника</option>
+<option>Агрономдор</option>
+</select>
+</div>
 
-      <label>Категория</label>
+<div class="group">
+<label>Баасы</label>
+<input id="adPrice" placeholder="25 сом/кг">
+</div>
 
-      <select id="adCategory">
+<div class="group">
+<label>Аймак</label>
+<select id="adRegion">
+<option>Талас</option>
+<option>Чүй</option>
+<option>Ош</option>
+<option>Ысык-Көл</option>
+<option>Баткен</option>
+<option>Жалал-Абад</option>
+<option>Нарын</option>
+</select>
+</div>
 
-        <option>Өсүмдүктөр</option>
-        <option>Мал чарбасы</option>
-        <option>Дары & Семирткич</option>
-        <option>Техника</option>
-        <option>Агрономдор</option>
+<div class="group">
+<label>Маалымат</label>
+<textarea id="adDesc" placeholder="Товар жөнүндө маалымат..."></textarea>
+</div>
 
-      </select>
+<button class="main-btn" id="publishBtn">
+📦 Жарыялоо
+</button>
 
-    </div>
-
-    <div class="group">
-
-      <label>Баасы</label>
-
-      <input
-        id="adPrice"
-        placeholder="25 сом/кг"
-      >
-
-    </div>
-
-    <div class="group">
-
-      <label>Аймак</label>
-
-      <select id="adRegion">
-
-        <option>Талас</option>
-        <option>Чүй</option>
-        <option>Ош</option>
-        <option>Ысык-Көл</option>
-        <option>Баткен</option>
-        <option>Жалал-Абад</option>
-        <option>Нарын</option>
-
-      </select>
-
-    </div>
-
-    <div class="group">
-
-      <label>Маалымат</label>
-
-      <textarea
-        id="adDesc"
-        placeholder="Товар жөнүндө маалымат..."
-      ></textarea>
-
-    </div>
-
-    <button
-      class="main"
-      id="publishBtn"
-    >
-      Жарыялоо
-    </button>
-
-  </div>
+</div>
 
 </section>
 
 
-<!-- ================= CHAT ================= -->
+<!-- CHAT -->
 
 <section class="page" id="chatPage">
 
-  <div class="title">
-    💬 Жеке чат
-  </div>
+<div class="title">💬 Жеке чат</div>
 
-  <div id="usersList" class="users">
-  </div>
+<div id="usersList" class="users"></div>
 
-  <div class="chat">
+<div class="chat">
 
-    <div id="chatHead">
-      <b>
-        Колдонуучуну тандаңыз
-      </b>
-    </div>
+<div class="chat-head" id="chatHead">
+<b>Колдонуучуну тандаңыз</b>
+</div>
 
-    <div class="messages" id="messages">
+<div class="messages" id="messages">
 
-      <div class="msg them">
+<div class="msg them">
 
-        <div class="sender">
-          Apex / Система
-        </div>
+<div class="sender">Apex / Система</div>
 
-        Салам!
-        Жеке чат үчүн колдонуучуну тандаңыз.
+Салам! Сүйлөшүү үчүн колдонуучуну тандаңыз.
 
-        <div class="mt">
-          Азыр
-        </div>
+<div class="mt">Азыр</div>
 
-      </div>
+</div>
 
-    </div>
+</div>
 
-    <div class="chatin">
+<div class="chat-input">
 
-     
+<input id="messageInput"
+placeholder="Билдирүү жазыңыз..."
+disabled>
+
+<button class="send" id="sendBtn" disabled>
+➤
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section class="page" id="profilePage">
+
+<div class="title">👤 Профиль</div>
+
+<div class="profile">
+
+<div class="avatar">👨‍🌾</div>
+
+<div class="profile-name" id="profileName">
+Конок
+</div>
+
+<div class="profile-phone" id="profilePhone">
+Телефон: -
+</div>
+
+<div class="profile-role" id="profileRole">
+Катталган эмес
+</div>
+
+<div class="menu">
+
+<button id="loginOpen">
+🔑 Кирүү / Катта
