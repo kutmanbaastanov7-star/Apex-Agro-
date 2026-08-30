@@ -1,1 +1,1557 @@
-оо
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+>
+
+<meta
+  name="theme-color"
+  content="#08783a"
+>
+
+<title>Apex — Агро маркетплейс</title>
+
+<style>
+
+:root{
+  --green:#08783a;
+  --green2:#0a9348;
+  --dark:#075b2d;
+  --bg:#f3f7f4;
+  --white:#ffffff;
+  --text:#183b27;
+  --muted:#718078;
+  --line:#dce8e0;
+  --soft:#eaf6ee;
+  --yellow:#fff3c9;
+  --danger:#c93b3b;
+  --shadow:0 8px 25px rgba(20,70,40,.07);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+.app{
+  width:100%;
+  max-width:760px;
+  min-height:100vh;
+  margin:auto;
+}
+
+/* HEADER */
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid #e1ebe4;
+  padding:16px 16px 12px;
+}
+
+.header-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.logo{
+  width:56px;
+  height:56px;
+  border-radius:18px;
+  background:linear-gradient(
+    145deg,
+    #087d3d,
+    #075e2e
+  );
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:
+    0 8px 20px
+    rgba(8,120,58,.18);
+}
+
+.logo svg{
+  width:42px;
+  height:42px;
+}
+
+.brand-name{
+  color:var(--green);
+  font-size:34px;
+  font-weight:900;
+  line-height:1;
+  letter-spacing:-1.5px;
+}
+
+.brand-sub{
+  margin-top:5px;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.8px;
+  color:#748178;
+}
+
+.region-btn{
+  border:1.5px solid #c8ddd0;
+  background:#f4faf6;
+  color:#276943;
+  border-radius:22px;
+  padding:11px 13px;
+  font-weight:800;
+}
+
+.search-box{
+  margin-top:13px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  border:1.5px solid #d5e2d9;
+  border-radius:20px;
+  background:#fbfdfb;
+  padding:0 13px;
+}
+
+.search-box:focus-within{
+  border-color:var(--green);
+  box-shadow:
+    0 0 0 3px
+    rgba(8,120,58,.08);
+}
+
+.search-icon{
+  font-size:21px;
+}
+
+.search-box input{
+  width:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  padding:14px 0;
+  font-size:15px;
+}
+
+.profile-bar{
+  margin-top:10px;
+  background:var(--yellow);
+  border-radius:14px;
+  padding:10px 13px;
+  color:#746846;
+  font-size:13px;
+}
+
+.profile-bar b{
+  color:#287346;
+}
+
+/* MAIN */
+
+main{
+  padding:18px 16px 110px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* HERO */
+
+.hero{
+  background:
+    linear-gradient(
+      135deg,
+      #075f2f,
+      #087c3d 55%,
+      #10974b
+    );
+  color:white;
+  border-radius:27px;
+  padding:24px 21px;
+  box-shadow:
+    0 15px 35px
+    rgba(8,120,58,.16);
+}
+
+.hero-small{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.8px;
+  opacity:.85;
+}
+
+.hero h1{
+  margin:11px 0 10px;
+  font-size:29px;
+  line-height:1.1;
+  letter-spacing:-.8px;
+}
+
+.hero p{
+  margin:0 0 19px;
+  color:#e1f5e8;
+  line-height:1.55;
+  font-size:14px;
+}
+
+.hero-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.hero-btn{
+  border:0;
+  min-height:53px;
+  border-radius:16px;
+  padding:10px;
+  font-weight:900;
+}
+
+.hero-primary{
+  background:white;
+  color:var(--green);
+}
+
+.hero-secondary{
+  background:rgba(255,255,255,.12);
+  color:white;
+  border:1px solid
+    rgba(255,255,255,.35);
+}
+
+/* SECTION */
+
+.section-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin:24px 2px 11px;
+}
+
+.section-title h2{
+  margin:0;
+  font-size:21px;
+  letter-spacing:-.3px;
+}
+
+.section-link{
+  border:0;
+  background:transparent;
+  color:#728078;
+  font-weight:700;
+}
+
+/* CATEGORIES */
+
+.categories{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.category{
+  min-height:125px;
+  border:1.5px solid #dce8e0;
+  background:white;
+  border-radius:22px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  color:#416a50;
+  box-shadow:var(--shadow);
+}
+
+.category.active{
+  border-color:var(--green);
+  background:#edf8f0;
+}
+
+.category-icon{
+  width:54px;
+  height:54px;
+  border-radius:18px;
+  background:#f0f7f2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:31px;
+}
+
+.category strong{
+  font-size:14px;
+}
+
+/* CHIPS */
+
+.chips{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  padding:2px 1px 7px;
+}
+
+.chips::-webkit-scrollbar{
+  display:none;
+}
+
+.chip{
+  flex:none;
+  border:1px solid #ceddd3;
+  background:white;
+  color:#52745e;
+  border-radius:20px;
+  padding:9px 13px;
+  font-size:13px;
+  font-weight:800;
+}
+
+.chip.active{
+  background:var(--green);
+  color:white;
+  border-color:var(--green);
+}
+
+/* PRICE */
+
+.price-card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:21px;
+  padding:10px;
+  overflow:auto;
+  box-shadow:var(--shadow);
+}
+
+.price-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+
+.price-table th,
+.price-table td{
+  padding:11px 6px;
+  text-align:left;
+  border-bottom:1px solid #edf2ee;
+  white-space:nowrap;
+}
+
+.price-table th{
+  color:#7a8780;
+  font-weight:800;
+}
+
+.green-price{
+  color:var(--green);
+  font-weight:900;
+}
+
+/* CARDS */
+
+.cards{
+  display:grid;
+  gap:10px;
+}
+
+.product{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:21px;
+  padding:13px;
+  display:flex;
+  gap:12px;
+  box-shadow:var(--shadow);
+}
+
+.product-icon{
+  width:70px;
+  height:70px;
+  border-radius:18px;
+  background:#eef8f1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:38px;
+  flex:none;
+}
+
+.product-info{
+  flex:1;
+  min-width:0;
+}
+
+.product-title{
+  margin:0 0 5px;
+  font-size:16px;
+  font-weight:900;
+}
+
+.product-meta{
+  color:#7b8981;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.product-price{
+  margin-top:6px;
+  color:var(--green);
+  font-size:16px;
+  font-weight:900;
+}
+
+.small-btn{
+  border:0;
+  background:var(--soft);
+  color:var(--green);
+  border-radius:11px;
+  padding:8px 10px;
+  font-size:12px;
+  font-weight:900;
+}
+
+.empty{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:25px 15px;
+  text-align:center;
+  color:#849189;
+}
+
+.loading{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:24px;
+  text-align:center;
+  color:#849189;
+}
+
+/* MARKET */
+
+.market-filter{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+.market-filter select{
+  flex:1;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:11px;
+  background:white;
+  outline:none;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  z-index:60;
+  width:min(760px,100%);
+  height:78px;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1fr 1fr;
+  align-items:end;
+  background:rgba(255,255,255,.98);
+  border-top:1px solid #e0e9e4;
+  padding:
+    6px
+    8px
+    calc(6px + env(safe-area-inset-bottom));
+}
+
+.nav-btn{
+  border:0;
+  background:transparent;
+  color:#8a968f;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  font-size:10px;
+  font-weight:800;
+}
+
+.nav-btn.active{
+  color:var(--green);
+}
+
+.nav-icon{
+  font-size:23px;
+}
+
+.plus-btn{
+  width:57px;
+  height:57px;
+  margin:0 auto -2px;
+  border-radius:50%;
+  border:5px solid white;
+  background:var(--green);
+  color:white;
+  font-size:32px;
+  line-height:1;
+  box-shadow:
+    0 7px 20px
+    rgba(8,120,58,.28);
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  background:rgba(8,30,18,.48);
+}
+
+.modal.show{
+  display:flex;
+}
+
+.sheet{
+  width:min(760px,100%);
+  max-height:92vh;
+  overflow:auto;
+  background:white;
+  border-radius:27px 27px 0 0;
+  padding:
+    18px
+    16px
+    calc(25px + env(safe-area-inset-bottom));
+}
+
+.sheet-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+
+.sheet-header h3{
+  margin:0;
+  font-size:21px;
+}
+
+.close{
+  width:39px;
+  height:39px;
+  border:0;
+  border-radius:50%;
+  background:#f0f4f1;
+  font-size:22px;
+}
+
+.field{
+  margin:11px 0;
+}
+
+.field label{
+  display:block;
+  margin-bottom:6px;
+  color:#64736a;
+  font-size:12px;
+  font-weight:900;
+}
+
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  border:1px solid #d5e1d9;
+  border-radius:13px;
+  background:#fbfdfb;
+  padding:12px;
+  outline:none;
+}
+
+.field textarea{
+  min-height:95px;
+  resize:vertical;
+}
+
+.submit-btn{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:14px;
+  background:var(--green);
+  color:white;
+  font-weight:900;
+  margin-top:7px;
+}
+
+/* AUTH */
+
+.tabs{
+  display:flex;
+  background:#eef4ef;
+  padding:4px;
+  border-radius:13px;
+  margin-bottom:13px;
+}
+
+.tab{
+  flex:1;
+  border:0;
+  background:transparent;
+  border-radius:10px;
+  padding:10px;
+  color:#718077;
+  font-weight:900;
+}
+
+.tab.active{
+  background:white;
+  color:var(--green);
+}
+
+/* PROFILE */
+
+.profile-card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:23px;
+  padding:19px;
+  box-shadow:var(--shadow);
+}
+
+.avatar{
+  width:65px;
+  height:65px;
+  border-radius:50%;
+  background:#eaf7ee;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:31px;
+  margin-bottom:10px;
+}
+
+.logout-btn{
+  width:100%;
+  margin-top:15px;
+  border:0;
+  background:#fff0f0;
+  color:var(--danger);
+  border-radius:13px;
+  padding:12px;
+  font-weight:900;
+}
+
+/* CHAT */
+
+.users{
+  display:grid;
+  gap:8px;
+}
+
+.user{
+  width:100%;
+  text-align:left;
+  border:1px solid var(--line);
+  background:white;
+  border-radius:15px;
+  padding:12px;
+}
+
+.chat{
+  margin-top:10px;
+  background:white;
+  border:1px solid var(--line);
+  border-radius:19px;
+  overflow:hidden;
+}
+
+.chat-head{
+  padding:12px;
+  border-bottom:1px solid var(--line);
+  font-weight:900;
+}
+
+.messages{
+  height:290px;
+  overflow-y:auto;
+  padding:11px;
+  background:#f5f8f6;
+}
+
+.message{
+  max-width:78%;
+  padding:9px 11px;
+  border-radius:14px;
+  background:white;
+  margin:6px 0;
+}
+
+.message.mine{
+  margin-left:auto;
+  background:#dff3e5;
+}
+
+.message small{
+  display:block;
+  margin-top:3px;
+  color:#89948e;
+  font-size:9px;
+}
+
+.chat-send{
+  display:flex;
+  gap:6px;
+  padding:8px;
+}
+
+.chat-send input{
+  flex:1;
+  border:1px solid #d7e1da;
+  border-radius:12px;
+  padding:10px;
+  outline:none;
+}
+
+.chat-send button{
+  width:45px;
+  border:0;
+  border-radius:12px;
+  background:var(--green);
+  color:white;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:94px;
+  z-index:200;
+  max-width:90%;
+  transform:
+    translateX(-50%)
+    translateY(20px);
+  opacity:0;
+  pointer-events:none;
+  background:#173d27;
+  color:white;
+  border-radius:13px;
+  padding:11px 15px;
+  transition:.25s;
+  font-size:13px;
+  font-weight:700;
+}
+
+.toast.show{
+  opacity:1;
+  transform:
+    translateX(-50%)
+    translateY(0);
+}
+
+/* DESKTOP */
+
+@media(min-width:700px){
+
+  .categories{
+    grid-template-columns:
+      repeat(4,1fr);
+  }
+
+  .category{
+    min-height:145px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+
+  <div class="header-row">
+
+    <div class="brand">
+
+      <div class="logo">
+
+        <svg
+          viewBox="0 0 64 64"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+
+          <path
+            d="M10 50 29 12l8 15 7-11 10 34H43l-5-16-7 16H10Z"
+            fill="white"
+          />
+
+          <path
+            d="M27 40c7-7 14-8 24-7-6 2-10 5-14 10l-10 5v-8Z"
+            fill="#8DD35B"
+          />
+
+        </svg>
+
+      </div>
+
+      <div>
+
+        <div class="brand-name">
+          Apex
+        </div>
+
+        <div class="brand-sub">
+          АГРО МАРКЕТПЛЕЙС
+        </div>
+
+      </div>
+
+    </div>
+
+    <button
+      class="region-btn"
+      id="regionBtn"
+    >
+      Талас 📍
+    </button>
+
+  </div>
+
+  <div class="search-box">
+
+    <span class="search-icon">
+      🔍
+    </span>
+
+    <input
+      id="globalSearch"
+      placeholder="Картошка, фасоль, трактор, агроном..."
+    >
+
+  </div>
+
+  <div class="profile-bar">
+
+    Сиздин профилиңиз:
+    <b id="profileName">
+      Конок
+    </b>
+
+  </div>
+
+</header>
+
+
+<main>
+
+<!-- HOME -->
+
+<section
+  id="homePage"
+  class="page active"
+>
+
+  <div class="hero">
+
+    <div class="hero-small">
+      🌱 APEX AGRO PLATFORM
+    </div>
+
+    <h1>
+      Кыргызстандагы<br>
+      бирдиктүү агро рынок
+    </h1>
+
+    <p>
+      Айыл чарба товарлары, мал,
+      агрономдор, техника,
+      дары-дармек жана кызматтар
+      бир жерде.
+    </p>
+
+    <div class="hero-buttons">
+
+      <button
+        class="hero-btn hero-primary"
+        id="marketBtn"
+      >
+        🛒 Рынокту көрүү
+      </button>
+
+      <button
+        class="hero-btn hero-secondary"
+        id="addBtn"
+      >
+        ＋ Жарыя берүү
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="section-title">
+
+    <h2>
+      Каталогдор
+    </h2>
+
+    <button
+      class="section-link"
+      id="allCategories"
+    >
+      Баарын көрүү
+    </button>
+
+  </div>
+
+
+  <div
+    class="categories"
+    id="categories"
+  >
+
+    <button
+      class="category active"
+      data-category="Өсүмдүктөр"
+    >
+
+      <span class="category-icon">
+        🌱
+      </span>
+
+      <strong>
+        Өсүмдүктөр
+      </strong>
+
+    </button>
+
+
+    <button
+      class="category"
+      data-category="Мал чарбасы"
+    >
+
+      <span class="category-icon">
+        🐄
+      </span>
+
+      <strong>
+        Мал чарбасы
+      </strong>
+
+    </button>
+
+
+    <button
+      class="category"
+      data-category="Дары & Семирткич"
+    >
+
+      <span class="category-icon">
+        🧪
+      </span>
+
+      <strong>
+        Дары & Семирткич
+      </strong>
+
+    </button>
+
+
+    <button
+      class="category"
+      data-category="Агрономдор"
+    >
+
+      <span class="category-icon">
+        👨‍🌾
+      </span>
+
+      <strong>
+        Агрономдор
+      </strong>
+
+    </button>
+
+  </div>
+
+
+  <div class="section-title">
+
+    <h2>
+      Рынок
+    </h2>
+
+    <button
+      class="section-link"
+      id="openMarket"
+    >
+      Баарын көрүү
+    </button>
+
+  </div>
+
+
+  <div class="chips">
+
+    <button
+      class="chip active"
+      data-chip="all"
+    >
+      Баардыгы
+    </button>
+
+    <button
+      class="chip"
+      data-chip="Жер-жемиш"
+    >
+      🥦 Жер-жемиш
+    </button>
+
+    <button
+      class="chip"
+      data-chip="Мөмө"
+    >
+      🍎 Мөмө
+    </button>
+
+    <button
+      class="chip"
+      data-chip="Дан"
+    >
+      🌾 Дан
+    </button>
+
+    <button
+      class="chip"
+      data-chip="Мал"
+    >
+      🐄 Мал
+    </button>
+
+    <button
+      class="chip"
+      data-chip="Техника"
+    >
+      🚜 Техника
+    </button>
+
+  </div>
+
+
+  <div class="section-title">
+
+    <h2>
+      💰 Аймактык баалар
+    </h2>
+
+  </div>
+
+
+  <div class="price-card">
+
+    <table class="price-table">
+
+      <thead>
+
+        <tr>
+          <th>Продукт</th>
+          <th>Талас</th>
+          <th>Чүй</th>
+          <th>Ош</th>
+          <th>Нарын</th>
+        </tr>
+
+      </thead>
+
+      <tbody id="priceBody"></tbody>
+
+    </table>
+
+  </div>
+
+
+  <div class="section-title">
+
+    <h2>
+      🌱 Өсүмдүктөр
+    </h2>
+
+    <button
+      class="section-link"
+      id="plantsMore"
+    >
+      Баарын көрүү
+    </button>
+
+  </div>
+
+
+  <div
+    class="cards"
+    id="products"
+  ></div>
+
+
+  <div class="section-title">
+
+    <h2>
+      👨‍🌾 Агрономдор
+    </h2>
+
+    <button
+      class="section-link"
+      id="agronomistsMore"
+    >
+      Баарын көрүү
+    </button>
+
+  </div>
+
+
+  <div
+    class="cards"
+    id="agronomists"
+  ></div>
+
+</section>
+
+
+<!-- MARKET -->
+
+<section
+  id="marketPage"
+  class="page"
+>
+
+  <div class="section-title">
+
+    <h2>
+      🛒 Бардык жарыялар
+    </h2>
+
+    <button
+      class="section-link"
+      id="refreshAds"
+    >
+      ↻
+    </button>
+
+  </div>
+
+
+  <div class="search-box">
+
+    <span class="search-icon">
+      🔍
+    </span>
+
+    <input
+      id="marketSearch"
+      placeholder="Товар же кызмат издөө..."
+    >
+
+  </div>
+
+
+  <div class="market-filter">
+
+    <select id="marketCategory">
+
+      <option value="">
+        Бардык категориялар
+      </option>
+
+      <option>
+        Өсүмдүктөр
+      </option>
+
+      <option>
+        Мал чарбасы
+      </option>
+
+      <option>
+        Дары & Семирткич
+      </option>
+
+      <option>
+        Агрономдор
+      </option>
+
+      <option>
+        Техника
+      </option>
+
+    </select>
+
+
+    <select id="marketRegion">
+
+      <option value="">
+        Бардык аймактар
+      </option>
+
+      <option>
+        Талас
+      </option>
+
+      <option>
+        Чүй
+      </option>
+
+      <option>
+        Ош
+      </option>
+
+      <option>
+        Нарын
+      </option>
+
+      <option>
+        Ысык-Көл
+      </option>
+
+      <option>
+        Жалал-Абад
+      </option>
+
+      <option>
+        Баткен
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <div
+    class="cards"
+    id="ads"
+    style="margin-top:12px"
+  ></div>
+
+</section>
+
+
+<!-- CHAT -->
+
+<section
+  id="chatPage"
+  class="page"
+>
+
+  <div class="section-title">
+
+    <h2>
+      💬 Жеке чат
+    </h2>
+
+  </div>
+
+
+  <div
+    class="users"
+    id="chatUsers"
+  ></div>
+
+
+  <div
+    id="chatBox"
+    class="chat"
+    style="display:none"
+  >
+
+    <div
+      id="chatHead"
+      class="chat-head"
+    ></div>
+
+    <div
+      id="messages"
+      class="messages"
+    ></div>
+
+    <div class="chat-send">
+
+      <input
+        id="messageInput"
+        placeholder="Билдирүү жазыңыз..."
+      >
+
+      <button id="sendMessage">
+        ➤
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section
+  id="profilePage"
+  class="page"
+>
+
+  <div class="section-title">
+
+    <h2>
+      👤 Профиль
+    </h2>
+
+  </div>
+
+
+  <div
+    class="profile-card"
+    id="profileCard"
+  ></div>
+
+</section>
+
+</main>
+
+
+<!-- NAV -->
+
+<nav class="bottom-nav">
+
+  <button
+    class="nav-btn active"
+    data-page="homePage"
+  >
+
+    <span class="nav-icon">
+      🏠
+    </span>
+
+    Башкы
+
+  </button>
+
+
+  <button
+    class="nav-btn"
+    data-page="marketPage"
+  >
+
+    <span class="nav-icon">
+      🛒
+    </span>
+
+    Рынок
+
+  </button>
+
+
+  <button
+    class="plus-btn"
+    id="plusButton"
+  >
+    ＋
+  </button>
+
+
+  <button
+    class="nav-btn"
+    data-page="chatPage"
+  >
+
+    <span class="nav-icon">
+      💬
+    </span>
+
+    Чат
+
+  </button>
+
+
+  <button
+    class="nav-btn"
+    data-page="profilePage"
+  >
+
+    <span class="nav-icon">
+      👤
+    </span>
+
+    Профиль
+
+  </button>
+
+</nav>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div
+  class="modal"
+  id="modal"
+>
+
+  <div class="sheet">
+
+    <div class="sheet-header">
+
+      <h3 id="modalTitle">
+        Apex
+      </h3>
+
+      <button
+        class="close"
+        id="closeModal"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <div id="modalBody"></div>
+
+  </div>
+
+</div>
+
+
+<div
+  class="toast"
+  id="toast"
+></div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+
+"use strict";
+
+/* =====================================================
+   APEX APP
+===================================================== */
+
+const state = {
+
+  token:
+    localStorage.getItem(
+      "apex_token"
+    ) || "",
+
+  user:null,
+
+  ads:[],
+
+  socket:null,
+
+  selectedUser:null,
+
+  currentPage:"homePage"
+
+};
+
+
+/* =====================================================
+   DEMO DATA
+   НИКАКОГО БЕСКОНЕЧНОГО LOADING
+===================================================== */
+
+const prices = [
+
+  {
+    product:"🥔 Картошка",
+    talas:"38 сом",
+    chui:"42 сом",
+    osh:"40 сом",
+    naryn:"45 сом"
+  },
+
+  {
+    product:"🍎 Яблоко",
+    talas:"65 сом",
+    chui:"70 сом",
+    osh:"75 сом",
+    naryn:"80 сом"
+  },
+
+  {
+    product:"🌾 Пшеница",
+    talas:"27 сом",
+    chui:"29 сом",
+    osh:"30 сом",
+    naryn:"32 сом"
+  },
+
+  {
+    product:"🫘 Фасоль",
+    talas:"115 сом",
+    chui:"120 сом",
