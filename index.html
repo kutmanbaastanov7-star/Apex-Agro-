@@ -1,23 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ky">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Apex Agro — Кыргызстандагы бирдиктүү агро рынок</title>
-<meta name="description" content="Apex Agro — Кыргызстандагы агро маркетплейс.">
+
+<title>Apex Agro — Кыргызстандагы агро рынок</title>
+
+<meta name="description"
+content="Apex Agro — Кыргызстандагы бирдиктүү агро маркетплейс.">
 
 <script src="/socket.io/socket.io.js"></script>
 
 <style>
 :root{
-  --g:#08752d;
-  --g2:#159447;
-  --bg:#f4f8f5;
-  --card:#fff;
-  --txt:#17321f;
-  --mut:#708276;
+  --green:#08752d;
+  --green2:#159447;
+  --dark:#12351f;
+  --bg:#f3f8f4;
+  --card:#ffffff;
+  --muted:#718276;
   --line:#dce9df;
-  --yel:#fff2c9;
+  --soft:#edf8f0;
+  --yellow:#fff4cf;
+  --danger:#d94141;
 }
 
 *{
@@ -32,12 +37,15 @@ html{
 
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-  background:#e9efeb;
-  color:var(--txt);
-  padding-bottom:82px;
+  background:#e7eee9;
+  color:var(--dark);
+  padding-bottom:80px;
 }
 
-button,input,select,textarea{
+button,
+input,
+select,
+textarea{
   font:inherit;
 }
 
@@ -45,22 +53,29 @@ button{
   cursor:pointer;
 }
 
-.app{
-  max-width:760px;
-  margin:auto;
-  min-height:100vh;
-  background:var(--bg);
-  box-shadow:0 0 35px #0001;
+button:active{
+  transform:scale(.98);
 }
+
+.app{
+  width:100%;
+  max-width:760px;
+  min-height:100vh;
+  margin:auto;
+  background:var(--bg);
+  box-shadow:0 0 40px #0002;
+}
+
+/* ================= HEADER ================= */
 
 header{
   position:sticky;
   top:0;
-  z-index:30;
+  z-index:50;
   background:#fff;
-  padding:12px 15px;
   border-bottom:1px solid var(--line);
-  box-shadow:0 4px 18px #194b2410;
+  padding:12px 15px;
+  box-shadow:0 4px 18px #0000000d;
 }
 
 .row{
@@ -74,33 +89,34 @@ header{
   display:flex;
   align-items:center;
   gap:10px;
-  cursor:pointer;
 }
 
 .logo{
-  width:48px;
-  height:48px;
+  width:47px;
+  height:47px;
   border-radius:15px;
-  background:var(--g);
+  background:var(--green);
   display:grid;
   place-items:center;
 }
 
 .logo svg{
-  width:40px;
-  height:40px;
+  width:39px;
+  height:39px;
 }
 
 .brand h1{
-  font-size:24px;
-  color:var(--g);
+  color:var(--green);
+  font-size:25px;
   line-height:1;
-  font-weight:900;
+  font-weight:950;
 }
 
 .brand small{
-  font-size:10px;
-  color:#56805f;
+  display:block;
+  margin-top:3px;
+  font-size:9px;
+  color:#598064;
   font-weight:900;
 }
 
@@ -108,41 +124,44 @@ header{
   border:2px solid #b9ddc1;
   background:#eff9f0;
   color:#276f39;
-  border-radius:28px;
-  padding:9px 11px;
-  font-weight:800;
+  border-radius:25px;
+  padding:8px 11px;
+  font-size:12px;
+  font-weight:900;
 }
 
 .search{
   margin-top:11px;
-  border:2px solid #cce3d1;
-  border-radius:16px;
-  background:#fff;
-  padding:11px 14px;
   display:flex;
+  align-items:center;
   gap:8px;
+  border:2px solid #cce3d1;
+  background:#fff;
+  border-radius:15px;
+  padding:10px 13px;
 }
 
 .search input{
+  width:100%;
   border:0;
   outline:0;
-  width:100%;
-  font-size:16px;
+  font-size:15px;
 }
 
 .loc{
-  margin-top:9px;
-  background:var(--yel);
-  border-radius:14px;
-  padding:9px 12px;
-  font-size:12px;
+  margin-top:8px;
+  background:var(--yellow);
+  border-radius:13px;
+  padding:8px 11px;
+  font-size:11px;
 }
 
 .loc strong{
-  display:block;
   color:#28743c;
-  font-size:17px;
+  font-size:15px;
 }
+
+/* ================= PAGES ================= */
 
 .page{
   display:none;
@@ -156,39 +175,48 @@ header{
 .title{
   padding:0 15px 11px;
   font-size:20px;
-  font-weight:900;
+  font-weight:950;
   color:#175d2d;
 }
 
+/* ================= HERO ================= */
+
 .hero{
-  margin:0 14px 14px;
-  padding:18px;
-  border-radius:21px;
+  margin:0 14px 15px;
+  padding:20px;
+  border-radius:22px;
   background:linear-gradient(135deg,#0e5b31,#24874b);
   color:#fff;
 }
 
+.hero small{
+  font-size:10px;
+  font-weight:900;
+}
+
 .hero h2{
-  font-size:23px;
-  line-height:1.1;
-  margin:5px 0 7px;
+  font-size:24px;
+  line-height:1.08;
+  margin:6px 0 8px;
 }
 
 .hero p{
   font-size:12px;
-  line-height:1.45;
+  line-height:1.5;
   opacity:.9;
 }
 
 .hero button{
-  margin-top:11px;
+  margin-top:13px;
   border:0;
   border-radius:12px;
-  padding:11px 14px;
-  font-weight:900;
-  color:var(--g);
   background:#fff;
+  color:var(--green);
+  padding:11px 15px;
+  font-weight:900;
 }
+
+/* ================= CATEGORIES ================= */
 
 .cats{
   display:grid;
@@ -198,30 +226,38 @@ header{
 }
 
 .cat{
-  background:#fff;
-  border:2px solid #e2ece4;
-  border-radius:17px;
   min-height:92px;
+  border:2px solid #e0ebe2;
+  background:#fff;
+  border-radius:17px;
   padding:8px 4px;
   color:#397246;
-  font-weight:800;
+  font-weight:900;
 }
 
 .cat.active{
-  border-color:var(--g);
+  border-color:var(--green);
   background:#edf8ef;
+  color:var(--green);
 }
 
-.ico{
-  font-size:18px;
-  margin-top:5px;
+.cat .emoji{
+  display:block;
+  font-size:29px;
+  margin-bottom:5px;
 }
+
+.cat .name{
+  font-size:11px;
+}
+
+/* ================= CHIPS ================= */
 
 .chips{
   display:flex;
   gap:8px;
   overflow:auto;
-  padding:10px 14px 14px;
+  padding:11px 14px 14px;
 }
 
 .chip{
@@ -231,13 +267,17 @@ header{
   color:#477650;
   border-radius:25px;
   padding:8px 13px;
-  font-weight:700;
+  font-size:11px;
+  font-weight:800;
 }
 
 .chip.active{
-  background:var(--g);
+  background:var(--green);
   color:#fff;
+  border-color:var(--green);
 }
+
+/* ================= ANALYSIS ================= */
 
 .analysis{
   margin:0 14px 14px;
@@ -248,8 +288,8 @@ header{
 }
 
 .analysis h3{
+  color:var(--green);
   font-size:14px;
-  color:var(--g);
   margin-bottom:9px;
 }
 
@@ -260,25 +300,34 @@ header{
 }
 
 .analysis-item{
+  text-align:center;
   background:#f7faf8;
   border:1px solid #e7eee9;
   border-radius:12px;
-  padding:9px;
-  text-align:center;
+  padding:10px 5px;
+}
+
+.analysis-item .emoji{
+  font-size:20px;
 }
 
 .analysis-item b{
   display:block;
   font-size:11px;
+  margin-top:3px;
 }
 
 .analysis-item span{
+  display:block;
   font-size:9px;
-  color:var(--mut);
+  color:var(--muted);
+  margin-top:2px;
 }
 
+/* ================= PRICE TABLE ================= */
+
 .pricebox{
-  margin:0 14px 14px;
+  margin:0 14px 15px;
   background:#fff;
   border:1px solid var(--line);
   border-radius:18px;
@@ -287,21 +336,21 @@ header{
 }
 
 .pricebox h3{
+  color:var(--green);
   font-size:14px;
-  color:var(--g);
   margin-bottom:8px;
 }
 
 .price-table{
   width:100%;
   border-collapse:collapse;
+  min-width:430px;
   font-size:10px;
-  min-width:500px;
 }
 
 .price-table th,
 .price-table td{
-  padding:7px 4px;
+  padding:8px 5px;
   border-bottom:1px solid #edf2ee;
   text-align:center;
 }
@@ -312,28 +361,37 @@ header{
 }
 
 .price-table td{
-  font-weight:800;
   color:#246b3b;
+  font-weight:900;
 }
 
-.card{
+/* ================= PRODUCT CARD ================= */
+
+.products{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.product{
+  margin:0 14px;
   background:#fff;
   border:1px solid #dfece1;
   border-radius:19px;
-  margin:0 14px 12px;
   padding:14px;
   box-shadow:0 7px 20px #19502a0b;
 }
 
 .phead{
   display:flex;
-  gap:11px;
   align-items:center;
+  gap:11px;
 }
 
 .pimg{
   width:60px;
   height:60px;
+  flex:0 0 60px;
   border-radius:15px;
   background:#e8f6ea;
   display:grid;
@@ -343,19 +401,20 @@ header{
 
 .pname{
   font-size:17px;
-  font-weight:900;
+  font-weight:950;
 }
 
 .desc{
-  font-size:11px;
   color:#618067;
+  font-size:11px;
   margin-top:3px;
+  line-height:1.4;
 }
 
 .tags{
   display:flex;
-  gap:5px;
   flex-wrap:wrap;
+  gap:5px;
   margin-top:9px;
 }
 
@@ -374,13 +433,13 @@ header{
   border:1px solid #e7eee9;
   border-radius:11px;
   padding:9px;
-  color:var(--mut);
+  color:var(--muted);
   font-size:10px;
 }
 
 .price b{
   display:block;
-  color:var(--g);
+  color:var(--green);
   font-size:16px;
   margin-top:2px;
 }
@@ -394,61 +453,41 @@ header{
 
 .region-prices span{
   background:#edf8f0;
-  padding:5px;
+  padding:6px;
   border-radius:7px;
   font-size:8px;
   display:flex;
   justify-content:space-between;
+  gap:4px;
 }
 
 .region-prices b{
-  color:var(--g);
+  color:var(--green);
 }
 
 .main{
   width:100%;
   border:0;
   border-radius:12px;
-  background:linear-gradient(135deg,var(--g),var(--g2));
+  background:linear-gradient(135deg,var(--green),var(--green2));
   color:#fff;
   padding:11px;
   font-weight:900;
   margin-top:9px;
 }
 
-.grid2{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-  padding:0 14px;
+.secondary{
+  width:100%;
+  border:1px solid #cde1d1;
+  border-radius:12px;
+  background:#f5faf6;
+  color:var(--green);
+  padding:10px;
+  font-weight:900;
+  margin-top:7px;
 }
 
-.ad{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:17px;
-  padding:12px;
-}
-
-.ad .icon{
-  font-size:27px;
-}
-
-.ad h3{
-  font-size:13px;
-  margin-top:5px;
-}
-
-.ad small{
-  display:block;
-  color:var(--mut);
-  margin:3px 0;
-  font-size:10px;
-}
-
-.ad b{
-  color:var(--g);
-}
+/* ================= SERVICES ================= */
 
 .service-grid{
   display:grid;
@@ -461,12 +500,12 @@ header{
   background:#fff;
   border:1px solid var(--line);
   border-radius:16px;
-  padding:12px;
+  padding:13px;
   text-align:left;
 }
 
 .service .icon{
-  font-size:24px;
+  font-size:25px;
 }
 
 .service b{
@@ -477,17 +516,46 @@ header{
 
 .service span{
   display:block;
+  color:var(--muted);
   font-size:10px;
-  color:var(--mut);
   margin-top:3px;
 }
 
 .service strong{
   display:block;
-  color:var(--g);
+  color:var(--green);
   font-size:10px;
   margin-top:6px;
 }
+
+/* ================= MARKET ================= */
+
+.market-controls{
+  padding:0 14px 12px;
+  display:flex;
+  gap:8px;
+}
+
+.market-controls select{
+  flex:1;
+  border:1px solid #d3e3d7;
+  background:#fff;
+  border-radius:11px;
+  padding:9px;
+  outline:none;
+}
+
+.empty{
+  text-align:center;
+  padding:28px 18px;
+  color:#78907d;
+  background:#fff;
+  border:1px dashed #ccdacf;
+  border-radius:16px;
+  margin:0 14px;
+}
+
+/* ================= FORMS ================= */
 
 .form,
 .profile,
@@ -505,9 +573,9 @@ header{
 
 .group label{
   display:block;
-  font-size:11px;
-  font-weight:800;
   color:#607667;
+  font-size:11px;
+  font-weight:900;
   margin-bottom:5px;
 }
 
@@ -515,27 +583,29 @@ header{
 .group select,
 .group textarea{
   width:100%;
-  padding:11px;
   border:1px solid #d7e5da;
-  border-radius:11px;
   background:#f9fbf9;
-  outline:0;
+  border-radius:11px;
+  padding:11px;
+  outline:none;
 }
 
 .group textarea{
-  min-height:80px;
+  min-height:90px;
   resize:vertical;
 }
 
+/* ================= CHAT ================= */
+
 .users{
-  margin:0 14px 12px;
   display:flex;
   gap:8px;
   overflow:auto;
+  padding:0 14px 12px;
 }
 
 .user{
-  min-width:135px;
+  min-width:140px;
   border:1px solid #cfe1d2;
   background:#fff;
   border-radius:13px;
@@ -550,7 +620,7 @@ header{
 }
 
 .user small{
-  color:var(--mut);
+  color:var(--muted);
   font-size:9px;
 }
 
@@ -562,12 +632,12 @@ header{
   display:flex;
   flex-direction:column;
   gap:8px;
-  margin-top:10px;
   border-radius:12px;
+  margin-top:10px;
 }
 
 .msg{
-  max-width:78%;
+  max-width:80%;
   padding:9px 11px;
   border-radius:15px;
   font-size:12px;
@@ -576,7 +646,7 @@ header{
 
 .me{
   align-self:flex-end;
-  background:var(--g);
+  background:var(--green);
   color:#fff;
 }
 
@@ -610,32 +680,19 @@ header{
   border:1px solid #d7e5da;
   border-radius:12px;
   padding:10px;
-  outline:0;
+  outline:none;
 }
 
 .send{
   border:0;
-  background:var(--g);
+  background:var(--green);
   color:#fff;
   border-radius:12px;
   padding:0 14px;
   font-weight:900;
 }
 
-.menu{
-  margin-top:14px;
-  border-top:1px solid var(--line);
-}
-
-.menu button{
-  width:100%;
-  border:0;
-  border-bottom:1px solid #edf2ee;
-  background:#fff;
-  padding:13px 2px;
-  text-align:left;
-  font-weight:750;
-}
+/* ================= PROFILE ================= */
 
 .avatar{
   width:70px;
@@ -648,6 +705,48 @@ header{
   font-size:31px;
   margin:0 auto 8px;
 }
+
+.profile-name{
+  font-size:20px;
+  font-weight:950;
+  text-align:center;
+}
+
+.profile-phone{
+  font-size:12px;
+  color:var(--muted);
+  text-align:center;
+  margin-top:3px;
+}
+
+.profile-role{
+  text-align:center;
+  color:var(--green);
+  font-weight:900;
+  font-size:12px;
+  margin-top:6px;
+}
+
+.menu{
+  margin-top:15px;
+  border-top:1px solid var(--line);
+}
+
+.menu button{
+  width:100%;
+  border:0;
+  border-bottom:1px solid #edf2ee;
+  background:#fff;
+  padding:14px 2px;
+  text-align:left;
+  font-weight:800;
+}
+
+.menu button.danger{
+  color:var(--danger);
+}
+
+/* ================= BOTTOM NAV ================= */
 
 .bottom{
   position:fixed;
@@ -662,7 +761,7 @@ header{
   display:flex;
   justify-content:space-around;
   align-items:center;
-  z-index:50;
+  z-index:80;
 }
 
 .nav{
@@ -671,17 +770,18 @@ header{
   color:#83a38b;
   text-align:center;
   font-size:10px;
-  font-weight:800;
+  font-weight:900;
   min-width:65px;
 }
 
 .nav span{
   display:block;
   font-size:21px;
+  margin-bottom:2px;
 }
 
 .nav.active{
-  color:var(--g);
+  color:var(--green);
 }
 
 .add{
@@ -689,18 +789,21 @@ header{
   height:49px;
   border-radius:50%;
   border:4px solid #fff;
-  background:var(--g);
+  background:var(--green);
   color:#fff;
   font-size:27px;
   margin-top:-20px;
+  box-shadow:0 5px 15px #08752d44;
 }
+
+/* ================= MODAL ================= */
 
 .modal{
   display:none;
   position:fixed;
   inset:0;
   background:#0009;
-  z-index:100;
+  z-index:200;
   align-items:center;
   justify-content:center;
   padding:18px;
@@ -717,6 +820,8 @@ header{
   width:100%;
   max-width:420px;
   position:relative;
+  max-height:90vh;
+  overflow:auto;
 }
 
 .close{
@@ -744,21 +849,23 @@ header{
 }
 
 .tab.active{
-  color:var(--g);
-  border-bottom:2px solid var(--g);
+  color:var(--green);
+  border-bottom:2px solid var(--green);
 }
+
+/* ================= TOAST ================= */
 
 .toast{
   position:fixed;
-  bottom:91px;
   left:50%;
+  bottom:90px;
   transform:translateX(-50%);
   background:#173d22;
   color:#fff;
   padding:10px 14px;
   border-radius:12px;
   display:none;
-  z-index:150;
+  z-index:300;
   font-size:11px;
   max-width:90%;
   text-align:center;
@@ -768,30 +875,36 @@ header{
   display:block;
 }
 
-.empty{
-  text-align:center;
-  padding:25px;
-  color:#78907d;
-  background:#fff;
-  border:1px dashed #ccdacf;
-  border-radius:16px;
-  margin:0 14px;
-}
+/* ================= LOADING ================= */
 
 .loading{
   text-align:center;
-  padding:22px;
-  color:var(--mut);
+  padding:25px;
+  color:var(--muted);
 }
 
-@media(max-width:430px){
+.spinner{
+  width:25px;
+  height:25px;
+  border:3px solid #d8e7dc;
+  border-top-color:var(--green);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:0 auto 9px;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:500px){
 
   .cats{
     grid-template-columns:repeat(2,1fr);
-  }
-
-  .grid2{
-    grid-template-columns:1fr;
   }
 
   .analysis-grid{
@@ -810,610 +923,406 @@ header{
 
 <div class="app">
 
+<!-- ================= HEADER ================= -->
+
 <header>
 
-<div class="row">
+  <div class="row">
 
-<div class="brand" id="brand">
+    <div class="brand" id="brand">
 
-<div class="logo">
+      <div class="logo">
+        <svg viewBox="0 0 100 100">
+          <path fill="white"
+          d="M18 78 45 18h12l-8 18 9-16 36 58H72L54 45 39 78z"/>
+          <path fill="#8bd697"
+          d="M49 74c1-15 8-24 19-32-1 13-6 25-19 32zm8-1c1-12 8-20 19-25-2 11-7 20-19 25z"/>
+        </svg>
+      </div>
 
-<svg viewBox="0 0 100 100">
+      <div>
+        <h1>Apex</h1>
+        <small>АГРО МАРКЕТПЛЕЙС</small>
+      </div>
 
-<path fill="white"
-d="M18 78 45 18h12l-8 18 9-16 36 58H72L54 45 39 78z"/>
+    </div>
 
-<path fill="#8bd697"
-d="M49 74c1-15 8-24 19-32-1 13-6 25-19 32zm8-1c1-12 8-20 19-25-2 11-7 20-19 25z"/>
+    <button class="region" id="regionBtn">
+      Талас 📍
+    </button>
 
-</svg>
+  </div>
 
-</div>
+  <div class="search">
+    🔍
+    <input
+      id="searchInput"
+      placeholder="Картошка, фасоль, трактор, агроном..."
+    >
+  </div>
 
-<div>
-<h1>Apex</h1>
-<small>АГРО МАРКЕТПЛЕЙС</small>
-</div>
-
-</div>
-
-<button class="region" id="regionBtn">
-Талас 📍⌄
-</button>
-
-</div>
-
-<div class="search">
-🔍
-<input id="search" placeholder="Картошка, фасоль, трактор, агроном...">
-</div>
-
-<div class="loc">
-Сиздин профилиңиз:
-<strong id="loc">Конок</strong>
-</div>
+  <div class="loc">
+    Сиздин профилиңиз:
+    <strong id="headerUser">
+      Конок
+    </strong>
+  </div>
 
 </header>
 
 
-<!-- HOME -->
+<!-- ================= HOME ================= -->
 
 <section class="page active" id="homePage">
 
-<div class="hero">
+  <div class="hero">
 
-<small>🌱 APEX AGRO PLATFORM</small>
+    <small>🌱 APEX AGRO PLATFORM</small>
 
-<h2>
-Кыргызстандагы бирдиктүү агро рынок
-</h2>
+    <h2>
+      Кыргызстандагы<br>
+      бирдиктүү агро рынок
+    </h2>
 
-<p>
-Айыл чарба товарлары, агрономдор, техника,
-логистика жана башка агро кызматтар бир жерде.
-</p>
+    <p>
+      Айыл чарба товарлары, агрономдор,
+      техника, логистика жана башка
+      агро кызматтар бир жерде.
+    </p>
 
-<button id="heroMarket">
-Рынокту көрүү →
-</button>
+    <button id="heroMarket">
+      Рынокту көрүү →
+    </button>
 
-</div>
-
-
-<div class="title">
-Категориялар
-</div>
-
-<div class="cats">
-
-<button class="cat active" data-cat="Өсүмдүктөр">
-🌱
-<div class="ico">Өсүмдүктөр</div>
-</button>
-
-<button class="cat" data-cat="Агрономдор">
-👨‍🌾
-<div class="ico">Агрономдор</div>
-</button>
-
-<button class="cat" data-cat="Дары & Семирткич">
-🧪
-<div class="ico">Дары & Семирткич</div>
-</button>
-
-<button class="cat" data-cat="Мал чарбасы">
-🐄
-<div class="ico">Мал чарбасы</div>
-</button>
-
-</div>
+  </div>
 
 
-<div class="chips">
-
-<button class="chip active" data-type="">
-Баардыгы
-</button>
-
-<button class="chip" data-type="Жер-жемиш">
-🥦 Жер-жемиш
-</button>
-
-<button class="chip" data-type="Мөмө">
-🍎 Мөмө
-</button>
-
-<button class="chip" data-type="Дан">
-🌾 Дан
-</button>
-
-<button class="chip" data-type="Мал">
-🐄 Мал
-</button>
-
-<button class="chip" data-type="Техника">
-🚜 Техника
-</button>
-
-</div>
+  <div class="title">
+    Категориялар
+  </div>
 
 
-<div class="analysis">
+  <div class="cats">
 
-<h3>📊 Рынок анализи</h3>
+    <button class="cat active" data-category="Өсүмдүктөр">
+      <span class="emoji">🌱</span>
+      <span class="name">Өсүмдүктөр</span>
+    </button>
 
-<div class="analysis-grid">
+    <button class="cat" data-category="Агрономдор">
+      <span class="emoji">👨‍🌾</span>
+      <span class="name">Агрономдор</span>
+    </button>
 
-<div class="analysis-item">
-📈
-<b>Баалар</b>
-<span>Аймак боюнча салыштыруу</span>
-</div>
+    <button class="cat" data-category="Дары & Семирткич">
+      <span class="emoji">🧪</span>
+      <span class="name">Дары & Семирткич</span>
+    </button>
 
-<div class="analysis-item">
-🔥
-<b>Суроо-талап</b>
-<span>Өтүмдүү товарлар</span>
-</div>
+    <button class="cat" data-category="Мал чарбасы">
+      <span class="emoji">🐄</span>
+      <span class="name">Мал чарбасы</span>
+    </button>
 
-<div class="analysis-item">
-🧠
-<b>Прогноз</b>
-<span>Сезондук багыт</span>
-</div>
-
-</div>
-
-</div>
+  </div>
 
 
-<div class="pricebox">
+  <div class="chips">
 
-<h3>💰 Аймактык баалар</h3>
+    <button class="chip active" data-type="">
+      Баардыгы
+    </button>
 
-<table class="price-table">
+    <button class="chip" data-type="Жер-жемиш">
+      🥦 Жер-жемиш
+    </button>
 
-<thead>
+    <button class="chip" data-type="Мөмө">
+      🍎 Мөмө
+    </button>
 
-<tr>
-<th>Продукт</th>
-<th>Талас</th>
-<th>Чүй</th>
-<th>Ош</th>
-<th>Нарын</th>
-</tr>
+    <button class="chip" data-type="Дан">
+      🌾 Дан
+    </button>
 
-</thead>
+    <button class="chip" data-type="Мал">
+      🐄 Мал
+    </button>
 
-<tbody id="priceRows"></tbody>
+    <button class="chip" data-type="Техника">
+      🚜 Техника
+    </button>
 
-</table>
-
-</div>
-
-
-<div class="title" id="homeTitle">
-🌱 Өсүмдүктөр тизмеси
-</div>
-
-<div id="homeList"></div>
+  </div>
 
 
-<div class="title">
-🧑‍🌾 Агро кызматтар
-</div>
+  <div class="analysis">
 
-<div id="serviceList" class="service-grid"></div>
+    <h3>
+      📊 Рынок анализи
+    </h3>
+
+    <div class="analysis-grid">
+
+      <div class="analysis-item">
+        <div class="emoji">📈</div>
+        <b>Баалар</b>
+        <span>Аймак боюнча салыштыруу</span>
+      </div>
+
+      <div class="analysis-item">
+        <div class="emoji">🔥</div>
+        <b>Суроо-талап</b>
+        <span>Өтүмдүү товарлар</span>
+      </div>
+
+      <div class="analysis-item">
+        <div class="emoji">🧠</div>
+        <b>Прогноз</b>
+        <span>Сезондук багыт</span>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- PRICE TABLE -->
+
+  <div class="pricebox">
+
+    <h3>
+      💰 Аймактык баалар
+    </h3>
+
+    <table class="price-table">
+
+      <thead>
+        <tr>
+          <th>Продукт</th>
+          <th>Талас</th>
+          <th>Чүй</th>
+          <th>Ош</th>
+          <th>Нарын</th>
+        </tr>
+      </thead>
+
+      <tbody id="priceRows">
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+  <div class="title" id="homeTitle">
+    🌱 Өсүмдүктөр тизмеси
+  </div>
+
+  <div id="homeList" class="products">
+  </div>
+
+
+  <div class="title">
+    🧑‍🌾 Агро кызматтар
+  </div>
+
+  <div id="serviceList" class="service-grid">
+  </div>
 
 </section>
 
 
-<!-- MARKET -->
+<!-- ================= MARKET ================= -->
 
 <section class="page" id="marketPage">
 
-<div class="title">
-🛒 Бардык жарыялар
-</div>
+  <div class="title">
+    🛒 Бардык жарыялар
+  </div>
 
-<div id="marketList" class="grid2"></div>
+  <div class="market-controls">
+
+    <select id="marketCategory">
+
+      <option value="">
+        Бардык категория
+      </option>
+
+      <option value="Өсүмдүктөр">
+        🌱 Өсүмдүктөр
+      </option>
+
+      <option value="Агрономдор">
+        👨‍🌾 Агрономдор
+      </option>
+
+      <option value="Дары & Семирткич">
+        🧪 Дары & Семирткич
+      </option>
+
+      <option value="Мал чарбасы">
+        🐄 Мал чарбасы
+      </option>
+
+      <option value="Техника">
+        🚜 Техника
+      </option>
+
+    </select>
+
+    <select id="marketRegion">
+
+      <option value="">
+        Бардык аймак
+      </option>
+
+      <option>Талас</option>
+      <option>Чүй</option>
+      <option>Ош</option>
+      <option>Ысык-Көл</option>
+      <option>Баткен</option>
+      <option>Жалал-Абад</option>
+      <option>Нарын</option>
+
+    </select>
+
+  </div>
+
+  <div id="marketList" class="products">
+  </div>
 
 </section>
 
 
-<!-- CREATE -->
+<!-- ================= CREATE ================= -->
 
 <section class="page" id="createPage">
 
-<div class="title">
-➕ Жаңы жарыя түзүү
-</div>
+  <div class="title">
+    ➕ Жаңы жарыя түзүү
+  </div>
 
-<div id="createHint"
-class="empty"
-style="margin-bottom:12px">
-Жарыя берүү үчүн аккаунтка кириңиз.
-</div>
+  <div id="createHint" class="empty" style="margin-bottom:12px;">
+    Жарыя берүү үчүн аккаунтка кириңиз.
+  </div>
 
-<div class="form">
+  <div class="form">
 
-<div class="group">
-<label>Продукт / кызмат аты</label>
-<input id="adTitle" placeholder="Мисалы: Нарын картошкасы">
-</div>
+    <div class="group">
+      <label>Продукт / кызмат аты</label>
+      <input
+        id="adTitle"
+        placeholder="Мисалы: Нарын картошкасы"
+      >
+    </div>
 
-<div class="group">
-<label>Категория</label>
+    <div class="group">
 
-<select id="adCategory">
+      <label>Категория</label>
 
-<option>Өсүмдүктөр</option>
-<option>Мал чарбасы</option>
-<option>Дары & Семирткич</option>
-<option>Техника</option>
-<option>Агрономдор</option>
+      <select id="adCategory">
 
-</select>
+        <option>Өсүмдүктөр</option>
+        <option>Мал чарбасы</option>
+        <option>Дары & Семирткич</option>
+        <option>Техника</option>
+        <option>Агрономдор</option>
 
-</div>
+      </select>
 
-<div class="group">
-<label>Баасы</label>
-<input id="adPrice" placeholder="25 сом/кг">
-</div>
+    </div>
 
-<div class="group">
-<label>Аймак</label>
+    <div class="group">
 
-<select id="adRegion">
+      <label>Баасы</label>
 
-<option>Талас</option>
-<option>Чүй</option>
-<option>Ош</option>
-<option>Ысык-Көл</option>
-<option>Баткен</option>
-<option>Жалал-Абад</option>
-<option>Нарын</option>
+      <input
+        id="adPrice"
+        placeholder="25 сом/кг"
+      >
 
-</select>
+    </div>
 
-</div>
+    <div class="group">
 
-<div class="group">
-<label>Маалымат</label>
-<textarea id="adDesc"
-placeholder="Товар жөнүндө маалымат..."></textarea>
-</div>
+      <label>Аймак</label>
 
-<button class="main" id="publishBtn">
-Жарыялоо
-</button>
+      <select id="adRegion">
 
-</div>
+        <option>Талас</option>
+        <option>Чүй</option>
+        <option>Ош</option>
+        <option>Ысык-Көл</option>
+        <option>Баткен</option>
+        <option>Жалал-Абад</option>
+        <option>Нарын</option>
+
+      </select>
+
+    </div>
+
+    <div class="group">
+
+      <label>Маалымат</label>
+
+      <textarea
+        id="adDesc"
+        placeholder="Товар жөнүндө маалымат..."
+      ></textarea>
+
+    </div>
+
+    <button
+      class="main"
+      id="publishBtn"
+    >
+      Жарыялоо
+    </button>
+
+  </div>
 
 </section>
 
 
-<!-- CHAT -->
+<!-- ================= CHAT ================= -->
 
 <section class="page" id="chatPage">
 
-<div class="title">
-💬 Жеке чат
-</div>
+  <div class="title">
+    💬 Жеке чат
+  </div>
 
-<div id="usersList" class="users"></div>
+  <div id="usersList" class="users">
+  </div>
 
-<div class="chat">
+  <div class="chat">
 
-<div id="chatHead">
-<b>Колдонуучуну тандаңыз</b>
-</div>
+    <div id="chatHead">
+      <b>
+        Колдонуучуну тандаңыз
+      </b>
+    </div>
 
-<div class="messages" id="messages">
+    <div class="messages" id="messages">
 
-<div class="msg them">
+      <div class="msg them">
 
-<div class="sender">
-Apex / Система
-</div>
+        <div class="sender">
+          Apex / Система
+        </div>
 
-Салам! Жеке чат үчүн колдонуучуну тандаңыз.
+        Салам!
+        Жеке чат үчүн колдонуучуну тандаңыз.
 
-<div class="mt">
-Азыр
-</div>
+        <div class="mt">
+          Азыр
+        </div>
 
-</div>
+      </div>
 
-</div>
+    </div>
 
-<div class="chatin">
+    <div class="chatin">
 
-<input
-id="messageInput"
-placeholder="Билдирүү жазыңыз..."
-disabled
->
-
-<button class="send" id="sendBtn" disabled>
-➤
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- PROFILE -->
-
-<section class="page" id="profilePage">
-
-<div class="title">
-👤 Профиль
-</div>
-
-<div class="profile">
-
-<div class="avatar">
-👨‍🌾
-</div>
-
-<div id="profileName"
-style="font-size:20px;font-weight:900;text-align:center">
-Конок
-</div>
-
-<div id="profilePhone"
-style="font-size:12px;color:var(--mut);text-align:center">
-Телефон: -
-</div>
-
-<div id="profileRole"
-style="text-align:center;color:var(--g);font-weight:800;margin-top:6px">
-Катталган эмес
-</div>
-
-<div class="menu">
-
-<button id="loginOpen">
-🔑 Кирүү / Катталуу　›
-</button>
-
-<button data-go="createPage">
-📦 Жаңы жарыя берүү　›
-</button>
-
-<button data-go="marketPage">
-🛒 Жарыялар　›
-</button>
-
-<button id="logoutBtn" style="color:#d84949">
-🚪 Чыгуу　›
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- NAV -->
-
-<nav class="bottom">
-
-<button class="nav active" data-go="homePage">
-<span>🏠</span>
-Башкы
-</button>
-
-<button class="nav" data-go="marketPage">
-<span>📋</span>
-Рынок
-</button>
-
-<button class="add" id="addBtn">
-+
-</button>
-
-<button class="nav" data-go="chatPage">
-<span>💬</span>
-Чат
-</button>
-
-<button class="nav" data-go="profilePage">
-<span>👤</span>
-Профиль
-</button>
-
-</nav>
-
-</div>
-
-
-<!-- AUTH MODAL -->
-
-<div class="modal" id="authModal">
-
-<div class="modalbox">
-
-<button class="close" id="authClose">
-✕
-</button>
-
-<div class="tabs">
-
-<button class="tab active" id="loginTab">
-Кирүү
-</button>
-
-<button class="tab" id="registerTab">
-Катталуу
-</button>
-
-</div>
-
-
-<div id="loginForm">
-
-<div class="group">
-<label>Телефон</label>
-<input id="loginPhone" placeholder="+996 700 000 000">
-</div>
-
-<div class="group">
-<label>Пароль</label>
-<input id="loginPass" type="password">
-</div>
-
-<button class="main" id="loginBtn">
-Кирүү
-</button>
-
-</div>
-
-
-<div id="registerForm" style="display:none">
-
-<div class="group">
-<label>Аты-жөнү</label>
-<input id="regName">
-</div>
-
-<div class="group">
-<label>Телефон</label>
-<input id="regPhone" placeholder="+996 700 000 000">
-</div>
-
-<div class="group">
-<label>Пароль</label>
-<input id="regPass" type="password">
-</div>
-
-<div class="group">
-<label>Рол</label>
-
-<select id="regRole">
-
-<option>Сатуучу (Фермер)</option>
-<option>Сатып алуучу</option>
-<option>Агро-эксперт / Агроном</option>
-
-</select>
-
-</div>
-
-<button class="main" id="registerBtn">
-Катталуу
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="toast" id="toast"></div>
-
-
-<script>
-
-(() => {
-
-'use strict';
-
-
-/* =====================================================
-   STATE
-===================================================== */
-
-const state = {
-
-user:null,
-
-token:
-localStorage.getItem('apex_token') || '',
-
-ads:[],
-
-category:'Өсүмдүктөр',
-
-type:'',
-
-region:'Талас',
-
-selectedUser:null,
-
-socket:null
-
-};
-
-
-/* =====================================================
-   BASE DATA
-===================================================== */
-
-const base = [
-
-{
-id:'b1',
-title:'Картошка (Элитная)',
-category:'Өсүмдүктөр',
-type:'Жер-жемиш',
-icon:'🥔',
-desc:'Жогорку түшүмдүү сорт',
-price:'25–40 сом/кг',
-region:'Талас',
-prices:{
-Талас:'30 сом',
-Чүй:'40 сом',
-Ош:'35 сом',
-Нарын:'42 сом'
-}
-},
-
-{
-id:'b2',
-title:'Кызыл алма',
-category:'Өсүмдүктөр',
-type:'Мөмө',
-icon:'🍎',
-desc:'Таттуу, ширелүү сорт',
-price:'50–65 сом/кг',
-region:'Талас',
-prices:{
-Талас:'50 сом',
-Чүй:'57 сом',
-Ош:'62 сом',
-Нарын:'61 сом'
-}
-},
-
-{
-id:'b3',
-title:'Помидор',
-category:'Өсүмдүктөр',
-type:'Жер-жемиш',
-icon:'🍅',
-desc:'Жаңы талаа түшүмү',
-price:'68–86 сом/кг',
-region:'Ош',
-prices:{
-Талас:'72 сом',
-Чүй:'68 сом',
-Ош:'75 сом',
-Нарын:'86 сом'
-}
-},
-
-{
-id:'b4',
-title:'Пияз',
-category:'Өсүмдүктөр',
-type:'Жер-жемиш',
-icon:'🧅',
-desc:'
+     
