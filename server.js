@@ -21,19 +21,15 @@ const DATA_FILE = path.join(__dirname, "apex-data.json");
 app.use(express.json({ limit: "2mb" }));
 app.use(express.static(__dirname));
 
-/* =========================
+/* =====================================================
    DATABASE
-========================= */
+===================================================== */
 
 const defaultData = {
   users: [],
   ads: [],
   messages: {}
 };
-
-function cloneDefaultData() {
-  return JSON.parse(JSON.stringify(defaultData));
-}
 
 function loadData() {
   try {
@@ -44,7 +40,7 @@ function loadData() {
         "utf8"
       );
 
-      return cloneDefaultData();
+      return JSON.parse(JSON.stringify(defaultData));
     }
 
     const data = JSON.parse(
@@ -52,14 +48,27 @@ function loadData() {
     );
 
     return {
-      users: Array.isArray(data.users) ? data.users : [],
-      ads: Array.isArray(data.ads) ? data.ads : [],
-      messages: data.messages || {}
+      users: Array.isArray(data.users)
+        ? data.users
+        : [],
+
+      ads: Array.isArray(data.ads)
+        ? data.ads
+        : [],
+
+      messages:
+        data.messages &&
+        typeof data.messages === "object"
+          ? data.messages
+          : {}
     };
 
   } catch (error) {
     console.error("DATABASE LOAD ERROR:", error);
-    return cloneDefaultData();
+
+    return JSON.parse(
+      JSON.stringify(defaultData)
+    );
   }
 }
 
@@ -77,9 +86,9 @@ function saveData() {
   }
 }
 
-/* =========================
+/* =====================================================
    HELPERS
-========================= */
+===================================================== */
 
 function clean(value, maxLength = 500) {
   return String(value ?? "")
@@ -101,9 +110,9 @@ function publicUser(user) {
   };
 }
 
-/* =========================
-   PASSWORD SECURITY
-========================= */
+/* =====================================================
+   PASSWORD
+===================================================== */
 
 function hashPassword(
   password,
@@ -121,24 +130,24 @@ function hashPassword(
 
 function checkPassword(password, user) {
   try {
-    const { hash } = hashPassword(
+    const result = hashPassword(
       password,
       user.salt
     );
 
     return crypto.timingSafeEqual(
-      Buffer.from(hash, "hex"),
+      Buffer.from(result.hash, "hex"),
       Buffer.from(user.passwordHash, "hex")
     );
 
-  } catch (error) {
+  } catch {
     return false;
   }
 }
 
-/* =========================
+/* =====================================================
    SESSIONS
-========================= */
+===================================================== */
 
 const sessions = new Map();
 
@@ -152,15 +161,17 @@ function createSession(userId) {
   return token;
 }
 
-function auth(req, res, next) {
-
+function getToken(req) {
   const header =
     req.headers.authorization || "";
 
-  const token =
-    String(header)
-      .replace(/^Bearer\s+/i, "")
-      .trim();
+  return String(header)
+    .replace(/^Bearer\s+/i, "")
+    .trim();
+}
+
+function auth(req, res, next) {
+  const token = getToken(req);
 
   if (!token) {
     return res.status(401).json({
@@ -172,14 +183,13 @@ function auth(req, res, next) {
 
   if (!userId) {
     return res.status(401).json({
-      error: "Сессия жараксыз же мөөнөтү бүткөн"
+      error: "Сессия жараксыз"
     });
   }
 
-  const user =
-    db.users.find(
-      u => u.id === userId
-    );
+  const user = db.users.find(
+    u => u.id === userId
+  );
 
   if (!user) {
     return res.status(401).json({
@@ -193,43 +203,36 @@ function auth(req, res, next) {
   next();
 }
 
-/* =========================
-   HEALTH CHECK
-========================= */
+/* =====================================================
+   HEALTH
+===================================================== */
 
 app.get("/api/health", (req, res) => {
-
   res.json({
     ok: true,
     service: "Apex Agro",
-    message: "Apex сервер иштеп жатат",
     users: db.users.length,
     ads: db.ads.length,
     time: new Date().toISOString()
   });
-
 });
 
-/* =========================
+/* =====================================================
    HOME
-========================= */
+===================================================== */
 
 app.get("/", (req, res) => {
-
   res.sendFile(
     path.join(__dirname, "index.html")
   );
-
 });
 
-/* =========================
+/* =====================================================
    REGISTER
-========================= */
+===================================================== */
 
 app.post("/api/register", (req, res) => {
-
   try {
-
     const name =
       clean(req.body.name, 100);
 
@@ -243,58 +246,42 @@ app.post("/api/register", (req, res) => {
       clean(req.body.role, 100);
 
     if (!name || !phone) {
-
       return res.status(400).json({
         error: "Аты-жөнү жана телефон керек"
       });
-
     }
 
     if (password.length < 6) {
-
       return res.status(400).json({
-        error: "Пароль кеминде 6 белгиден турушу керек"
+        error:
+          "Пароль кеминде 6 белгиден турушу керек"
       });
-
     }
 
-    const existingUser =
+    const exists =
       db.users.find(
-        user => user.phone === phone
+        u => u.phone === phone
       );
 
-    if (existingUser) {
-
+    if (exists) {
       return res.status(409).json({
-        error: "Бул телефон номер буга чейин катталган"
+        error:
+          "Бул телефон номер буга чейин катталган"
       });
-
     }
 
     const passwordData =
       hashPassword(password);
 
     const user = {
-
-      id:
-        crypto.randomUUID(),
-
+      id: crypto.randomUUID(),
       name,
-
       phone,
-
-      role:
-        role || "Сатып алуучу",
-
-      salt:
-        passwordData.salt,
-
-      passwordHash:
-        passwordData.hash,
-
+      role: role || "Сатып алуучу",
+      salt: passwordData.salt,
+      passwordHash: passwordData.hash,
       createdAt:
         new Date().toISOString()
-
     };
 
     db.users.push(user);
@@ -305,37 +292,28 @@ app.post("/api/register", (req, res) => {
       createSession(user.id);
 
     res.status(201).json({
-
       success: true,
-
       token,
-
-      user:
-        publicUser(user)
-
+      user: publicUser(user)
     });
 
   } catch (error) {
-
     console.error(
       "REGISTER ERROR:",
       error
     );
 
     res.status(500).json({
-      error: "Каттоодо сервердик ката кетти"
+      error: "Каттоодо ката кетти"
     });
-
   }
-
 });
 
-/* =========================
+/* =====================================================
    LOGIN
-========================= */
+===================================================== */
 
 app.post("/api/login", (req, res) => {
-
   const phone =
     normalizePhone(req.body.phone);
 
@@ -351,80 +329,80 @@ app.post("/api/login", (req, res) => {
     !user ||
     !checkPassword(password, user)
   ) {
-
     return res.status(401).json({
-      error: "Телефон же пароль туура эмес"
+      error:
+        "Телефон же пароль туура эмес"
     });
-
   }
 
   const token =
     createSession(user.id);
 
   res.json({
-
     success: true,
-
     token,
-
-    user:
-      publicUser(user)
-
+    user: publicUser(user)
   });
-
 });
 
-/* =========================
+/* =====================================================
    LOGOUT
-========================= */
+===================================================== */
 
-app.post("/api/logout", auth, (req, res) => {
+app.post(
+  "/api/logout",
+  auth,
+  (req, res) => {
 
-  sessions.delete(req.token);
+    sessions.delete(req.token);
 
-  res.json({
-    success: true
-  });
+    res.json({
+      success: true
+    });
+  }
+);
 
-});
-
-/* =========================
+/* =====================================================
    CURRENT USER
-========================= */
+===================================================== */
 
-app.get("/api/me", auth, (req, res) => {
+app.get(
+  "/api/me",
+  auth,
+  (req, res) => {
 
-  res.json({
-    user:
-      publicUser(req.user)
-  });
+    res.json({
+      user: publicUser(req.user)
+    });
+  }
+);
 
-});
-
-/* =========================
+/* =====================================================
    USERS
-========================= */
+===================================================== */
 
-app.get("/api/users", auth, (req, res) => {
+app.get(
+  "/api/users",
+  auth,
+  (req, res) => {
 
-  const users =
-    db.users
-      .filter(
-        user =>
-          user.id !== req.user.id
-      )
-      .map(publicUser);
+    const users =
+      db.users
+        .filter(
+          u =>
+            u.id !== req.user.id
+        )
+        .map(publicUser);
 
-  res.json(users);
+    res.json(users);
+  }
+);
 
-});
-
-/* =========================
+/* =====================================================
    ADS
-========================= */
+===================================================== */
 
 app.get("/api/ads", (req, res) => {
-
   let ads =
     [...db.ads].reverse();
 
@@ -439,121 +417,141 @@ app.get("/api/ads", (req, res) => {
     clean(req.query.region, 100);
 
   if (q) {
+    ads = ads.filter(ad => {
 
-    ads =
-      ads.filter(ad => {
+      const text = [
+        ad.title,
+        ad.description,
+        ad.category,
+        ad.region
+      ]
+        .join(" ")
+        .toLowerCase();
 
-        const text = `
-          ${ad.title}
-          ${ad.description}
-          ${ad.category}
-          ${ad.region}
-        `.toLowerCase();
-
-        return text.includes(q);
-
-      });
-
+      return text.includes(q);
+    });
   }
 
   if (category) {
-
-    ads =
-      ads.filter(
-        ad =>
-          ad.category === category
-      );
-
+    ads = ads.filter(
+      ad =>
+        ad.category === category
+    );
   }
 
   if (region) {
-
-    ads =
-      ads.filter(
-        ad =>
-          ad.region === region
-      );
-
+    ads = ads.filter(
+      ad =>
+        ad.region === region
+    );
   }
 
   res.json(ads);
-
 });
 
-/* =========================
+/* =====================================================
    CREATE AD
-========================= */
+===================================================== */
 
-app.post("/api/ads", auth, (req, res) => {
+app.post(
+  "/api/ads",
+  auth,
+  (req, res) => {
 
-  const ad = {
+    const ad = {
+      id: crypto.randomUUID(),
 
-    id:
-      crypto.randomUUID(),
+      title:
+        clean(req.body.title, 150),
 
-    title:
-      clean(req.body.title, 150),
+      category:
+        clean(req.body.category, 100),
 
-    category:
-      clean(req.body.category, 100),
+      price:
+        clean(req.body.price, 100),
 
-    price:
-      clean(req.body.price, 100),
+      region:
+        clean(req.body.region, 100),
 
-    region:
-      clean(req.body.region, 100),
+      description:
+        clean(
+          req.body.description,
+          2000
+        ),
 
-    description:
-      clean(req.body.description, 2000),
+      seller:
+        publicUser(req.user),
 
-    seller:
-      publicUser(req.user),
+      createdAt:
+        new Date().toISOString()
+    };
 
-    createdAt:
-      new Date().toISOString()
+    if (
+      !ad.title ||
+      !ad.category ||
+      !ad.price ||
+      !ad.region
+    ) {
+      return res.status(400).json({
+        error:
+          "Товар, категория, баа жана аймак толтурулушу керек"
+      });
+    }
 
-  };
+    db.ads.push(ad);
 
-  if (
-    !ad.title ||
-    !ad.category ||
-    !ad.price ||
-    !ad.region
-  ) {
+    saveData();
 
-    return res.status(400).json({
-      error:
-        "Товар, категория, баа жана аймак толтурулушу керек"
-    });
-
+    res.status(201).json(ad);
   }
+);
 
-  db.ads.push(ad);
+/* =====================================================
+   DELETE OWN AD
+===================================================== */
 
-  saveData();
+app.delete(
+  "/api/ads/:id",
+  auth,
+  (req, res) => {
 
-  res.status(201).json(ad);
+    const index =
+      db.ads.findIndex(
+        ad =>
+          ad.id === req.params.id &&
+          ad.seller?.id === req.user.id
+      );
 
-});
+    if (index === -1) {
+      return res.status(404).json({
+        error:
+          "Жарыя табылган жок"
+      });
+    }
 
-/* =========================
+    db.ads.splice(index, 1);
+
+    saveData();
+
+    res.json({
+      success: true
+    });
+  }
+);
+
+/* =====================================================
    CHAT ROOM
-========================= */
+===================================================== */
 
-function roomId(userA, userB) {
-
-  return [
-    userA,
-    userB
-  ]
+function roomId(a, b) {
+  return [a, b]
     .sort()
     .join(":");
-
 }
 
-/* =========================
+/* =====================================================
    CHAT HISTORY
-========================= */
+===================================================== */
 
 app.get(
   "/api/chats/:otherUserId/messages",
@@ -562,18 +560,16 @@ app.get(
 
     const otherUser =
       db.users.find(
-        user =>
-          user.id ===
+        u =>
+          u.id ===
           req.params.otherUserId
       );
 
     if (!otherUser) {
-
       return res.status(404).json({
         error:
           "Колдонуучу табылган жок"
       });
-
     }
 
     const room =
@@ -585,16 +581,14 @@ app.get(
     res.json(
       db.messages[room] || []
     );
-
   }
 );
 
-/* =========================
-   SOCKET.IO AUTH
-========================= */
+/* =====================================================
+   SOCKET AUTH
+===================================================== */
 
 io.use((socket, next) => {
-
   const token =
     socket.handshake.auth?.token;
 
@@ -627,27 +621,22 @@ io.use((socket, next) => {
   socket.user = user;
 
   next();
-
 });
 
-/* =========================
+/* =====================================================
    SOCKET CONNECTION
-========================= */
+===================================================== */
 
 io.on("connection", socket => {
 
   console.log(
-    "🟢 Apex user connected:",
+    "🟢 User connected:",
     socket.user.name
   );
 
   socket.join(
     `user:${socket.user.id}`
   );
-
-  /* =====================
-     JOIN CHAT
-  ===================== */
 
   socket.on(
     "join_chat",
@@ -666,7 +655,6 @@ io.on("connection", socket => {
         );
 
       if (!otherUser) {
-
         socket.emit(
           "chat_error",
           {
@@ -686,24 +674,12 @@ io.on("connection", socket => {
 
       socket.join(room);
 
-      const history =
-        db.messages[room] || [];
-
       socket.emit(
         "chat_history",
-        history
+        db.messages[room] || []
       );
-
-      console.log(
-        `💬 ${socket.user.name} joined chat`
-      );
-
     }
   );
-
-  /* =====================
-     SEND MESSAGE
-  ===================== */
 
   socket.on(
     "send_message",
@@ -713,7 +689,10 @@ io.on("connection", socket => {
         data?.otherUserId;
 
       const text =
-        clean(data?.text, 2000);
+        clean(
+          data?.text,
+          2000
+        );
 
       if (
         !otherUserId ||
@@ -729,18 +708,7 @@ io.on("connection", socket => {
             otherUserId
         );
 
-      if (!otherUser) {
-
-        socket.emit(
-          "chat_error",
-          {
-            error:
-              "Колдонуучу табылган жок"
-          }
-        );
-
-        return;
-      }
+      if (!otherUser) return;
 
       const room =
         roomId(
@@ -749,23 +717,15 @@ io.on("connection", socket => {
         );
 
       const message = {
-
-        id:
-          crypto.randomUUID(),
-
+        id: crypto.randomUUID(),
         room,
-
         senderId:
           socket.user.id,
-
         senderName:
           socket.user.name,
-
         text,
-
         createdAt:
           new Date().toISOString()
-
       };
 
       if (!db.messages[room]) {
@@ -777,8 +737,7 @@ io.on("connection", socket => {
       );
 
       db.messages[room] =
-        db.messages[room]
-          .slice(-500);
+        db.messages[room].slice(-500);
 
       saveData();
 
@@ -786,17 +745,8 @@ io.on("connection", socket => {
         "new_message",
         message
       );
-
-      console.log(
-        `📨 ${socket.user.name}: ${text}`
-      );
-
     }
   );
-
-  /* =====================
-     TYPING
-  ===================== */
 
   socket.on(
     "typing",
@@ -824,77 +774,75 @@ io.on("connection", socket => {
             )
         }
       );
-
     }
   );
-
-  /* =====================
-     DISCONNECT
-  ===================== */
 
   socket.on(
     "disconnect",
     reason => {
 
       console.log(
-        "🔴 Apex user disconnected:",
+        "🔴 User disconnected:",
         socket.user.name,
         reason
       );
-
     }
   );
-
 });
 
-/* =========================
+/* =====================================================
    SPA FALLBACK
-   Express 5 compatible
-========================= */
+===================================================== */
 
-app.use((req, res, next) => {
+app.use(
+  (req, res, next) => {
 
-  if (req.path.startsWith("/api/")) {
-    return next();
-  }
-
-  res.sendFile(
-    path.join(__dirname, "index.html"),
-    error => {
-
-      if (error) {
-        next(error);
-      }
-
+    if (
+      req.path.startsWith("/api/")
+    ) {
+      return next();
     }
-  );
 
-});
-
-/* =========================
-   ERROR HANDLER
-========================= */
-
-app.use((err, req, res, next) => {
-
-  console.error(
-    "SERVER ERROR:",
-    err
-  );
-
-  if (res.headersSent) {
-    return next(err);
+    res.sendFile(
+      path.join(
+        __dirname,
+        "index.html"
+      ),
+      error => {
+        if (error) {
+          next(error);
+        }
+      }
+    );
   }
+);
 
-  res.status(500).json({
-    error: "Сервердик ката кетти"
-  });
+/* =====================================================
+   ERROR HANDLER
+===================================================== */
 
-});
+app.use(
+  (err, req, res, next) => {
 
-/* =========================
-   START SERVER
-========================= */
+    console.error(
+      "SERVER ERROR:",
+      err
+    );
+
+    if (res.headersSent) {
+      return next(err);
+    }
+
+    res.status(500).json({
+      error:
+        "Сервердик ката кетти"
+    });
+  }
+);
+
+/* =====================================================
+   START
+===================================================== */
 
 server.listen(
   PORT,
@@ -902,7 +850,7 @@ server.listen(
   () => {
 
     console.log(
-      `🚀 Apex Agro server running on port ${PORT}`
+      `🚀 Apex Agro running on port ${PORT}`
     );
 
     console.log(
@@ -912,6 +860,5 @@ server.listen(
     console.log(
       `📦 Ads: ${db.ads.length}`
     );
-
   }
 );
