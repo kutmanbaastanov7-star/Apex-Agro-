@@ -3621,4 +3621,175 @@ function sendTyping(isTyping){
 
   clearTimeout(typingTimeout);
 
-  typingTimeout=setTimeout(()=>{
+  typingTimeout=setTimeout(()=>{}
+   sendTyping(false);
+
+},1200);
+
+}
+
+}
+
+ /* SOCKET */
+
+function connectSocket(){
+
+  if(!state.user || typeof io!=='function'){
+    return;
+  }
+
+  if(state.socket){
+    try{
+      state.socket.disconnect();
+    }catch(e){}
+  }
+
+  state.socket=io({
+    auth:{
+      token:state.token
+    }
+  });
+
+  state.socket.on('connect',()=>{
+
+    state.socketReady=true;
+
+    if(state.selectedUser){
+
+      state.socket.emit(
+        'join_chat',
+        {
+          otherUserId:state.selectedUser.id
+        }
+      );
+
+    }
+
+    renderChat();
+
+  });
+
+  state.socket.on('disconnect',()=>{
+
+    state.socketReady=false;
+
+    renderChat();
+
+  });
+
+  state.socket.on('chat_history',messages=>{
+
+    state.messages=Array.isArray(messages)
+      ?messages
+      :[];
+
+    renderMessages();
+
+  });
+
+  state.socket.on('new_message',message=>{
+
+    if(!message){
+      return;
+    }
+
+    state.messages.push(message);
+
+    renderMessages();
+
+  });
+
+  state.socket.on('typing',data=>{
+
+    if(
+      !data ||
+      !state.selectedUser ||
+      String(data.userId)!==
+      String(state.selectedUser.id)
+    ){
+      return;
+    }
+
+    state.typing=Boolean(data.isTyping);
+
+    renderTyping();
+
+  });
+
+}
+
+     }
+
+  }
+
+
+
+}
+
+ /* INIT */
+
+async function init(){
+
+  renderPriceTable();
+
+  renderHomeProducts();
+
+  renderMarket();
+
+  renderProfile();
+
+  /*
+   Интерфейс дароо ачылат.
+   API жооп бербесе да сайт
+   "Маалымат жүктөлүүдө..."
+   болуп туруп калбайт.
+  */
+
+  await Promise.allSettled([
+
+    loadMe(),
+
+    loadAds()
+
+  ]);
+
+  if(state.user){
+
+    connectSocket();
+
+  }
+
+  updateAdsCount();
+
+}
+
+/* ESC */
+
+document.addEventListener(
+  "keydown",
+  event=>{
+     if(event.key==="Escape"){
+
+    closeModal();
+
+  }
+
+}
+);
+
+/* START */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  init
+);
+
+</script>
+
+</div>
+
+</body>
+</html>
+
+ 
+ 
