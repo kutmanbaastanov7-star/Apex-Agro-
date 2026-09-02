@@ -2,1297 +2,3623 @@
 <html lang="ky">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#08783a">
-<title>Apex — Агро маркетплейс</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0f8f55">
+<title>Apex Agro</title>
+<script src="/socket.io/socket.io.js"></script>
 
 <style>
 :root{
-  --green:#08783a;
-  --green2:#0b9148;
-  --dark:#075b2d;
-  --bg:#f3f7f4;
-  --white:#fff;
-  --text:#173d27;
-  --muted:#75837b;
-  --line:#dce8e0;
-  --soft:#eaf7ee;
-  --yellow:#fff2c8;
-  --red:#d43d3d;
-  --shadow:0 8px 25px rgba(20,70,40,.07);
+ --green:#0f8f55;
+ --green-dark:#087442;
+ --green-light:#e9f7ef;
+ --text:#183126;
+ --muted:#728078;
+ --bg:#f5f8f6;
+ --card:#fff;
+ --border:#e2ebe5;
+ --danger:#d95353;
+ --shadow:0 8px 30px rgba(15,50,30,.08);
 }
 
 *{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+ box-sizing:border-box;
 }
 
 html{
-  scroll-behavior:smooth;
+ scroll-behavior:smooth;
 }
 
 body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ margin:0;
+ font-family:Arial,Helvetica,sans-serif;
+ background:var(--bg);
+ color:var(--text);
 }
 
-button,input,select,textarea{
-  font:inherit;
+button,
+input,
+select,
+textarea{
+ font:inherit;
 }
 
 button{
-  cursor:pointer;
-}
-
-button:active{
-  transform:scale(.97);
+ cursor:pointer;
 }
 
 .app{
-  width:100%;
-  max-width:760px;
-  min-height:100vh;
-  margin:auto;
-  background:var(--bg);
+ min-height:100vh;
+ padding-bottom:85px;
 }
 
 /* HEADER */
 
 .header{
-  position:sticky;
-  top:0;
-  z-index:50;
-  background:rgba(255,255,255,.97);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid #e1ebe4;
-  padding:15px 16px 11px;
+ position:sticky;
+ top:0;
+ z-index:50;
+ background:rgba(255,255,255,.96);
+ backdrop-filter:blur(12px);
+ border-bottom:1px solid var(--border);
 }
 
-.header-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
+.header-inner{
+ max-width:1180px;
+ height:70px;
+ margin:auto;
+ padding:0 20px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
 }
 
 .logo{
-  width:55px;
-  height:55px;
-  border-radius:18px;
-  background:linear-gradient(145deg,#087d3d,#075e2e);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 7px 18px rgba(8,120,58,.18);
+ border:0;
+ background:none;
+ display:flex;
+ align-items:center;
+ gap:10px;
+ color:var(--green);
+ font-size:23px;
+ font-weight:900;
 }
 
-.logo svg{
-  width:42px;
-  height:42px;
+.logo-mark{
+ width:42px;
+ height:42px;
+ border-radius:13px;
+ display:grid;
+ place-items:center;
+ background:linear-gradient(135deg,#0f8f55,#36b879);
+ color:#fff;
+ font-size:22px;
+ font-weight:900;
 }
 
-.brand-name{
-  color:var(--green);
-  font-size:33px;
-  line-height:1;
-  font-weight:900;
-  letter-spacing:-1.5px;
+.header-actions{
+ display:flex;
+ gap:9px;
 }
 
-.brand-sub{
-  margin-top:5px;
-  font-size:9px;
-  font-weight:900;
-  letter-spacing:.8px;
-  color:#75827a;
+.header-btn{
+ border:1px solid var(--border);
+ background:#fff;
+ color:var(--text);
+ padding:10px 14px;
+ border-radius:12px;
+ font-weight:700;
 }
 
-.region-btn{
-  border:1.5px solid #c9ded1;
-  background:#f5fbf6;
-  color:#286943;
-  border-radius:22px;
-  padding:10px 12px;
-  font-weight:800;
+.header-btn:hover{
+ border-color:#b9d9c7;
 }
 
-.search-box{
-  margin-top:12px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  border:1.5px solid #d4e2d9;
-  border-radius:19px;
-  background:#fbfdfb;
-  padding:0 13px;
-}
-
-.search-box:focus-within{
-  border-color:var(--green);
-  box-shadow:0 0 0 3px rgba(8,120,58,.07);
-}
-
-.search-icon{
-  font-size:20px;
-}
-
-.search-box input{
-  width:100%;
-  border:0;
-  outline:0;
-  background:transparent;
-  padding:13px 0;
-  font-size:15px;
-}
-
-.profile-bar{
-  margin-top:9px;
-  background:var(--yellow);
-  border-radius:13px;
-  padding:9px 12px;
-  color:#746846;
-  font-size:12px;
-}
-
-.profile-bar b{
-  color:#287346;
+.primary{
+ background:var(--green);
+ border-color:var(--green);
+ color:#fff;
 }
 
 /* MAIN */
 
-main{
-  padding:17px 16px 105px;
+.main{
+ max-width:1180px;
+ margin:auto;
+ padding:24px 20px;
 }
 
 .page{
-  display:none;
+ display:none;
 }
 
 .page.active{
-  display:block;
+ display:block;
 }
 
 /* HERO */
 
 .hero{
-  background:linear-gradient(135deg,#075f2f,#087c3d 55%,#10974b);
-  color:#fff;
-  border-radius:27px;
-  padding:24px 21px;
-  box-shadow:0 15px 35px rgba(8,120,58,.16);
-}
-
-.hero-small{
-  font-size:12px;
-  font-weight:900;
-  letter-spacing:.8px;
-  opacity:.87;
+ position:relative;
+ overflow:hidden;
+ min-height:350px;
+ padding:45px;
+ border-radius:28px;
+ color:#fff;
+ background:
+ linear-gradient(135deg,#086d40,#0f8f55 55%,#20aa6b);
+ box-shadow:var(--shadow);
 }
 
 .hero h1{
-  margin:11px 0 10px;
-  font-size:29px;
-  line-height:1.1;
-  letter-spacing:-.8px;
+ max-width:700px;
+ margin:0 0 18px;
+ font-size:clamp(35px,6vw,60px);
+ line-height:1;
+ letter-spacing:-2px;
 }
 
 .hero p{
-  margin:0 0 19px;
-  color:#e2f5e9;
-  font-size:14px;
-  line-height:1.55;
+ max-width:650px;
+ margin:0 0 25px;
+ color:rgba(255,255,255,.9);
+ line-height:1.6;
+ font-size:17px;
 }
 
-.hero-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
+.hero-search{
+ max-width:700px;
+ display:flex;
+ padding:7px;
+ background:#fff;
+ border-radius:15px;
 }
 
-.hero-btn{
-  min-height:53px;
-  border-radius:16px;
-  border:0;
-  padding:10px;
-  font-weight:900;
+.hero-search input{
+ flex:1;
+ min-width:0;
+ border:0;
+ outline:0;
+ padding:12px;
 }
 
-.hero-primary{
-  background:#fff;
-  color:var(--green);
+.hero-search button{
+ border:0;
+ border-radius:11px;
+ padding:0 20px;
+ background:var(--green);
+ color:#fff;
+ font-weight:800;
 }
 
-.hero-secondary{
-  background:rgba(255,255,255,.12);
-  color:#fff;
-  border:1px solid rgba(255,255,255,.35);
+/* SECTIONS */
+
+.section{
+ margin-top:30px;
 }
 
-/* SECTION */
+.section-head{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:15px;
+ margin-bottom:15px;
+}
 
 .section-title{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-  margin:24px 2px 11px;
+ margin:0;
+ font-size:25px;
 }
 
-.section-title h2{
-  margin:0;
-  font-size:21px;
-  letter-spacing:-.3px;
-}
-
-.section-link{
-  border:0;
-  background:transparent;
-  color:#718078;
-  font-weight:800;
+.section-sub{
+ color:var(--muted);
+ font-size:13px;
+ margin-top:5px;
 }
 
 /* CATEGORIES */
 
 .categories{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:13px;
 }
 
 .category{
-  min-height:125px;
-  border:1.5px solid #dce8e0;
-  background:#fff;
-  border-radius:22px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:9px;
-  color:#416a50;
-  box-shadow:var(--shadow);
+ border:1px solid var(--border);
+ background:#fff;
+ border-radius:18px;
+ padding:19px;
+ min-height:125px;
+ text-align:left;
+ transition:.2s;
 }
 
-.category.active{
-  border-color:var(--green);
-  background:#edf8f0;
-  box-shadow:0 6px 18px rgba(8,120,58,.08);
+.category:hover{
+ transform:translateY(-3px);
+ box-shadow:var(--shadow);
+ border-color:#afd5c0;
 }
 
-.category-icon{
-  width:54px;
-  height:54px;
-  border-radius:18px;
-  background:#f0f7f2;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:31px;
+.cat-icon{
+ width:45px;
+ height:45px;
+ display:grid;
+ place-items:center;
+ border-radius:14px;
+ background:var(--green-light);
+ font-size:22px;
+ margin-bottom:12px;
 }
 
 .category strong{
-  font-size:14px;
+ display:block;
+ font-size:16px;
 }
 
-/* CHIPS */
-
-.chips{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  scrollbar-width:none;
-  padding:2px 1px 7px;
+.category span{
+ display:block;
+ margin-top:5px;
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.4;
 }
 
-.chips::-webkit-scrollbar{
-  display:none;
+/* MARKET CARD */
+
+.market-card{
+ overflow:hidden;
+ background:#fff;
+ border:1px solid var(--border);
+ border-radius:20px;
+ box-shadow:var(--shadow);
 }
 
-.chip{
-  flex:none;
-  border:1px solid #ceddd3;
-  background:#fff;
-  color:#52745e;
-  border-radius:20px;
-  padding:9px 13px;
-  font-size:13px;
-  font-weight:800;
+.market-tools{
+ display:flex;
+ gap:10px;
+ flex-wrap:wrap;
+ padding:16px;
+ border-bottom:1px solid var(--border);
 }
 
-.chip.active{
-  background:var(--green);
-  color:#fff;
-  border-color:var(--green);
+.search{
+ flex:1;
+ min-width:200px;
+ border:1px solid var(--border);
+ border-radius:12px;
+ padding:12px 14px;
+ outline:0;
 }
 
-/* PRICE */
-
-.price-card{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:21px;
-  padding:9px;
-  overflow:auto;
-  box-shadow:var(--shadow);
+.search:focus{
+ border-color:var(--green);
 }
 
-.price-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:12px;
+.select{
+ border:1px solid var(--border);
+ background:#fff;
+ border-radius:12px;
+ padding:12px;
+ outline:0;
 }
 
-.price-table th,
-.price-table td{
-  padding:11px 6px;
-  text-align:left;
-  border-bottom:1px solid #edf2ee;
-  white-space:nowrap;
+.table-wrap{
+ overflow:auto;
 }
 
-.price-table th{
-  color:#7a8780;
+table{
+ width:100%;
+ min-width:620px;
+ border-collapse:collapse;
 }
 
-.green-price{
-  color:var(--green);
-  font-weight:900;
+th,
+td{
+ padding:14px;
+ text-align:left;
+ border-bottom:1px solid #edf1ee;
 }
 
-/* CARDS */
+th{
+ background:#f8faf9;
+ color:#68756e;
+ font-size:11px;
+ text-transform:uppercase;
+}
 
-.cards{
-  display:grid;
-  gap:10px;
+.price-up{
+ color:var(--green);
+ font-weight:800;
+}
+
+.price-down{
+ color:var(--danger);
+ font-weight:800;
+}
+
+/* PRODUCTS */
+
+.products{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:15px;
 }
 
 .product{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:21px;
-  padding:13px;
-  display:flex;
-  gap:12px;
-  box-shadow:var(--shadow);
+ overflow:hidden;
+ background:#fff;
+ border:1px solid var(--border);
+ border-radius:19px;
+ transition:.2s;
 }
 
-.product-icon{
-  width:70px;
-  height:70px;
-  border-radius:18px;
-  background:#eef8f1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:38px;
-  flex:none;
+.product:hover{
+ transform:translateY(-3px);
+ box-shadow:var(--shadow);
 }
 
-.product-info{
-  flex:1;
-  min-width:0;
+.product-image{
+ height:145px;
+ display:grid;
+ place-items:center;
+ font-size:60px;
+ background:linear-gradient(135deg,#edf8f1,#dff1e7);
 }
 
-.product-title{
-  margin:0 0 5px;
-  font-size:16px;
-  font-weight:900;
+.product-body{
+ padding:15px;
 }
 
-.product-meta{
-  color:#7b8981;
-  font-size:12px;
-  line-height:1.5;
+.product-region{
+ color:var(--muted);
+ font-size:11px;
+}
+
+.product h3{
+ margin:7px 0;
+ font-size:17px;
 }
 
 .product-price{
-  margin-top:6px;
-  color:var(--green);
-  font-size:16px;
-  font-weight:900;
+ color:var(--green);
+ font-size:18px;
+ font-weight:900;
 }
 
-.small-btn{
-  border:0;
-  background:var(--soft);
-  color:var(--green);
-  border-radius:11px;
-  padding:8px 10px;
-  font-size:12px;
-  font-weight:900;
+.product-meta{
+ display:flex;
+ justify-content:space-between;
+ gap:8px;
+ margin-top:10px;
+ color:var(--muted);
+ font-size:11px;
 }
+
+.product-btn{
+ width:100%;
+ margin-top:13px;
+ padding:10px;
+ border:1px solid #cce3d6;
+ border-radius:10px;
+ background:#f3fbf6;
+ color:var(--green);
+ font-weight:800;
+}
+
+/* HUB */
+
+.hub{
+ display:grid;
+ grid-template-columns:1.3fr .7fr;
+ gap:15px;
+}
+
+.hub-card{
+ background:#fff;
+ border:1px solid var(--border);
+ border-radius:20px;
+ padding:22px;
+}
+
+.hub-card h3{
+ margin-top:0;
+}
+
+.hub-list{
+ display:grid;
+ gap:11px;
+}
+
+.hub-item{
+ padding:14px;
+ border:1px solid #e5eee8;
+ border-radius:13px;
+ background:#f7faf8;
+ cursor:pointer;
+}
+
+.hub-item strong{
+ display:block;
+ margin-bottom:5px;
+}
+
+.hub-item span{
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.5;
+}
+
+/* EMPTY */
 
 .empty{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:26px 15px;
-  text-align:center;
-  color:#849189;
+ padding:45px 20px;
+ text-align:center;
+ color:var(--muted);
 }
 
 .empty-icon{
-  font-size:35px;
-  margin-bottom:7px;
+ margin-bottom:10px;
+ font-size:42px;
 }
 
-/* MARKET */
+/* END PART 1 */
+  /* CHAT */
 
-.market-filter{
-  display:flex;
-  gap:8px;
-  margin-top:10px;
+.chat-layout{
+ min-height:600px;
+ display:grid;
+ grid-template-columns:290px 1fr;
+ overflow:hidden;
+ background:#fff;
+ border:1px solid var(--border);
+ border-radius:20px;
+ box-shadow:var(--shadow);
 }
 
-.market-filter select{
-  min-width:0;
-  flex:1;
-  border:1px solid var(--line);
-  border-radius:13px;
-  padding:10px;
-  background:#fff;
-  outline:none;
+.chat-users{
+ background:#fbfcfb;
+ border-right:1px solid var(--border);
+}
+
+.chat-users-head{
+ padding:18px;
+ font-weight:900;
+ border-bottom:1px solid var(--border);
+}
+
+.chat-user{
+ display:flex;
+ align-items:center;
+ gap:11px;
+ padding:14px 16px;
+ border-bottom:1px solid #edf1ee;
+ cursor:pointer;
+}
+
+.chat-user:hover,
+.chat-user.active{
+ background:#eaf8f0;
+}
+
+.avatar{
+ width:42px;
+ height:42px;
+ flex:0 0 42px;
+ display:grid;
+ place-items:center;
+ border-radius:50%;
+ background:#def2e6;
+ color:var(--green);
+ font-weight:900;
+}
+
+.chat-user-name{
+ font-weight:800;
+}
+
+.chat-user-role{
+ margin-top:3px;
+ color:var(--muted);
+ font-size:11px;
+}
+
+.chat-main{
+ min-width:0;
+ display:flex;
+ flex-direction:column;
+}
+
+.chat-head{
+ min-height:70px;
+ padding:14px 18px;
+ display:flex;
+ align-items:center;
+ border-bottom:1px solid var(--border);
+}
+
+.messages{
+ flex:1;
+ overflow:auto;
+ padding:20px;
+ background:#f7faf8;
+}
+
+.message{
+ max-width:75%;
+ margin-bottom:12px;
+ padding:11px 14px;
+ border:1px solid #e2ebe6;
+ border-radius:15px;
+ background:#fff;
+}
+
+.message.mine{
+ margin-left:auto;
+ background:#dcf5e7;
+ border-color:#c3ead3;
+}
+
+.message-name{
+ margin-bottom:4px;
+ color:var(--muted);
+ font-size:10px;
+}
+
+.message-time{
+ margin-top:5px;
+ text-align:right;
+ color:#849089;
+ font-size:9px;
+}
+
+.typing{
+ color:var(--green);
+ font-size:11px;
+}
+
+.chat-input{
+ display:flex;
+ gap:8px;
+ padding:12px;
+ border-top:1px solid var(--border);
+}
+
+.chat-input input{
+ flex:1;
+ min-width:0;
+ border:1px solid var(--border);
+ border-radius:12px;
+ padding:12px;
+ outline:0;
+}
+
+.chat-input button{
+ border:0;
+ border-radius:12px;
+ padding:0 20px;
+ background:var(--green);
+ color:#fff;
+ font-weight:900;
 }
 
 /* PROFILE */
 
 .profile-card{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:23px;
-  padding:19px;
-  box-shadow:var(--shadow);
+ background:#fff;
+ border:1px solid var(--border);
+ border-radius:22px;
+ padding:28px;
+ box-shadow:var(--shadow);
 }
 
-.avatar{
-  width:65px;
-  height:65px;
-  border-radius:50%;
-  background:#eaf7ee;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:31px;
-  margin-bottom:10px;
+.profile-top{
+ display:flex;
+ align-items:center;
+ gap:18px;
+ padding-bottom:23px;
+ border-bottom:1px solid var(--border);
 }
 
-.profile-name{
-  font-size:22px;
-  font-weight:900;
+.profile-avatar{
+ width:80px;
+ height:80px;
+ display:grid;
+ place-items:center;
+ border-radius:24px;
+ background:#e1f5e9;
+ color:var(--green);
+ font-size:28px;
+ font-weight:900;
 }
 
-.profile-role{
-  color:var(--muted);
-  margin-top:3px;
+.profile-info h2{
+ margin:0 0 7px;
 }
 
-.profile-row{
-  margin-top:15px;
-  display:grid;
-  gap:8px;
+.profile-info p{
+ margin:4px 0;
+ color:var(--muted);
 }
 
-.profile-item{
-  background:#f5f9f6;
-  border-radius:13px;
-  padding:11px;
+.profile-grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:13px;
+ margin-top:22px;
 }
 
-.logout-btn{
-  width:100%;
-  margin-top:15px;
-  border:0;
-  background:#fff0f0;
-  color:var(--red);
-  border-radius:13px;
-  padding:12px;
-  font-weight:900;
+.profile-stat{
+ padding:17px;
+ border-radius:15px;
+ background:#f7faf8;
 }
 
-/* CHAT */
-
-.users{
-  display:grid;
-  gap:8px;
+.profile-stat strong{
+ display:block;
+ font-size:22px;
 }
 
-.user{
-  width:100%;
-  text-align:left;
-  border:1px solid var(--line);
-  background:#fff;
-  border-radius:15px;
-  padding:12px;
-}
-
-.user strong{
-  display:block;
-}
-
-.user span{
-  color:var(--muted);
-  font-size:12px;
-}
-
-.chat{
-  margin-top:10px;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:19px;
-  overflow:hidden;
-}
-
-.chat-head{
-  padding:12px;
-  border-bottom:1px solid var(--line);
-  font-weight:900;
-}
-
-.messages{
-  height:290px;
-  overflow-y:auto;
-  padding:11px;
-  background:#f5f8f6;
-}
-
-.message{
-  max-width:78%;
-  padding:9px 11px;
-  border-radius:14px;
-  background:#fff;
-  margin:6px 0;
-}
-
-.message.mine{
-  margin-left:auto;
-  background:#dff3e5;
-}
-
-.message small{
-  display:block;
-  margin-top:3px;
-  color:#89948e;
-  font-size:9px;
-}
-
-.chat-send{
-  display:flex;
-  gap:6px;
-  padding:8px;
-}
-
-.chat-send input{
-  flex:1;
-  border:1px solid #d7e1da;
-  border-radius:12px;
-  padding:10px;
-  outline:none;
-}
-
-.chat-send button{
-  width:45px;
-  border:0;
-  border-radius:12px;
-  background:var(--green);
-  color:#fff;
-}
-
-/* BOTTOM NAV */
-
-.bottom-nav{
-  position:fixed;
-  left:50%;
-  bottom:0;
-  transform:translateX(-50%);
-  z-index:60;
-  width:min(760px,100%);
-  height:78px;
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr 1fr 1fr;
-  align-items:end;
-  background:rgba(255,255,255,.98);
-  border-top:1px solid #e0e9e4;
-  padding:6px 8px calc(6px + env(safe-area-inset-bottom));
-}
-
-.nav-btn{
-  border:0;
-  background:transparent;
-  color:#8a968f;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:2px;
-  font-size:10px;
-  font-weight:800;
-}
-
-.nav-btn.active{
-  color:var(--green);
-}
-
-.nav-icon{
-  font-size:23px;
-}
-
-.plus-btn{
-  width:57px;
-  height:57px;
-  margin:0 auto -2px;
-  border-radius:50%;
-  border:5px solid #fff;
-  background:var(--green);
-  color:#fff;
-  font-size:32px;
-  line-height:1;
-  box-shadow:0 7px 20px rgba(8,120,58,.28);
+.profile-stat span{
+ color:var(--muted);
+ font-size:11px;
 }
 
 /* MODAL */
 
+.modal-bg{
+ position:fixed;
+ inset:0;
+ z-index:100;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ background:rgba(8,28,18,.52);
+}
+
+.modal-bg.show{
+ display:flex;
+}
+
 .modal{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  display:none;
-  align-items:flex-end;
-  justify-content:center;
-  background:rgba(8,30,18,.48);
+ width:min(480px,100%);
+ max-height:90vh;
+ overflow:auto;
+ padding:25px;
+ border-radius:22px;
+ background:#fff;
+ box-shadow:0 25px 80px rgba(0,0,0,.22);
 }
 
-.modal.show{
-  display:flex;
+.modal-head{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ margin-bottom:20px;
 }
 
-.sheet{
-  width:min(760px,100%);
-  max-height:92vh;
-  overflow:auto;
-  background:#fff;
-  border-radius:27px 27px 0 0;
-  padding:18px 16px calc(25px + env(safe-area-inset-bottom));
-}
-
-.sheet-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:14px;
-}
-
-.sheet-header h3{
-  margin:0;
-  font-size:21px;
+.modal-head h2{
+ margin:0;
 }
 
 .close{
-  width:39px;
-  height:39px;
-  border:0;
-  border-radius:50%;
-  background:#f0f4f1;
-  font-size:22px;
+ width:36px;
+ height:36px;
+ border:0;
+ border-radius:50%;
+ background:#f1f4f2;
+ font-size:21px;
 }
 
-.field{
-  margin:11px 0;
+.form{
+ display:grid;
+ gap:12px;
 }
 
-.field label{
-  display:block;
-  margin-bottom:6px;
-  color:#64736a;
-  font-size:12px;
-  font-weight:900;
+.form label{
+ display:block;
+ margin-bottom:6px;
+ font-size:12px;
+ font-weight:800;
 }
 
-.field input,
-.field select,
-.field textarea{
-  width:100%;
-  border:1px solid #d5e1d9;
-  border-radius:13px;
-  background:#fbfdfb;
-  padding:12px;
-  outline:none;
+.form input,
+.form select,
+.form textarea{
+ width:100%;
+ padding:12px;
+ border:1px solid var(--border);
+ border-radius:12px;
+ outline:0;
 }
 
-.field textarea{
-  min-height:90px;
-  resize:vertical;
+.form textarea{
+ min-height:100px;
+ resize:vertical;
 }
 
-.submit-btn{
-  width:100%;
-  border:0;
-  border-radius:14px;
-  padding:14px;
-  background:var(--green);
-  color:#fff;
-  font-weight:900;
-  margin-top:7px;
+.form button.submit{
+ width:100%;
+ border:0;
+ padding:13px;
+ border-radius:12px;
+ background:var(--green);
+ color:#fff;
+ font-weight:900;
+}
+
+.form-switch{
+ text-align:center;
+ color:var(--muted);
+ font-size:12px;
+}
+
+.form-switch button{
+ border:0;
+ padding:0;
+ background:none;
+ color:var(--green);
+ font-weight:900;
 }
 
 /* TOAST */
 
 .toast{
-  position:fixed;
-  left:50%;
-  bottom:94px;
-  z-index:200;
-  max-width:90%;
-  transform:translateX(-50%) translateY(20px);
-  opacity:0;
-  pointer-events:none;
-  background:#173d27;
-  color:#fff;
-  border-radius:13px;
-  padding:11px 15px;
-  transition:.25s;
-  font-size:13px;
-  font-weight:700;
+ position:fixed;
+ right:20px;
+ bottom:95px;
+ z-index:200;
+ max-width:350px;
+ padding:13px 17px;
+ border-radius:13px;
+ background:#173126;
+ color:#fff;
+ box-shadow:var(--shadow);
+ opacity:0;
+ transform:translateY(20px);
+ pointer-events:none;
+ transition:.25s;
 }
 
 .toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
+ opacity:1;
+ transform:translateY(0);
 }
 
-@media(min-width:700px){
-  .categories{
-    grid-template-columns:repeat(4,1fr);
-  }
+/* BOTTOM NAV */
 
-  .category{
-    min-height:145px;
-  }
+.bottom-nav{
+ position:fixed;
+ left:0;
+ right:0;
+ bottom:0;
+ z-index:60;
+ height:72px;
+ background:rgba(255,255,255,.97);
+ backdrop-filter:blur(12px);
+ border-top:1px solid var(--border);
 }
-</style>
+
+.bottom-inner{
+ max-width:650px;
+ height:100%;
+ margin:auto;
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
+}
+
+.nav-btn{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ gap:3px;
+ border:0;
+ background:none;
+ color:#7a877f;
+ font-size:10px;
+ font-weight:700;
+}
+
+.nav-icon{
+ font-size:21px;
+}
+
+.nav-btn.active{
+ color:var(--green);
+}
+
+.add-btn .nav-icon{
+ width:42px;
+ height:42px;
+ margin-top:-20px;
+ display:grid;
+ place-items:center;
+ border-radius:14px;
+ background:var(--green);
+ color:#fff;
+ font-size:25px;
+ box-shadow:0 7px 20px rgba(15,143,85,.25);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+ .categories{
+  grid-template-columns:repeat(2,1fr);
+ }
+
+ .products{
+  grid-template-columns:repeat(2,1fr);
+ }
+
+ .hub{
+  grid-template-columns:1fr;
+ }
+
+}
+
+@media(max-width:650px){
+
+ .header-inner{
+  height:62px;
+ }
+
+ .header-actions .header-btn:not(.primary){
+  display:none;
+ }
+
+ .main{
+  padding:15px;
+ }
+
+ .hero{
+  padding:28px 22px;
+ }
+
+ .hero h1{
+  font-size:39px;
+ }
+
+ .hero-search{
+  flex-direction:column;
+  gap:7px;
+ }
+
+ .hero-search button{
+  min-height:45px;
+ }
+
+ .chat-layout{
+  grid-template-columns:1fr;
+ }
+
+ .chat-users{
+  display:none;
+ }
+
+ .chat-layout.mobile-users .chat-users{
+  display:block;
+ }
+
+ .profile-grid{
+  grid-template-columns:1fr 1fr;
+ }
+
+}
+
+@media(max-width:420px){
+
+ .products{
+  grid-template-columns:1fr;
+ }
+
+ .categories{
+  gap:9px;
+ }
+
+ .category{
+  padding:14px;
+ }
+
+}
+
+/* END PART 2 */
+
+  </style>
 </head>
 
 <body>
 
 <div class="app">
 
-<!-- HEADER -->
 <header class="header">
 
-  <div class="header-row">
+ <div class="header-inner">
 
-    <div class="brand">
+  <button class="logo" onclick="navigate('home')">
 
-      <div class="logo">
-        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M10 50 29 12l8 15 7-11 10 34H43l-5-16-7 16H10Z"
-            fill="white"
-          />
-          <path
-            d="M27 40c7-7 14-8 24-7-6 2-10 5-14 10l-10 5v-8Z"
-            fill="#8DD35B"
-          />
-        </svg>
-      </div>
+   <span class="logo-mark">A</span>
 
-      <div>
-        <div class="brand-name">Apex</div>
-        <div class="brand-sub">АГРО МАРКЕТПЛЕЙС</div>
-      </div>
+   <span>Apex</span>
 
-    </div>
+  </button>
 
-    <button class="region-btn" id="regionBtn">
-      Талас 📍
-    </button>
+  <div class="header-actions">
+
+   <button
+    class="header-btn"
+    onclick="navigate('market')">
+    Рынок
+   </button>
+
+   <button
+    class="header-btn primary"
+    onclick="openAddModal()">
+    + Жарыя
+   </button>
 
   </div>
 
-  <div class="search-box">
-    <span class="search-icon">🔍</span>
-    <input
-      id="globalSearch"
-      type="search"
-      placeholder="Картошка, фасоль, трактор, агроном..."
-    >
-  </div>
-
-  <div class="profile-bar">
-    Сиздин профилиңиз:
-    <b id="profileName">Конок</b>
-  </div>
+ </div>
 
 </header>
 
 
-<main>
+<main class="main">
 
-<!-- ================= HOME ================= -->
 
-<section id="homePage" class="page active">
+<!-- HOME -->
 
-  <div class="hero">
+<section id="page-home" class="page active">
 
-    <div class="hero-small">
-      🌱 APEX AGRO PLATFORM
-    </div>
+ <div class="hero">
 
-    <h1>
-      Кыргызстандагы<br>
-      бирдиктүү агро рынок
-    </h1>
+  <h1>
+   Айыл чарбасын бириктирген бирдиктүү платформа.
+  </h1>
 
-    <p>
-      Айыл чарба товарлары, мал,
-      агрономдор, техника,
-      дары-дармек жана кызматтар
-      бир жерде.
-    </p>
+  <p>
+   Apex — фермерлерди, сатып алуучуларды,
+   агрономдорду, поставщиктерди жана агросектордун
+   башка катышуучуларын бириктирген санариптик экосистема.
+  </p>
 
-    <div class="hero-buttons">
+  <div class="hero-search">
 
-      <button class="hero-btn hero-primary" id="marketBtn">
-        🛒 Рынокту көрүү
-      </button>
+   <input
+    id="heroSearch"
+    placeholder="Картошка, алма, трактор, агроном..."
+    onkeydown="if(event.key==='Enter')performSearch()">
 
-      <button class="hero-btn hero-secondary" id="addBtn">
-        ＋ Жарыя берүү
-      </button>
-
-    </div>
+   <button onclick="performSearch()">
+    Издөө
+   </button>
 
   </div>
 
+ </div>
 
-  <!-- CATEGORIES -->
 
-  <div class="section-title">
+ <div class="section">
 
-    <h2>Каталогдор</h2>
+  <div class="section-head">
 
-    <button class="section-link" id="allCategories">
-      Баарын көрүү
-    </button>
+   <div>
+    <h2 class="section-title">Категориялар</h2>
+    <div class="section-sub">
+     Агросектордун негизги багыттары
+    </div>
+   </div>
 
   </div>
 
 
   <div class="categories">
 
-    <button class="category active" data-category="Өсүмдүктөр">
-      <span class="category-icon">🌱</span>
-      <strong>Өсүмдүктөр</strong>
-    </button>
+   <button
+    class="category"
+    onclick="filterCategory('Өсүмдүктөр')">
 
-    <button class="category" data-category="Мал чарбасы">
-      <span class="category-icon">🐄</span>
-      <strong>Мал чарбасы</strong>
-    </button>
+    <div class="cat-icon">🌱</div>
 
-    <button class="category" data-category="Дары & Семирткич">
-      <span class="category-icon">🧪</span>
-      <strong>Дары & Семирткич</strong>
-    </button>
+    <strong>Өсүмдүктөр</strong>
 
-    <button class="category" data-category="Агрономдор">
-      <span class="category-icon">👨‍🌾</span>
-      <strong>Агрономдор</strong>
-    </button>
+    <span>
+     Жашылча, мөмө-жемиш, дан
+    </span>
+
+   </button>
+
+
+   <button
+    class="category"
+    onclick="filterCategory('Мал чарбасы')">
+
+    <div class="cat-icon">🐄</div>
+
+    <strong>Мал чарбасы</strong>
+
+    <span>
+     Мал, кой, жылкы, канаттуу
+    </span>
+
+   </button>
+
+
+   <button
+    class="category"
+    onclick="filterCategory('Дары & Семирткич')">
+
+    <div class="cat-icon">🧪</div>
+
+    <strong>Дары & Семирткич</strong>
+
+    <span>
+     Препараттар жана жер семирткич
+    </span>
+
+   </button>
+
+
+   <button
+    class="category"
+    onclick="filterCategory('Агрономдор')">
+
+    <div class="cat-icon">👨‍🌾</div>
+
+    <strong>Агрономдор</strong>
+
+    <span>
+     Кеңеш жана консультация
+    </span>
+
+   </button>
+
+
+   <button
+    class="category"
+    onclick="showHub()">
+
+    <div class="cat-icon">🚜</div>
+
+    <strong>Техника</strong>
+
+    <span>
+     Айыл чарба техникасы
+    </span>
+
+   </button>
+
+
+   <button
+    class="category"
+    onclick="showHub()">
+
+    <div class="cat-icon">🚚</div>
+
+    <strong>Логистика</strong>
+
+    <span>
+     Жеткирүү жана транспорт
+    </span>
+
+   </button>
+
+
+   <button
+    class="category"
+    onclick="showHub()">
+
+    <div class="cat-icon">🐕</div>
+
+    <strong>Ветеринария</strong>
+
+    <span>
+     Ветеринардык кызматтар
+    </span>
+
+   </button>
+
+
+   <button
+    class="category"
+    onclick="showHub()">
+
+    <div class="cat-icon">🔬</div>
+
+    <strong>Агро лаборатория</strong>
+
+    <span>
+     Топурак жана анализ
+    </span>
+
+   </button>
+
+  </div>
+
+ </div>
+
+
+<!-- PRICES -->
+
+ <div class="section">
+
+  <div class="section-head">
+
+   <div>
+    <h2 class="section-title">Аймактык баалар</h2>
+    <div class="section-sub">
+     Аймактар боюнча рыноктук баалар
+    </div>
+   </div>
+
+   <button
+    class="header-btn"
+    onclick="cycleRegion()">
+
+    Аймак:
+    <b id="regionName">Талас</b>
+
+   </button>
 
   </div>
 
 
-  <!-- MARKET -->
+  <div class="market-card">
 
-  <div class="section-title">
+   <div class="table-wrap">
 
-    <h2>Рынок</h2>
+    <table>
 
-    <button class="section-link" id="openMarket">
-      Баарын көрүү
-    </button>
+     <thead>
 
-  </div>
+      <tr>
+       <th>Товар</th>
+       <th>Талас</th>
+       <th>Чүй</th>
+       <th>Ош</th>
+       <th>Нарын</th>
+       <th>Тренд</th>
+      </tr>
 
+     </thead>
 
-  <div class="chips">
-
-    <button class="chip active" data-chip="all">
-      Баардыгы
-    </button>
-
-    <button class="chip" data-chip="Жер-жемиш">
-      🥦 Жер-жемиш
-    </button>
-
-    <button class="chip" data-chip="Мөмө">
-      🍎 Мөмө
-    </button>
-
-    <button class="chip" data-chip="Дан">
-      🌾 Дан
-    </button>
-
-    <button class="chip" data-chip="Мал">
-      🐄 Мал
-    </button>
-
-    <button class="chip" data-chip="Техника">
-      🚜 Техника
-    </button>
-
-  </div>
-
-
-  <!-- PRICES -->
-
-  <div class="section-title">
-    <h2>💰 Аймактык баалар</h2>
-  </div>
-
-  <div class="price-card">
-
-    <table class="price-table">
-
-      <thead>
-        <tr>
-          <th>Продукт</th>
-          <th>Талас</th>
-          <th>Чүй</th>
-          <th>Ош</th>
-          <th>Нарын</th>
-        </tr>
-      </thead>
-
-      <tbody id="priceBody"></tbody>
+     <tbody id="priceTable"></tbody>
 
     </table>
 
+   </div>
+
   </div>
 
+ </div>
 
-  <!-- PRODUCTS -->
 
-  <div class="section-title">
+<!-- PRODUCTS -->
 
-    <h2 id="productSectionTitle">
-      🌱 Өсүмдүктөр
+ <div class="section">
+
+  <div class="section-head">
+
+   <div>
+    <h2 class="section-title">
+     Популярдуу товарлар
     </h2>
 
-    <button class="section-link" id="plantsMore">
-      Баарын көрүү
-    </button>
+    <div class="section-sub">
+     Apex Marketplace
+    </div>
+   </div>
 
-  </div>
-
-  <div class="cards" id="products"></div>
-
-
-  <!-- AGRONOMISTS -->
-
-  <div class="section-title">
-
-    <h2>👨‍🌾 Агрономдор</h2>
-
-    <button class="section-link" id="agronomistsMore">
-      Баарын көрүү
-    </button>
-
-  </div>
-
-  <div class="cards" id="agronomists"></div>
-
-</section>
-
-
-<!-- ================= MARKET ================= -->
-
-<section id="marketPage" class="page">
-
-  <div class="section-title">
-
-    <h2>🛒 Бардык жарыялар</h2>
-
-    <button class="section-link" id="refreshAds">
-      ↻ Жаңыртуу
-    </button>
-
-  </div>
-
-
-  <div class="search-box">
-
-    <span class="search-icon">🔍</span>
-
-    <input
-      id="marketSearch"
-      type="search"
-      placeholder="Товар же кызмат издөө..."
-    >
-
-  </div>
-
-
-  <div class="market-filter">
-
-    <select id="marketCategory">
-
-      <option value="">Бардык категориялар</option>
-      <option value="Өсүмдүктөр">Өсүмдүктөр</option>
-      <option value="Мал чарбасы">Мал чарбасы</option>
-      <option value="Дары & Семирткич">Дары & Семирткич</option>
-      <option value="Агрономдор">Агрономдор</option>
-      <option value="Техника">Техника</option>
-
-    </select>
-
-
-    <select id="marketRegion">
-
-      <option value="">Бардык аймактар</option>
-      <option value="Талас">Талас</option>
-      <option value="Чүй">Чүй</option>
-      <option value="Ош">Ош</option>
-      <option value="Нарын">Нарын</option>
-      <option value="Ысык-Көл">Ысык-Көл</option>
-      <option value="Жалал-Абад">Жалал-Абад</option>
-      <option value="Баткен">Баткен</option>
-
-    </select>
+   <button
+    class="header-btn"
+    onclick="navigate('market')">
+    Баарын көрүү
+   </button>
 
   </div>
 
 
   <div
-    class="cards"
-    id="ads"
-    style="margin-top:12px"
-  ></div>
-
-</section>
-
-
-<!-- ================= CHAT ================= -->
-
-<section id="chatPage" class="page">
-
-  <div class="section-title">
-    <h2>💬 Жеке чат</h2>
+   id="homeProducts"
+   class="products">
   </div>
 
-  <div class="users" id="chatUsers"></div>
+ </div>
 
-  <div id="chatBox" class="chat" style="display:none">
 
-    <div id="chatHead" class="chat-head"></div>
+<!-- HUB -->
 
-    <div id="messages" class="messages"></div>
+ <div class="section">
 
-    <div class="chat-send">
+  <div class="section-head">
 
-      <input
-        id="messageInput"
-        placeholder="Билдирүү жазыңыз..."
-      >
+   <div>
+    <h2 class="section-title">
+     Apex Agro Hub
+    </h2>
 
-      <button id="sendMessage">
-        ➤
-      </button>
+    <div class="section-sub">
+     Фермер үчүн керектүү кызматтар бир жерде
+    </div>
+
+   </div>
+
+  </div>
+
+
+  <div class="hub">
+
+   <div class="hub-card">
+
+    <h3>
+     Фермер үчүн мүмкүнчүлүктөр
+    </h3>
+
+    <div class="hub-list">
+
+     <div
+      class="hub-item"
+      onclick="navigate('market')">
+
+      <strong>
+       📊 Рыноктук анализ
+      </strong>
+
+      <span>
+       Аймактар боюнча бааларды салыштыруу
+       жана суроо-талапты көрүү.
+      </span>
+
+     </div>
+
+
+     <div
+      class="hub-item"
+      onclick="openAddModal()">
+
+      <strong>
+       📦 Өз товарыңды сат
+      </strong>
+
+      <span>
+       Товарыңды жарыялап, сатып алуучулар
+       менен түз байланыш.
+      </span>
+
+     </div>
+
+
+     <div
+      class="hub-item"
+      onclick="navigate('chat')">
+
+      <strong>
+       💬 Кардар менен байланыш
+      </strong>
+
+      <span>
+       Эки тараптуу жеке чат аркылуу сүйлөшүү.
+      </span>
+
+     </div>
 
     </div>
 
+   </div>
+
+
+   <div class="hub-card">
+
+    <h3>
+     Бүгүнкү көрсөткүчтөр
+    </h3>
+
+    <div class="hub-list">
+
+     <div class="hub-item">
+      <strong id="hubAds">0</strong>
+      <span>Активдүү жарыялар</span>
+     </div>
+
+     <div class="hub-item">
+      <strong>7</strong>
+      <span>Аймак</span>
+     </div>
+
+     <div class="hub-item">
+      <strong>8+</strong>
+      <span>Агро багыт</span>
+     </div>
+
+    </div>
+
+   </div>
+
   </div>
+
+ </div>
 
 </section>
 
 
-<!-- ================= PROFILE ================= -->
+<!-- MARKET -->
 
-<section id="profilePage" class="page">
+<section id="page-market" class="page">
 
-  <div class="section-title">
-    <h2>👤 Профиль</h2>
+ <div class="section-head">
+
+  <div>
+   <h1 class="section-title">
+    Apex Market
+   </h1>
+
+   <div class="section-sub">
+    Кыргызстандын агро рыногу
+   </div>
   </div>
 
-  <div class="profile-card" id="profileCard"></div>
+  <button
+   class="header-btn primary"
+   onclick="openAddModal()">
+   + Жарыя берүү
+  </button>
+
+ </div>
+
+
+ <div class="market-card">
+
+  <div class="market-tools">
+
+   <input
+    id="marketSearch"
+    class="search"
+    placeholder="Товарды издөө..."
+    oninput="renderMarket()">
+
+
+   <select
+    id="categoryFilter"
+    class="select"
+    onchange="renderMarket()">
+
+    <option value="">
+     Бардык категория
+    </option>
+
+    <option>
+     Өсүмдүктөр
+    </option>
+
+    <option>
+     Мал чарбасы
+    </option>
+
+    <option>
+     Дары & Семирткич
+    </option>
+
+    <option>
+     Агрономдор
+    </option>
+
+   </select>
+
+
+   <select
+    id="regionFilter"
+    class="select"
+    onchange="renderMarket()">
+
+    <option value="">
+     Бардык аймак
+    </option>
+
+    <option>Талас</option>
+    <option>Чүй</option>
+    <option>Ош</option>
+    <option>Жалал-Абад</option>
+    <option>Баткен</option>
+    <option>Ысык-Көл</option>
+    <option>Нарын</option>
+
+   </select>
+
+  </div>
+
+
+  <div
+   id="marketProducts"
+   class="products"
+   style="padding:16px">
+  </div>
+
+ </div>
+
+</section>
+
+
+<!-- END PART 3 -->
+
+  <!-- CHAT -->
+
+<section id="page-chat" class="page">
+
+ <div class="section-head">
+
+  <div>
+   <h1 class="section-title">
+    Бүтүмдөр
+   </h1>
+
+   <div class="section-sub">
+    Кардарлар жана сатуучулар менен жеке сүйлөшүү
+   </div>
+
+  </div>
+
+ </div>
+
+
+ <div class="chat-layout">
+
+  <aside class="chat-users">
+
+   <div class="chat-users-head">
+    Сүйлөшүүлөр
+   </div>
+
+   <div id="chatUsers"></div>
+
+  </aside>
+
+
+  <div class="chat-main">
+
+   <div class="chat-head">
+
+    <div id="chatHeader">
+
+     <strong>
+      Чатты тандаңыз
+     </strong>
+
+     <div class="section-sub">
+      Сүйлөшүү баштоо үчүн колдонуучуну тандаңыз
+     </div>
+
+    </div>
+
+   </div>
+
+
+   <div id="messages" class="messages">
+
+    <div class="empty">
+
+     <div class="empty-icon">💬</div>
+
+     <div>
+      Сол жактан сүйлөшүүнү тандаңыз.
+     </div>
+
+    </div>
+
+   </div>
+
+
+   <div class="chat-input">
+
+    <input
+     id="messageInput"
+     disabled
+     placeholder="Билдирүү жазыңыз..."
+     oninput="sendTyping(true)"
+     onkeydown="if(event.key==='Enter')sendMessage()">
+
+    <button onclick="sendMessage()">
+     Жөнөтүү
+    </button>
+
+   </div>
+
+  </div>
+
+ </div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section id="page-profile" class="page">
+
+ <div class="section-head">
+
+  <div>
+   <h1 class="section-title">
+    Профиль
+   </h1>
+
+   <div class="section-sub">
+    Сиздин Apex аккаунтуңуз
+   </div>
+
+  </div>
+
+ </div>
+
+
+ <div id="profileContent"></div>
 
 </section>
 
 </main>
 
 
-<!-- ================= NAV ================= -->
+<!-- BOTTOM NAV -->
 
 <nav class="bottom-nav">
 
-  <button class="nav-btn active" data-page="homePage">
-    <span class="nav-icon">🏠</span>
-    Башкы
+ <div class="bottom-inner">
+
+  <button
+   class="nav-btn active"
+   data-page="home"
+   onclick="navigate('home')">
+
+   <span class="nav-icon">⌂</span>
+   <span>Башкы</span>
+
   </button>
 
-  <button class="nav-btn" data-page="marketPage">
-    <span class="nav-icon">🛒</span>
-    Рынок
+
+  <button
+   class="nav-btn"
+   data-page="market"
+   onclick="navigate('market')">
+
+   <span class="nav-icon">🌾</span>
+   <span>Рынок</span>
+
   </button>
 
-  <button class="plus-btn" id="plusButton">
-    ＋
+
+  <button
+   class="nav-btn add-btn"
+   onclick="openAddModal()">
+
+   <span class="nav-icon">+</span>
+   <span>Жарыя</span>
+
   </button>
 
-  <button class="nav-btn" data-page="chatPage">
-    <span class="nav-icon">💬</span>
-    Чат
+
+  <button
+   class="nav-btn"
+   data-page="chat"
+   onclick="navigate('chat')">
+
+   <span class="nav-icon">💬</span>
+   <span>Чат</span>
+
   </button>
 
-  <button class="nav-btn" data-page="profilePage">
-    <span class="nav-icon">👤</span>
-    Профиль
+
+  <button
+   class="nav-btn"
+   data-page="profile"
+   onclick="navigate('profile')">
+
+   <span class="nav-icon">👤</span>
+   <span>Профиль</span>
+
   </button>
+
+ </div>
 
 </nav>
 
-</div>
 
+<!-- MODAL -->
 
-<!-- ================= MODAL ================= -->
+<div
+ id="modalBg"
+ class="modal-bg"
+ onclick="if(event.target===this)closeModal()">
 
-<div class="modal" id="modal">
+ <div class="modal">
 
-  <div class="sheet">
+  <div class="modal-head">
 
-    <div class="sheet-header">
+   <h2 id="modalTitle">
+    Apex
+   </h2>
 
-      <h3 id="modalTitle">Apex</h3>
-
-      <button class="close" id="closeModal">
-        ×
-      </button>
-
-    </div>
-
-    <div id="modalBody"></div>
+   <button
+    class="close"
+    onclick="closeModal()">
+    ×
+   </button>
 
   </div>
 
+  <div id="modalBody"></div>
+
+ </div>
+
 </div>
 
 
-<div class="toast" id="toast"></div>
+<div id="toast" class="toast"></div>
 
 
 <script>
+
 "use strict";
 
-/*
-========================================================
- APEX AGRO — STANDALONE FRONTEND
- -------------------------------------------------------
- Бул версия:
- - Backend талап кылбайт
- - API талап кылбайт
- - Socket.IO талап кылбайт
- - Render static/server deployment менен иштейт
- - Бардык негизги кнопкалар иштейт
- - localStorage колдонот
-========================================================
-*/
 
-
-/* =====================================================
-   STATE
-===================================================== */
+/* STATE */
 
 const state = {
-  currentPage: "homePage",
-  category: "Өсүмдүктөр",
-  chip: "all",
-  selectedUser: null,
-  user: null,
-  ads: [],
-  messages: {}
+
+ page:"home",
+
+ user:null,
+
+ token:localStorage.getItem("apex_token") || "",
+
+ products:[],
+
+ ads:[],
+
+ users:[],
+
+ selectedUser:null,
+
+ socket:null,
+
+ socketReady:false,
+
+ regionIndex:0
+
 };
 
 
-/* =====================================================
-   DEMO DATA
-===================================================== */
+const regions = [
+ "Талас",
+ "Чүй",
+ "Ош",
+ "Жалал-Абад",
+ "Баткен",
+ "Ысык-Көл",
+ "Нарын"
+];
 
-const prices = [
 
-  {
-    product:"🥔 Картошка",
-    talas:"38 сом",
-    chui:"42 сом",
-    osh:"40 сом",
-    naryn:"45 сом"
-  },
+/* DEMO PRODUCTS */
 
-  {
-    product:"🍎 Алма",
-    talas:"65 сом",
-    chui:"70 сом",
-    osh:"75 сом",
-    naryn:"80 сом"
-  },
+const products = [
 
-  {
-    product:"🌾 Буудай",
-    talas:"27 сом",
-    chui:"29 сом",
-    osh:"30 сом",
-    naryn:"32 сом"
-  },
+ {
+  id:"p1",
+  title:"Картошка — Элитная",
+  category:"Өсүмдүктөр",
+  price:"42 сом/кг",
+  region:"Талас",
+  icon:"🥔",
+  demand:"Жогорку",
+  description:"Сапаттуу үрөндүк жана товардык картошка."
+ },
 
-  {
-    product:"🫘 Фасоль",
-    talas:"115 сом",
-    chui:"120 сом",
-    osh:"125 сом",
-    naryn:"130 сом"
-  },
+ {
+  id:"p2",
+  title:"Кызыл алма",
+  category:"Өсүмдүктөр",
+  price:"85 сом/кг",
+  region:"Чүй",
+  icon:"🍎",
+  demand:"Жогорку",
+  description:"Жаңы түшүм. Көтермө сатуу мүмкүн."
+ },
 
-  {
-    product:"🥕 Сабиз",
-    talas:"35 сом",
-    chui:"38 сом",
-    osh:"40 сом",
-    naryn:"42 сом"
-  }
+ {
+  id:"p3",
+  title:"Буудай",
+  category:"Өсүмдүктөр",
+  price:"29 сом/кг",
+  region:"Ош",
+  icon:"🌾",
+  demand:"Орточо",
+  description:"Сапаттуу дан азыгы."
+ },
+
+ {
+  id:"p4",
+  title:"Ангус букасы",
+  category:"Мал чарбасы",
+  price:"185 000 сом",
+  region:"Нарын",
+  icon:"🐂",
+  demand:"Жогорку",
+  description:"Эт багытындагы Angus породасы."
+ },
+
+ {
+  id:"p5",
+  title:"Актара 25 WG",
+  category:"Дары & Семирткич",
+  price:"1 450 сом",
+  region:"Чүй",
+  icon:"🧪",
+  demand:"Орточо",
+  description:"Өсүмдүктөрдү зыянкечтерден коргоо үчүн."
+ },
+
+ {
+  id:"p6",
+  title:"Агрономдун консультациясы",
+  category:"Агрономдор",
+  price:"1 000 сом",
+  region:"Талас",
+  icon:"👨‍🌾",
+  demand:"Жогорку",
+  description:"Онлайн агрономдук консультация."
+ },
+
+ {
+  id:"p7",
+  title:"Пияз",
+  category:"Өсүмдүктөр",
+  price:"38 сом/кг",
+  region:"Ош",
+  icon:"🧅",
+  demand:"Орточо",
+  description:"Көтермө жана чекене сатуу."
+ },
+
+ {
+  id:"p8",
+  title:"Арпа",
+  category:"Өсүмдүктөр",
+  price:"27 сом/кг",
+  region:"Нарын",
+  icon:"🌿",
+  demand:"Орточо",
+  description:"Тоют жана дан үчүн."
+ }
 
 ];
 
 
-const products = [
+state.products=[...products];
 
-  {
-    id:1,
-    title:"Элиталык картошка",
-    icon:"🥔",
-    category:"Өсүмдүктөр",
-    type:"Жер-жемиш",
-    region:"Талас",
-    price:"38 сом/кг",
-    seller:"Асылбек фермер"
-  },
 
-  {
-    id:2,
-    title:"Кызыл алма",
-    icon:"🍎",
-    category:"Өсүмдүктөр",
-    type:"Мөмө",
-    region:"Чүй",
-    price:"65 сом/кг",
-    seller:"Нурбек фермер"
-  },
+/* PRICES */
 
+const priceRows=[
+
+ {
+  name:"Картошка",
+  icon:"🥔",
+  talas:"42 сом",
+  chui:"48 сом",
+  osh:"39 сом",
+  naryn:"45 сом",
+  trend:"↑ 7%"
+ },
+
+ {
+  name:"Алма",
+  icon:"🍎",
+  talas:"72 сом",
+  chui:"85 сом",
+  osh:"78 сом",
+  naryn:"90 сом",
+  trend:"↑ 4%"
+ },
+
+ {
+  name:"Пияз",
+  icon:"🧅",
+  talas:"36 сом",
+  chui:"41 сом",
+  osh:"38 сом",
+  naryn:"44 сом",
+  trend:"↑ 2%"
+ },
+
+ {
+  name:"Буудай",
+  icon:"🌾",
+  talas:"29 сом",
+  chui:"31 сом",
+  osh:"28 сом",
+  naryn:"32 сом",
+  trend:"↓ 1%"
+ },
+
+ {
+  name:"Арпа",
+  icon:"🌿",
+  talas:"27 сом",
+  chui:"29 сом",
+  osh:"26 сом",
+  naryn:"30 сом",
+  trend:"↑ 3%"
+ }
+
+];
+
+
+/* HELPERS */
+
+function escapeHTML(value){
+
+ return String(value ?? "")
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+
+}
+
+
+function initials(name){
+
+ const text=String(name || "Apex").trim();
+
+ if(!text) return "A";
+
+ return text
+  .split(/\s+/)
+  .slice(0,2)
+  .map(x=>x[0])
+  .join("")
+  .toUpperCase();
+
+}
+
+
+function formatDate(date){
+
+ try{
+
+  return new Date(date).toLocaleTimeString(
+   "ky-KG",
+   {
+    hour:"2-digit",
+    minute:"2-digit"
+   }
+  );
+
+ }catch{
+
+  return "";
+
+ }
+
+}
+
+
+/* TOAST */
+
+let toastTimer=null;
+
+function toast(message){
+
+ const el=document.getElementById("toast");
+
+ el.textContent=message;
+
+ el.classList.add("show");
+
+ clearTimeout(toastTimer);
+
+ toastTimer=setTimeout(()=>{
+  el.classList.remove("show");
+ },3000);
+
+}
+
+
+/* NAVIGATION */
+
+function navigate(page){
+
+ state.page=page;
+
+ document.querySelectorAll(".page").forEach(el=>{
+  el.classList.remove("active");
+ });
+
+ const target=document.getElementById("page-"+page);
+
+ if(target){
+  target.classList.add("active");
+ }
+
+ document.querySelectorAll(
+  ".nav-btn[data-page]"
+ ).forEach(btn=>{
+  btn.classList.toggle(
+   "active",
+   btn.dataset.page===page
+  );
+ });
+
+ window.scrollTo({
+  top:0,
+  behavior:"smooth"
+ });
+
+ if(page==="market"){
+  renderMarket();
+ }
+
+ if(page==="chat"){
+  loadChatUsers();
+ }
+
+ if(page==="profile"){
+  renderProfile();
+ }
+
+}
+
+
+/* END PART 4 */
+
+  /* SEARCH */
+
+function performSearch(){
+
+ const input=document.getElementById("heroSearch");
+
+ const value=input.value.trim();
+
+ navigate("market");
+
+ const marketSearch=
+  document.getElementById("marketSearch");
+
+ if(marketSearch){
+  marketSearch.value=value;
+ }
+
+ renderMarket();
+
+}
+
+
+/* CATEGORY */
+
+function filterCategory(category){
+
+ navigate("market");
+
+ const filter=
+  document.getElementById("categoryFilter");
+
+ if(filter){
+  filter.value=category;
+ }
+
+ renderMarket();
+
+}
+
+
+/* HUB */
+
+function showHub(){
+
+ toast(
+  "Бул бөлүм Apex Agro Hub ичинде өнүктүрүлүүдө 🚜"
+ );
+
+}
+
+
+/* REGION */
+
+function cycleRegion(){
+
+ state.regionIndex=
+  (state.regionIndex+1)%regions.length;
+
+ document.getElementById("regionName").textContent=
+  regions[state.regionIndex];
+
+ toast(
+  "Аймак: "+regions[state.regionIndex]
+ );
+
+}
+
+
+/* PRICE TABLE */
+
+function renderPriceTable(){
+
+ const tbody=
+  document.getElementById("priceTable");
+
+ if(!tbody) return;
+
+ tbody.innerHTML=priceRows.map(row=>{
+
+  const trendClass=
+   row.trend.startsWith("↓")
+    ? "price-down"
+    : "price-up";
+
+  return `
+   <tr>
+
+    <td>
+     <strong>
+      ${row.icon} ${escapeHTML(row.name)}
+     </strong>
+    </td>
+
+    <td>${row.talas}</td>
+    <td>${row.chui}</td>
+    <td>${row.osh}</td>
+    <td>${row.naryn}</td>
+
+    <td class="${trendClass}">
+     ${row.trend}
+    </td>
+
+   </tr>
+  `;
+
+ }).join("");
+
+}
+
+
+/* PRODUCT CARD */
+
+function productCard(product){
+
+ return `
+
+  <article class="product">
+
+   <div class="product-image">
+    ${escapeHTML(product.icon || "🌱")}
+   </div>
+
+   <div class="product-body">
+
+    <div class="product-region">
+     ${escapeHTML(product.region || "Кыргызстан")}
+    </div>
+
+    <h3>
+     ${escapeHTML(product.title)}
+    </h3>
+
+    <div class="product-price">
+     ${escapeHTML(product.price)}
+    </div>
+
+    <div class="product-meta">
+
+     <span>
+      ${escapeHTML(product.category)}
+     </span>
+
+     <span>
+      ${escapeHTML(product.demand || "Суроо-талап")}
+     </span>
+
+    </div>
+
+    <button
+     class="product-btn"
+     onclick="openProduct('${escapeHTML(product.id)}')">
+
+     Толук маалымат
+
+    </button>
+
+   </div>
+
+  </article>
+
+ `;
+
+}
+
+
+/* HOME */
+
+function renderHomeProducts(){
+
+ const container=
+  document.getElementById("homeProducts");
+
+ if(!container) return;
+
+ container.innerHTML=
+  state.products
+   .slice(0,4)
+   .map(productCard)
+   .join("");
+
+}
+
+
+/* ALL PRODUCTS */
+
+function getAllProducts(){
+
+ const ads=state.ads.map(ad=>({
+
+  id:"ad-"+ad.id,
+
+  title:ad.title,
+
+  category:ad.category,
+
+  price:ad.price,
+
+  region:ad.region,
+
+  icon:
+   ad.category==="Мал чарбасы"
+    ? "🐄"
+    : ad.category==="Дары & Семирткич"
+    ? "🧪"
+    : ad.category==="Агрономдор"
+    ? "👨‍🌾"
+    : "🌱",
+
+  demand:"Жаңы жарыя",
+
+  description:ad.description,
+
+  seller:ad.seller,
+
+  isAd:true
+
+ }));
+
+ return [
+  ...ads,
+  ...state.products
+ ];
+
+}
+
+
+/* MARKET */
+
+function renderMarket(){
+
+ const container=
+  document.getElementById("marketProducts");
+
+ if(!container) return;
+
+ const search=
+  (
+   document.getElementById("marketSearch")?.value ||
+   ""
+  ).trim().toLowerCase();
+
+ const category=
+  document.getElementById("categoryFilter")?.value ||
+  "";
+
+ const region=
+  document.getElementById("regionFilter")?.value ||
+  "";
+
+ let list=getAllProducts();
+
+ if(search){
+
+  list=list.filter(item=>{
+
+   const text=[
+    item.title,
+    item.category,
+    item.region,
+    item.description
+   ].join(" ").toLowerCase();
+
+   return text.includes(search);
+
+  });
+
+ }
+
+ if(category){
+
+  list=list.filter(
+   item=>item.category===category
+  );
+
+ }
+
+ if(region){
+
+  list=list.filter(
+   item=>item.region===region
+  );
+
+ }
+
+ if(!list.length){
+
+  container.innerHTML=`
+
+   <div
+    class="empty"
+    style="grid-column:1/-1">
+
+    <div class="empty-icon">🔎</div>
+
+    <strong>
+     Товар табылган жок
+    </strong>
+
+    <div style="margin-top:6px">
+     Башка издөө сөзүн же фильтрди колдонуп көрүңүз.
+    </div>
+
+   </div>
+
+  `;
+
+  return;
+
+ }
+
+ container.innerHTML=
+  list.map(productCard).join("");
+
+}
+
+
+/* PRODUCT */
+
+function openProduct(id){
+
+ const product=
+  getAllProducts().find(
+   item=>String(item.id)===String(id)
+  );
+
+ if(!product){
+
+  toast("Товар табылган жок");
+
+  return;
+
+ }
+
+ openModal(
+  product.title,
+  `
+
+   <div
+    style="
+     text-align:center;
+     font-size:65px;
+     margin-bottom:10px">
+    ${escapeHTML(product.icon)}
+   </div>
+
+   <div class="form">
+
+    <div>
+     <label>Категория</label>
+     <div>
+      ${escapeHTML(product.category)}
+     </div>
+    </div>
+
+    <div>
+     <label>Аймак</label>
+     <div>
+      ${escapeHTML(product.region)}
+     </div>
+    </div>
+
+    <div>
+     <label>Баасы</label>
+     <div
+      style="
+       color:var(--green);
+       font-weight:900">
+      ${escapeHTML(product.price)}
+     </div>
+    </div>
+
+    <div>
+     <label>Маалымат</label>
+     <div style="color:var(--muted)">
+      ${escapeHTML(
+       product.description || "Маалымат жок"
+      )}
+     </div>
+    </div>
+
+    ${
+     product.seller
+      ? `
+       <button
+        class="submit"
+        onclick="startChatWith('${escapeHTML(product.seller.id)}')">
+        💬 Сатуучу менен байланыш
+       </button>
+      `
+      : `
+       <button
+        class="submit"
+        onclick="closeModal();navigate('chat')">
+        💬 Чатка өтүү
+       </button>
+      `
+    }
+
+   </div>
+
+  `
+ );
+
+}
+
+
+/* MODAL */
+
+function openModal(title,body){
+
+ document.getElementById("modalTitle").textContent=
+  title;
+
+ document.getElementById("modalBody").innerHTML=
+  body;
+
+ document.getElementById("modalBg")
+  .classList.add("show");
+
+}
+
+
+function closeModal(){
+
+ document.getElementById("modalBg")
+  .classList.remove("show");
+
+}
+
+
+/* AUTH */
+
+function openLoginModal(){
+
+ openModal(
+  "Apex аккаунтуна кирүү",
+  `
+
+   <form
+    class="form"
+    onsubmit="login(event)">
+
+    <div>
+
+     <label>Телефон</label>
+
+     <input
+      id="loginPhone"
+      required
+      placeholder="+996 700 000 000">
+
+    </div>
+
+    <div>
+
+     <label>Пароль</label>
+
+     <input
+      id="loginPassword"
+      type="password"
+      required
+      placeholder="Пароль">
+
+    </div>
+
+    <button
+     type="submit"
+     class="submit">
+
+     Кирүү
+
+    </button>
+
+    <div class="form-switch">
+
+     Аккаунтуңуз жокпу?
+
+     <button
+      type="button"
+      onclick="openRegisterModal()">
+
+      Катталуу
+
+     </button>
+
+    </div>
+
+   </form>
+
+  `
+ );
+
+}
+
+
+function openRegisterModal(){
+
+ openModal(
+  "Apex аккаунтун түзүү",
+  `
+
+   <form
+    class="form"
+    onsubmit="register(event)">
+
+    <div>
+
+     <label>Аты-жөнү</label>
+
+     <input
+      id="registerName"
+      required
+      placeholder="Атыңыз">
+
+    </div>
+
+    <div>
+
+     <label>Телефон</label>
+
+     <input
+      id="registerPhone"
+      required
+      placeholder="+996 700 000 000">
+
+    </div>
+
+    <div>
+
+     <label>Роль</label>
+
+     <select id="registerRole">
+
+      <option>Сатып алуучу</option>
+      <option>Фермер</option>
+      <option>Сатуучу</option>
+      <option>Агроном</option>
+      <option>Поставщик</option>
+      <option>Логист</option>
+
+     </select>
+
+    </div>
+
+    <div>
+
+     <label>Пароль</label>
+
+     <input
+      id="registerPassword"
+      type="password"
+      minlength="6"
+      required
+      placeholder="Кеминде 6 белги">
+
+    </div>
+
+    <button
+     type="submit"
+     class="submit">
+
+     Катталуу
+
+    </button>
+
+    <div class="form-switch">
+
+     Аккаунтуңуз барбы?
+
+     <button
+      type="button"
+      onclick="openLoginModal()">
+
+      Кирүү
+
+     </button>
+
+    </div>
+
+   </form>
+
+  `
+ );
+
+}
+
+
+/* API */
+
+async function api(url,options={}){
+
+ const headers={
+  ...(options.headers || {})
+ };
+
+ if(options.body &&
+    !headers["Content-Type"]){
+
+  headers["Content-Type"]="application/json";
+
+ }
+
+ if(state.token){
+
+  headers.Authorization=
+   "Bearer "+state.token;
+
+ }
+
+ const response=
+  await fetch(url,{
+   ...options,
+   headers
+  });
+
+ let data={};
+
+ try{
+
+  data=await response.json();
+
+ }catch{
+
+  data={};
+
+ }
+
+ if(!response.ok){
+
+  throw new Error(
+   data.error || "Сервердик ката"
+  );
+
+ }
+
+ return data;
+
+}
+
+
+/* REGISTER */
+
+async function register(event){
+
+ event.preventDefault();
+
+ const name=
+  document.getElementById("registerName").value;
+
+ const phone=
+  document.getElementById("registerPhone").value;
+
+ const password=
+  document.getElementById("registerPassword").value;
+
+ const role=
+  document.getElementById("registerRole").value;
+
+ try{
+
+  const data=
+   await api("/api/register",{
+
+    method:"POST",
+
+    body:JSON.stringify({
+     name,
+     phone,
+     password,
+     role
+    })
+
+   });
+
+  state.token=data.token;
+  state.user=data.user;
+
+  localStorage.setItem(
+   "apex_token",
+   state.token
+  );
+
+  closeModal();
+
+  toast("Каттоо ийгиликтүү өттү! 🎉");
+
+  connectSocket();
+
+  renderProfile();
+
+  navigate("profile");
+
+ }catch(error){
+
+  toast(error.message);
+
+ }
+
+}
+
+
+/* LOGIN */
+
+async function login(event){
+
+ event.preventDefault();
+
+ const phone=
+  document.getElementById("loginPhone").value;
+
+ const password=
+  document.getElementById("loginPassword").value;
+
+ try{
+
+  const data=
+   await api("/api/login",{
+
+    method:"POST",
+
+    body:JSON.stringify({
+     phone,
+     password
+    })
+
+   });
+
+  state.token=data.token;
+  state.user=data.user;
+
+  localStorage.setItem(
+   "apex_token",
+   state.token
+  );
+
+  closeModal();
+
+  toast(
+   "Кош келиңиз, "+
+   state.user.name+
+   "! 👋"
+  );
+
+  connectSocket();
+
+  renderProfile();
+
+ }catch(error){
+
+  toast(error.message);
+
+ }
+
+}
+
+
+/* LOGOUT */
+
+async function logout(){
+
+ try{
+
+  if(state.token){
+
+   await api("/api/logout",{
+    method:"POST"
+   });
+
+  }
+
+ }catch{}
+
+ state.token="";
+ state.user=null;
+ state.users=[];
+ state.selectedUser=null;
+
+ localStorage.removeItem("apex_token");
+
+ if(state.socket){
+
+  try{
+   state.socket.disconnect();
+  }catch{}
+
+ }
+
+ state.socket=null;
+ state.socketReady=false;
+
+ toast("Аккаунттан чыктыңыз");
+
+ renderProfile();
+
+}
+
+
+/* ME */
+
+async function loadMe(){
+
+ if(!state.token){
+
+  renderProfile();
+
+  return;
+
+ }
+
+ try{
+
+  const data=
+   await api("/api/me");
+
+  state.user=data.user;
+
+  connectSocket();
+
+ }catch{
+
+  state.token="";
+  state.user=null;
+
+  localStorage.removeItem("apex_token");
+
+ }
+
+ renderProfile();
+
+}
+
+
+/* PROFILE */
+
+function renderProfile(){
+
+ const container=
+  document.getElementById("profileContent");
+
+ if(!container) return;
+
+ if(!state.user){
+
+  container.innerHTML=`
+
+   <div class="profile-card">
+
+    <div class="profile-top">
+
+     <div class="profile-avatar">
+      👤
+     </div>
+
+     <div class="profile-info">
+
+      <h2>
+       Кош келиңиз!
+      </h2>
+
+      <p>
+       Apex платформасын толук колдонуу үчүн
+       аккаунт түзүңүз.
+      </p>
+
+     </div>
+
+    </div>
+
+    <div
+     style="
+      margin-top:20px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap">
+
+     <button
+      class="header-btn primary"
+      onclick="openLoginModal()">
+
+      Кирүү
+
+     </button>
+
+     <button
+      class="header-btn"
+      onclick="openRegisterModal()">
+
+      Катталуу
+
+     </button>
+
+    </div>
+
+   </div>
+
+  `;
+
+  return;
+
+ }
+
+ container.innerHTML=`
+
+  <div class="profile-card">
+
+   <div class="profile-top">
+
+    <div class="profile-avatar">
+     ${escapeHTML(
+      initials(state.user.name)
+     )}
+    </div>
+
+    <div class="profile-info">
+
+     <h2>
+      ${escapeHTML(state.user.name)}
+     </h2>
+
+     <p>
+      ${escapeHTML(state.user.role)}
+     </p>
+
+     <p>
+      ${escapeHTML(state.user.phone)}
+     </p>
+
+    </div>
+
+   </div>
+
+
+   <div class="profile-grid">
+
+    <div class="profile-stat">
+     <strong>${state.ads.length}</strong>
+     <span>Жарыялар</span>
+    </div>
+
+    <div class="profile-stat">
+     <strong>7</strong>
+     <span>Аймак</span>
+    </div>
+
+    <div class="profile-stat">
+     <strong>1</strong>
+     <span>Аккаунт</span>
+    </div>
+
+   </div>
+
+
+   <div
+    style="
+     margin-top:22px;
+     display:flex;
+     gap:10px;
+     flex-wrap:wrap">
+
+    <button
+     class="header-btn primary"
+     onclick="openAddModal()">
+
+     + Жарыя берүү
+
+    </button>
+
+    <button
+     class="header-btn"
+     onclick="navigate('chat')">
+
+     💬 Чаттар
+
+    </button>
+
+    <button
+     class="header-btn"
+     onclick="logout()">
+
+     Чыгуу
+
+    </button>
+
+   </div>
+
+  </div>
+
+ `;
+
+}
+
+
+/* ADD AD */
+
+function openAddModal(){
+
+ if(!state.user){
+
+  openModal(
+   "Авторизация керек",
+   `
+
+    <div class="empty">
+
+     <div class="empty-icon">
+      🔐
+     </div>
+
+     <strong>
+      Жарыя берүү үчүн аккаунтка кириңиз.
+     </strong>
+
+     <div
+      style="
+       margin-top:15px;
+       display:flex;
+       gap:8px;
+       justify-content:center;
+       flex-wrap:wrap">
+
+      <button
+       class="header-btn primary"
+       onclick="openLoginModal()">
+
+       Кирүү
+
+      </button>
+
+      <button
+       class="header-btn"
+       onclick="openRegisterModal()">
+
+       Катталуу
+
+      </button>
+
+     </div>
+
+    </div>
+
+   `
+  );
+
+  return;
+
+ }
+
+
+ openModal(
+  "Жаңы жарыя",
+  `
+
+   <form
+    class="form"
+    onsubmit="createAd(event)">
+
+    <div>
+
+     <label>
+      Товардын аталышы
+     </label>
+
+     <input
+      id="adTitle"
+      required
+      placeholder="Мисалы: Картошка">
+
+    </div>
+
+    <div>
+
+     <label>
+      Категория
+     </label>
+
+     <select id="adCategory">
+
+      <option>Өсүмдүктөр</option>
+      <option>Мал чарбасы</option>
+      <option>Дары & Семирткич</option>
+      <option>Агрономдор</option>
+
+     </select>
+
+    </div>
+
+    <div>
+
+     <label>
+      Баасы
+     </label>
+
+     <input
+      id="adPrice"
+      required
+      placeholder="45 сом/кг">
+
+    </div>
+
+    <div>
+
+     <label>
+      Аймак
+     </label>
+
+     <select id="adRegion">
+
+      ${regions.map(r=>
+       `<option>${escapeHTML(r)}</option>`
+      ).join("")}
+
+     </select>
+
+    </div>
+
+    <div>
+
+     <label>
+      Сүрөттөмө
+     </label>
+
+     <textarea
+      id="adDescription"
+      placeholder="Товар жөнүндө маалымат...">
+     </textarea>
+
+    </div>
+
+    <button
+     type="submit"
+     class="submit">
+
+     Жарыяны жарыялоо
+
+    </button>
+
+   </form>
+
+  `
+ );
+
+}
+
+
+/* CREATE AD */
+
+async function createAd(event){
+
+ event.preventDefault();
+
+ const title=
+  document.getElementById("adTitle").value;
+
+ const category=
+  document.getElementById("adCategory").value;
+
+ const price=
+  document.getElementById("adPrice").value;
+
+ const region=
+  document.getElementById("adRegion").value;
+
+ const description=
+  document.getElementById("adDescription").value;
+
+ try{
+
+  const ad=
+   await api("/api/ads",{
+
+    method:"POST",
+
+    body:JSON.stringify({
+     title,
+     category,
+     price,
+     region,
+     description
+    })
+
+   });
+
+  state.ads.unshift(ad);
+
+  closeModal();
+
+  toast(
+   "Жарыя ийгиликтүү жарыяланды! 📦"
+  );
+
+  updateAdsCount();
+
+  renderMarket();
+
+  renderProfile();
+
+ }catch(error){
+
+  toast(error.message);
+
+ }
+
+}
+
+
+/* LOAD ADS */
+
+async function loadAds(){
+
+ try{
+
+  const ads=
+   await api("/api/ads");
+
+  state.ads=
+   Array.isArray(ads)
+    ? ads
+    : [];
+
+ }catch{
+
+  state.ads=[];
+
+ }
+
+ renderHomeProducts();
+ renderMarket();
+ updateAdsCount();
+ renderProfile();
+
+}
+
+
+function updateAdsCount(){
+
+ const el=
+  document.getElementById("hubAds");
+
+ if(el){
+  el.textContent=state.ads.length;
+ }
+
+}
+
+
+/* CHAT USERS */
+
+async function loadChatUsers(){
+
+ const container=
+  document.getElementById("chatUsers");
+
+ if(!container) return;
+
+ if(!state.user){
+
+  container.innerHTML=`
+
+   <div class="empty">
+
+    <div class="empty-icon">
+     🔐
+    </div>
+
+    <strong>
+     Авторизация керек
+    </strong>
+
+    <div style="margin-top:6px">
+     Чатты колдонуу үчүн аккаунтка кириңиз.
+    </div>
+
+    <button
+     class="header-btn primary"
+     style="margin-top:15px"
+     onclick="openLoginModal()">
+
+     Кирүү
+
+    </button>
+
+   </div>
+
+  `;
+
+  return;
+
+ }
+
+ try{
+
+  const users=
+   await api("/api/users");
+
+  state.users=
+   Array.isArray(users)
+    ? users
+    : [];
+
+  renderChatUsers();
+
+ }catch{
+
+  container.innerHTML=`
+
+   <div class="empty">
+
+    <div class="empty-icon">
+     💬
+    </div>
+
+    Сүйлөшө турган колдонуучулар азырынча жок.
+
+   </div>
+
+  `;
+
+ }
+
+}
+
+
+/* RENDER CHAT USERS */
+
+function renderChatUsers(){
+
+ const container=
+  document.getElementById("chatUsers");
+
+ if(!container) return;
+
+ if(!state.users.length){
+
+  container.innerHTML=`
+
+   <div class="empty">
+
+    <div class="empty-icon">
+     👥
+    </div>
+
+    <strong>
+     Азырынча колдонуучулар жок
+    </strong>
+
+   </div>
+
+  `;
+
+  return;
+
+ }
+
+ container.innerHTML=
+  state.users.map(user=>`
+
+   <div
+    class="chat-user ${
+     state.selectedUser?.id===user.id
+      ? "active"
+      : ""
+    }"
+    onclick="selectChatUser('${escapeHTML(user.id)}')">
+
+    <div class="avatar">
+     ${escapeHTML(initials(user.name))}
+    </div>
+
+    <div>
+
+     <div class="chat-user-name">
+      ${escapeHTML(user.name)}
+     </div>
+
+     <div class="chat-user-role">
+      ${escapeHTML(user.role)}
+     </div>
+
+    </div>
+
+   </div>
+
+  `).join("");
+
+}
+
+
+/* SELECT CHAT */
+
+async function selectChatUser(userId){
+
+ const user=
+  state.users.find(
+   item=>String(item.id)===String(userId)
+  );
+
+ if(!user) return;
+
+ state.selectedUser=user;
+
+ renderChatUsers();
+
+ document.getElementById("chatHeader").innerHTML=`
+
+  <div>
+
+   <strong>
+    ${escapeHTML(user.name)}
+   </strong>
+
+   <div class="section-sub">
+    ${escapeHTML(user.role)}
+   </div>
+
+   <div
+    id="typingIndicator"
+    class="typing">
+   </div>
+
+  </div>
+
+ `;
+
+ const input=
+  document.getElementById("messageInput");
+
+ input.disabled=false;
+
+ input.focus();
+
+ renderMessages([]);
+
+ if(state.socketReady){
+
+  state.socket.emit(
+   "join_chat",
+   {
+    otherUserId:user.id
+   }
+  );
+
+ }else{
+
+  try{
+
+   const messages=
+    await api(
+     "/api/chats/"+
+     encodeURIComponent(user.id)+
+     "/messages"
+    );
+
+   renderMessages(messages);
+
+  }catch(error){
+
+   toast(error.message);
+
+  }
+
+ }
+
+}
+
+
+/* START CHAT */
+
+async function startChatWith(userId){
+
+ closeModal();
+
+ if(!state.user){
+
+  openLoginModal();
+
+  return;
+
+ }
+
+ navigate("chat");
+
+ await loadChatUsers();
+
+ const user=
+  state.users.find(
+   item=>String(item.id)===String(userId)
+  );
+
+ if(user){
+
+  selectChatUser(user.id);
+
+ }
+
+}
+
+
+/* MESSAGES */
+
+function renderMessages(messages){
+
+ const container=
+  document.getElementById("messages");
+
+ if(!container) return;
+
+ if(!messages || !messages.length){
+
+  container.innerHTML=`
+
+   <div class="empty">
+
+    <div class="empty-icon">
+     👋
+    </div>
+
+    <strong>
+     Саламдашып баштаңыз
+    </strong>
+
+    <div style="margin-top:6px">
+     Биринчи билдирүүнү жазыңыз.
+    </div>
+
+   </div>
+
+  `;
+
+  return;
+
+ }
+
+ container.innerHTML=
+  messages.map(message=>{
+
+   const mine=
+    state.user &&
+    String(message.senderId)===
+    String(state.user.id);
+
+   return `
+
+    <div class="message ${
+     mine ? "mine" : ""
+    }">
+
+     <div class="message-name">
+      ${escapeHTML(
+       message.senderName || ""
+      )}
+     </div>
+
+     <div>
+      ${escapeHTML(message.text)}
+     </div>
+
+     <div class="message-time">
+      ${formatDate(message.createdAt)}
+     </div>
+
+    </div>
+
+   `;
+
+  }).join("");
+
+ container.scrollTop=
+  container.scrollHeight;
+
+}
+
+
+/* SEND */
+
+function sendMessage(){
+
+ const input=
+  document.getElementById("messageInput");
+
+ const text=input.value.trim();
+
+ if(!text) return;
+
+ if(!state.user){
+
+  openLoginModal();
+
+  return;
+
+ }
+
+ if(!state.selectedUser){
+
+  toast("Алгач колдонуучуну тандаңыз");
+
+  return;
+
+ }
+
+ if(!state.socketReady){
+
+  toast("Сервер менен байланыш жок");
+
+  return;
+
+ }
+
+ state.socket.emit(
+  "send_message",
   {
-    id:3,
- 
+   otherUserId:state.selectedUser.id,
+   text
+  }
+ );
+
+ input.value="";
+
+ sendTyping(false);
+
+}
+
+
+/* TYPING */
+
+let typingTimeout=null;
+
+function sendTyping(isTyping){
+
+ if(
+  !state.socketReady ||
+  !state.selectedUser
+ ){
+  return;
+ }
+
+ state.socket.emit(
+  "typing",
+  {
+   otherUserId:state.selectedUser.id,
+   isTyping:Boolean(isTyping)
+  }
+ );
+
+ if(isTyping){
+
+  clearTimeout(typingTimeout);
+
+  typingTimeout=setTimeout(()=>{
